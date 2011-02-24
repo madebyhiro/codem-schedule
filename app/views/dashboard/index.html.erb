@@ -1,0 +1,5 @@
+<% title 'Dashboard' %>
+
+<h2 class="inline">Recent jobs</h2>
+<span>Click on a job to view more details, <%= link_to 'create a new job', new_job_path %> or <%= link_to 'view all jobs', jobs_path %>.</span>
+<%= render "jobs/jobs" %>

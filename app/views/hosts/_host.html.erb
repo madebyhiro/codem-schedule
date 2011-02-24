@@ -1,0 +1,20 @@
+<%= content_tag_for :div, host, :class => "#{host.available ? 'up' : 'down'} #{cycle 'left', 'right'}" do %>
+  <h2>
+    <%= host_name host %>: <%= host.status %>
+  </h2>
+  
+  <% if host.available %>
+    <ol>
+      <li>
+        Available slots: <%= host.available_slots %>
+      </li>
+      <li>
+        Total slots: <%= host.total_slots %>
+      </li>
+      <li>
+        Used slots: <%= host.used_slots %>
+      </li>
+    </ol>
+  <% end %>
+  
+<% end %>

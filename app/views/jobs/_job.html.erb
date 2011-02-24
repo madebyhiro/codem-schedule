@@ -1,0 +1,37 @@
+<%= content_tag_for :tr, job, :class => "#{cycle('even', 'odd')} #{job.state}" do %>
+  <td class="id">
+    <%= job.id %>
+  </td>
+  <td class="input_file" title="<%= job.source_file %>">
+    <%= File.basename job.source_file %>
+  </td>
+  <td class="duration" title="<%= job.duration %> seconds">
+    <%= number_to_time job.duration %>
+  </td>
+  <td class="size" title="<%= job.filesize %> bytes">
+    <%= number_to_human_size job.filesize %>
+  </td>
+  <td class="submitted" title="<%= I18n.l job.created_at %>">
+    <%= time_ago_in_words job.created_at, true %> ago
+  </td>
+  <td class="preset">
+    <%= job.preset.name %>
+  </td>
+  <td class="host">
+    <%= job.host.try(:name) %>
+  </td>
+  <td class="progress">
+    <% if job.host %>
+      <%= link_to job.state.capitalize, "#{job.host.address}/jobs/#{job.remote_jobid}" %>
+    <% else %>
+      <%= job.state.capitalize %>
+    <% end %>
+    
+    <% if job.state == 'transcoding' %>
+      : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
+      <div class="bar">
+        <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
+      </div>
+    <% end %>
+  </td>
+<% end %>
