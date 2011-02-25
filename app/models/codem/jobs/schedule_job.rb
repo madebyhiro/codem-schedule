@@ -8,8 +8,10 @@ module Codem
       end
       
       def perform
-        for host in available_hosts
-          next unless schedule_jobs_at(host)
+        if scheduled_jobs.any?
+          for host in available_hosts
+            next unless schedule_jobs_at(host)
+          end
         end
         reschedule
       end
