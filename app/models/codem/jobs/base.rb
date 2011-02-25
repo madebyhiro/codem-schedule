@@ -4,6 +4,12 @@ module Codem
       include HTTParty
       format :json
 
+      def self.remove_all_for(job)
+        Delayed::Job.all.each do |delayed_job|
+          delayed_job.destroy if delayed_job.payload_object.job == job
+        end
+      end
+      
       attr_accessor :job, :parameters
 
       def initialize(job=nil, parameters={})
@@ -24,9 +30,9 @@ module Codem
       end
       
       def error(delayed_job, exception)
-        # host is dead?
-        job.enter(:scheduled)
-        job.host.update_status
+        if exception.is_a?(Errno::ECONNREFUSED)
+          job.enter(:on_hold)
+        end
       end
       
       def failure

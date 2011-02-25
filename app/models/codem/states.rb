@@ -24,12 +24,21 @@ module Codem
       end
       
       def enter_queued(parameters)
-        update_attributes :remote_jobid => parameters['job_id']
+        if parameters['job_id']
+          update_attributes :remote_jobid => parameters['job_id']
+        end
         Delayed::Job.enqueue Codem::Jobs::QueuedJob.new(self)
       end
       
       def enter_transcoding(parameters)
         Delayed::Job.enqueue Codem::Jobs::TranscodeJob.new(self, parameters)
+      end
+
+      def enter_on_hold(parameters)
+        unless state == 'on_hold'
+          Codem::Jobs::Base.remove_all_for(self)
+          Delayed::Job.enqueue Codem::Jobs::OnHoldJob.new(self, parameters)
+        end
       end
       
       def enter_complete(parameters)

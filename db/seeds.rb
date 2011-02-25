@@ -1,4 +1,4 @@
-%w(hosts jobs presets delayed_jobs).each do |name|
+%w(hosts jobs presets).each do |name|
   ActiveRecord::Base.connection.execute("TRUNCATE #{name}")
 end
 
