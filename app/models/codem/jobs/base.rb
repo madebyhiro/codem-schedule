@@ -6,7 +6,7 @@ module Codem
 
       attr_accessor :job, :parameters
 
-      def initialize(job, parameters={})
+      def initialize(job=nil, parameters={})
         @job        = job
         @parameters = parameters
       end

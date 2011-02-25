@@ -21,7 +21,6 @@ module Codem
 
     protected
       def enter_scheduled(parameters)
-        Delayed::Job.enqueue Codem::Jobs::ScheduleJob.new(self)
       end
       
       def enter_queued(parameters)

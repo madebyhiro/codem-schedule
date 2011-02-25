@@ -7,10 +7,11 @@ class Host < ActiveRecord::Base
   before_validation :fix_address
   validates_presence_of :address
 
-  before_save :update_status
+  after_create :update_status
   
   def self.with_available_slots
-    all.select { |h| h.available }
+    all.map(&:update_status)
+    all.select { |h| h.available_slots > 0 }
   end
   
   def status
@@ -32,6 +33,7 @@ class Host < ActiveRecord::Base
       self.status_checked_at    = Time.zone.now
       self.available            = true
     end
+    save
   end
   
   private

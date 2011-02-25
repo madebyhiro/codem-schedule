@@ -8,4 +8,5 @@ class Job < ActiveRecord::Base
   validates_presence_of :preset_id
     
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => :host
+  scope :scheduled, lambda { where(:state => 'scheduled') }
 end
