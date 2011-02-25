@@ -1,6 +1,12 @@
 module Codem
   module Jobs
     class ScheduleJob < Codem::Jobs::Base
+      def self.ensure_only_one_instance_running!
+        Delayed::Job.all.each do |job|
+          job.destroy if job.payload_object.is_a?(Codem::Jobs::ScheduleJob)
+        end
+      end
+      
       def perform
         for host in available_hosts
           next unless schedule_jobs_at(host)

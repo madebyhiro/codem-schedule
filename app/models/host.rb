@@ -32,6 +32,8 @@ class Host < ActiveRecord::Base
       self.available_slots      = response['free_slots']
       self.status_checked_at    = Time.zone.now
       self.available            = true
+    else
+      self.available            = false
     end
     save
   end

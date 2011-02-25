@@ -27,7 +27,7 @@
       <%= job.state.capitalize %>
     <% end %>
     
-    <% if job.state == 'transcoding' %>
+    <% if job.progress != '0' && job.state != 'complete' %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>

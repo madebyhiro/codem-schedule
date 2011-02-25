@@ -22,6 +22,16 @@ module Codem
       def reschedule(options={})
         Delayed::Job.enqueue self.class.new(job, parameters), options
       end
+      
+      def error(delayed_job, exception)
+        # host is dead?
+        job.enter(:scheduled)
+        job.host.update_status
+      end
+      
+      def failure
+        reschedule
+      end
     end
   end
 end
