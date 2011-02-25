@@ -3,6 +3,7 @@ class Job < ActiveRecord::Base
   
   belongs_to :host
   belongs_to :preset
+  has_many :state_changes, :order => 'created_at', :dependent => :destroy
 
   validates_presence_of :source_file, :destination_file, :allow_blank => false
   validates_presence_of :preset_id

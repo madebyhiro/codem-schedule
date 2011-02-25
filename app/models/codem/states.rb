@@ -11,8 +11,6 @@ module Codem
 
       method = "enter_#{state}".to_sym
       self.send(method, parameters)
-      
-      notify_responders
     end
 
     def initial_state
