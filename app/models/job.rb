@@ -8,6 +8,7 @@ class Job < ActiveRecord::Base
   validates_presence_of :source_file, :destination_file, :allow_blank => false
   validates_presence_of :preset_id
     
-  scope :recent, :order => "updated_at DESC", :limit => 10, :include => :host
+  scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
   scope :scheduled, lambda { where(:state => 'scheduled') }
+  scope :completed, lambda { where(:state => 'completed') }
 end

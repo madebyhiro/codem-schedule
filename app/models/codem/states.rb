@@ -29,6 +29,7 @@ module Codem
       end
       
       def enter_transcoding(parameters)
+        update_attributes :transcoding_started_at => Time.now
         Delayed::Job.enqueue Codem::Jobs::TranscodeJob.new(self, parameters)
       end
 
@@ -40,6 +41,8 @@ module Codem
       end
       
       def enter_complete(parameters)
+        update_attributes :progress => '100.00',
+                          :completed_at => Time.now
       end        
   end
 end

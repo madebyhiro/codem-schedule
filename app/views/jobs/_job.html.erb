@@ -12,7 +12,7 @@
     <%= number_to_human_size job.filesize %>
   </td>
   <td class="submitted" title="<%= I18n.l job.created_at %>">
-    <%= time_ago_in_words job.created_at, true %> ago
+    <%= time_ago_in_words job.created_at %> ago
   </td>
   <td class="preset">
     <%= job.preset.name %>
@@ -27,7 +27,9 @@
       <%= job.state.capitalize %>
     <% end %>
     
-    <% if job.progress != '0' && job.state != 'complete' %>
+		<% if job.state == 'complete' %>
+			<%= job.completed_at.try(:strftime, '%Y-%m-%d %H:%M') %>
+    <% elsif job.progress != '0' %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>

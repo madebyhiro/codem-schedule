@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110225123612) do
+ActiveRecord::Schema.define(:version => 20110225132637) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -39,17 +39,19 @@ ActiveRecord::Schema.define(:version => 20110225123612) do
   end
 
   create_table "jobs", :force => true do |t|
-    t.string   "source_file",                                             :null => false
+    t.string   "source_file",                                                   :null => false
     t.string   "duration"
     t.integer  "filesize"
-    t.string   "progress",         :limit => 6,  :default => "0"
+    t.string   "progress",               :limit => 6,  :default => "0"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "host_id"
-    t.string   "destination_file",                                        :null => false
-    t.integer  "preset_id",                                               :null => false
+    t.string   "destination_file",                                              :null => false
+    t.integer  "preset_id",                                                     :null => false
     t.string   "remote_jobid"
-    t.string   "state",            :limit => 25, :default => "scheduled", :null => false
+    t.string   "state",                  :limit => 25, :default => "scheduled", :null => false
+    t.datetime "transcoding_started_at"
+    t.datetime "completed_at"
   end
 
   add_index "jobs", ["host_id"], :name => "index_jobs_on_host_id"

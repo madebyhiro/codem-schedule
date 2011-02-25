@@ -7,7 +7,7 @@ Host.create!(:address => 'http://127.0.0.1:8080', :name => "Localhost", :availab
 
 Preset.create!(:name => 'h264', :parameters => 'params')
 
-50.times do |i|
+500.times do |i|
   Job.create!({
     :source_file => "/e/ap/download/insane/path/job_#{i}.mkv",
     :destination_file => "/e/ap/download/insane/path/job_#{i}.mp4",

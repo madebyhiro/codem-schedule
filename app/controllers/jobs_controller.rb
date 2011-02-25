@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   def index
-    @jobs = Job.paginate(:include => [:host, :preset], :order => "created_at DESC", :page => params[:page])
+    @history = History.new(params[:period])
+    @jobs = Job.paginate(:include => [:host, :preset], :order => "created_at", :page => params[:page], :per_page => 20)
   end
   
   def new

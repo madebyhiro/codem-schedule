@@ -1,5 +1,7 @@
 module HostsHelper
   def host_name(host)
+    return nil unless host
+    
     if host.name.blank?
       host.address
     else

@@ -14,6 +14,10 @@ class Host < ActiveRecord::Base
     all.select { |h| h.available_slots > 0 }
   end
   
+  def name
+    attributes['name'].blank? ? address : attributes['name']
+  end
+  
   def status
     available ? 'Available' : 'Not available'
   end
