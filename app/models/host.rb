@@ -10,7 +10,7 @@ class Host < ActiveRecord::Base
   before_save :update_status
   
   def self.with_available_slots
-    all.select { |h| h.available_slots > 0 }
+    all.select { |h| h.available }
   end
   
   def status
