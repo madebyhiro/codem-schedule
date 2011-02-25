@@ -17,7 +17,7 @@
   <td class="preset">
     <%= job.preset.name %>
   </td>
-  <td class="host">
+  <td class="host" title="<%= strip_tags host_name(job.host) if job.host %>">
     <%= job.host.try(:name) %>
   </td>
   <td class="progress">

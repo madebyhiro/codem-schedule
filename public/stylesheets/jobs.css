@@ -12,6 +12,8 @@
 table.jobs tbody tr td.duration { width: 80px; }
 table.jobs tbody tr td.size { width: 70px; }
 table.jobs tbody tr td.submitted { width: 120px; }
+table.jobs tbody tr td.host { width: 80px; }
+table.jobs tbody tr td.progress { width: 200px; }
 table.jobs tbody tr td.progress span.percentage { font-weight: bold; }
 table.jobs tbody tr td.progress div.bar {
   width: 100%;
