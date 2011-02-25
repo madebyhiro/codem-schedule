@@ -11,7 +11,7 @@ module Codem
                                 :duration => status['duration'], 
                                 :filesize => status['filesize']
 
-          reschedule :run_at => 3.seconds.from_now
+          reschedule
         end
       end
     end

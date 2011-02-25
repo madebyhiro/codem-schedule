@@ -11,7 +11,7 @@ module Codem
         for host in available_hosts
           next unless schedule_jobs_at(host)
         end
-        reschedule :run_at => 5.seconds.from_now
+        reschedule
       end
 
       def schedule_jobs_at(host)

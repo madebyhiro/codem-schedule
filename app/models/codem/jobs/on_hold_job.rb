@@ -7,7 +7,7 @@ module Codem
         if job.host.available
           job.enter(:queued)
         else
-          reschedule :run_at => 5.seconds.from_now
+          reschedule
         end
       end
     end

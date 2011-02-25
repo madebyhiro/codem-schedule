@@ -9,7 +9,7 @@ module Codem
         elsif status.empty?
           job.enter(:complete)
         else
-          reschedule :run_at => 5.seconds.from_now
+          reschedule
         end
       end
     end

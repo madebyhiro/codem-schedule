@@ -26,6 +26,7 @@ module Codem
       end
       
       def reschedule(options={})
+        options[:run_at] ||= 5.seconds.from_now
         Delayed::Job.enqueue self.class.new(job, parameters), options
       end
       
