@@ -26,10 +26,10 @@
 			<th>Average queue time</th>
 		</tr>
 		<tr>
-			<td class="success">
+			<td class="success" title="<%= @history.completed_jobs.size %> out of <%= @history.jobs.size %> completed">
 				<%= @history.completed_jobs.size %>
 			</td>
-			<td class="failed">
+			<td class="failed" title="<%= @history.failed_jobs.size %> out of <%= @history.jobs.size %> failed">
 				<%= @history.failed_jobs.size %>
 			</td>
 			<td title="<%= number_with_delimiter @history.seconds_encoded %> seconds">
