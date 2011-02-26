@@ -27,9 +27,7 @@
       <%= job.state.capitalize %>
     <% end %>
     
-		<% if job.state == 'complete' %>
-			<%= I18n.l job.completed_at %>
-    <% elsif job.progress != '0' %>
+		<% if 0 < job.progress.to_i && job.progress.to_i < 100 %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
