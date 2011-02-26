@@ -14,10 +14,6 @@ class Host < ActiveRecord::Base
     all.select { |h| h.available_slots > 0 }.shuffle
   end
   
-  def name
-    attributes['name'].blank? ? address : attributes['name']
-  end
-  
   def status
     available ? 'Available' : 'Not available'
   end
@@ -29,7 +25,7 @@ class Host < ActiveRecord::Base
   def update_status
     begin
       response = Host.get("#{address}/jobs")
-    rescue Errno::ECONNREFUSED
+    rescue Errno::ECONNREFUSED, SocketError
     end
     if response
       self.total_slots          = response['max_slots']
