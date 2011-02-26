@@ -1,8 +1,13 @@
 module Codem
   module Notifiers
     class Logger
+      cattr_accessor :log_file_path, :logging_enabled
+      
+      @@log_file_path = File.join(Rails.root, 'log', 'job_notifier.log')
+      @@logging_enabled = true
+      
       def notify(state, job)
-        logger.info format_log_message(state, job) if logging_enabled?
+        logger.info format_log_message(state, job) if self.class.logging_enabled
       end
 
       def format_log_message(state, job)
@@ -10,17 +15,8 @@ module Codem
       end
       
       def logger
-        @logger ||= ::Logger.new(log_file_path)
+        @logger ||= ::Logger.new(self.class.log_file_path)
       end
-      
-      def logging_enabled?
-        Rails.env != 'test'
-      end
-      
-      protected
-        def log_file_path
-          File.join(Rails.root, 'log', 'job_notifier.log')          
-        end
     end
   end
 end
