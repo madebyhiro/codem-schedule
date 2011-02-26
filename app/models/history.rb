@@ -9,7 +9,7 @@ class History
   end
   
   def jobs
-    Job.where(:completed_at => between)
+    @jobs ||= Job.where(:completed_at => between)
   end
   
   def between
@@ -28,15 +28,15 @@ class History
   end
   
   def completed_jobs
-    jobs.where(:state => 'complete')
+    @completed ||= jobs.where(:state => 'complete')
   end
   
   def failed_jobs
-    jobs.where(:state => 'failed')
+    @failed ||= jobs.where(:state => 'failed')
   end
   
   def transcoding_jobs
-    jobs.where(:state => 'transcoding')
+    @transcoding ||= jobs.where(:state => 'transcoding')
   end
   
   def seconds_encoded
