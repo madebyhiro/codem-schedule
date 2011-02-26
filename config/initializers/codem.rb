@@ -1,0 +1,1 @@
+Codem::Notifiers.default_responders << Codem::Notifiers::Email.new(JobsMailer)
