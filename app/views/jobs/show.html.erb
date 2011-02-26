@@ -1,0 +1,19 @@
+<% title "View Job" %>
+
+<% @jobs = [@job] %>
+<%= render "jobs" %>
+
+<h2>History</h2>
+
+<table class="items">
+	<tr class="odd">
+		<th>State</th>
+		<th>Date</th>
+	</tr>
+	<% for state in @job.state_changes %>
+		<tr>
+			<td><%= state.state.capitalize %></td>
+			<td><%= I18n.l state.created_at %></td>
+		</tr>
+	<% end %>
+</table>

@@ -1,6 +1,6 @@
 <%= content_tag_for :tr, job, :class => "#{cycle('even', 'odd')} #{job.state}" do %>
   <td class="id">
-    <%= job.id %>
+    <%= link_to job.id, job %>
   </td>
   <td class="input_file" title="<%= job.source_file %>">
     <%= File.basename job.source_file %>
@@ -28,7 +28,7 @@
     <% end %>
     
 		<% if job.state == 'complete' %>
-			<%= job.completed_at.try(:strftime, '%Y-%m-%d %H:%M') %>
+			<%= I18n.l job.completed_at %>
     <% elsif job.progress != '0' %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">

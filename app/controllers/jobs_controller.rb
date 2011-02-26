@@ -18,4 +18,8 @@ class JobsController < ApplicationController
       render :action => "new"
     end
   end
+  
+  def show
+    @job = Job.find(params[:id], :include => [:host, :preset, :state_changes])
+  end
 end

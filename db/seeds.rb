@@ -11,7 +11,7 @@ Preset.create!(:name => 'h264', :parameters => 'params')
   Job.create!({
     :source_file => "/e/ap/download/insane/path/job_#{i}.mkv",
     :destination_file => "/e/ap/download/insane/path/job_#{i}.mp4",
-    :created_at => (i+1).hours.ago,
+    :created_at => i.minutes.ago,
     :preset => Preset.first
   })
 end

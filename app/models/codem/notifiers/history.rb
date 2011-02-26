@@ -2,7 +2,7 @@ module Codem
   module Notifiers
     class History
       def notify(state, job)
-        StateChange.create(:job => job, :state => state)
+        job.state_changes.create(:state => state)
       end
     end
   end
