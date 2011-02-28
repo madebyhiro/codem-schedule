@@ -2,7 +2,7 @@
   ActiveRecord::Base.connection.execute("TRUNCATE #{name}")
 end
 
-#Host.create!(:address => 'http://10.0.2.1:8080', :name => "Sjoerd's Mac", :available => true)
+Host.create!(:address => 'http://10.0.2.1:8080', :name => "Sjoerd's Mac", :available => true)
 Host.create!(:address => 'http://127.0.0.1:8080', :name => "Localhost", :available => true)
 
 Preset.create!(:name => 'h264', :parameters => 'params')

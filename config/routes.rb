@@ -5,7 +5,12 @@ Scheduler::Application.routes.draw do
 
   root :to => 'dashboard#index'
 
-  resources :jobs
+  resources :jobs do
+    collection do
+      get :completed
+      get :failed
+    end
+  end
   
   resources :hosts
   
