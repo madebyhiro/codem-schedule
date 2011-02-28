@@ -9,7 +9,7 @@ class Job < ActiveRecord::Base
   validates_presence_of :preset_id
     
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
-  scope :scheduled, lambda { where(:state => 'schedule') }
+  scope :scheduled, lambda { where(:state => 'scheduled') }
   scope :completed, lambda { where(:state => 'complete') }
   scope :failed, lambda { where(:state => 'failed') }
   

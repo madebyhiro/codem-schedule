@@ -23,18 +23,17 @@ class Host < ActiveRecord::Base
   end
 
   def update_status
+    self.status_checked_at    = Time.zone.now
+    self.available            = false
+
     begin
       response = Host.get("#{address}/jobs")
-    rescue Errno::ECONNREFUSED, SocketError
-    end
-    if response
       self.total_slots          = response['max_slots']
       self.available_slots      = response['free_slots']
-      self.status_checked_at    = Time.zone.now
       self.available            = true
-    else
-      self.available            = false
+    rescue Errno::ECONNREFUSED, SocketError
     end
+
     save
   end
   
