@@ -13,7 +13,7 @@ module Codem
             next unless schedule_jobs_at(host)
           end
         end
-        reschedule
+        reschedule unless scheduled_jobs.empty?
       end
 
       def schedule_jobs_at(host)

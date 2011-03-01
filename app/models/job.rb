@@ -14,7 +14,7 @@ class Job < ActiveRecord::Base
   scope :failed, lambda { where(:state => 'failed') }
   
   def self.list(opts={})
-    paginate(:include => [:host, :preset], 
+    paginate(:include => [:host, :preset],
              :order => "created_at", 
              :page => opts[:page], :per_page => opts[:per_page] || 20)
   end
