@@ -5,6 +5,9 @@ class PresetsController < ApplicationController
 
   def new
     @preset = Preset.new
+    @preset.notifications = [Notification.new(:kind => 'email'), 
+                             Notification.new(:kind => 'network'), 
+                             Notification.new(:kind => 'filesystem')]
   end
   
   def create
