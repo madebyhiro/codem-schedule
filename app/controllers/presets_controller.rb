@@ -1,4 +1,6 @@
 class PresetsController < ApplicationController
+  respond_to :html, :json
+  
   def index
     @presets = Preset.all
   end
@@ -14,10 +16,9 @@ class PresetsController < ApplicationController
     @preset = Preset.new(params[:preset])
     if @preset.save
       flash[:notice] = "Preset has been created"
-      redirect_to presets_path
     else
       flash[:error] = "Preset could not be saved"
-      render :action => "new"
     end
+    respond_with @preset
   end
 end
