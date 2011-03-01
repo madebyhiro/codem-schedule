@@ -19,6 +19,7 @@ module Codem
 
     protected
       def enter_scheduled(parameters)
+        Codem::Jobs::ScheduleJob.reschedule!
       end
       
       def enter_queued(parameters)
