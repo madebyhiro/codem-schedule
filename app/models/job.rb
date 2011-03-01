@@ -15,7 +15,7 @@ class Job < ActiveRecord::Base
   
   def self.list(opts={})
     paginate(:include => [:host, :preset],
-             :order => "created_at", 
+             :order => "created_at DESC", 
              :page => opts[:page], :per_page => opts[:per_page] || 20)
   end
 end
