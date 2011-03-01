@@ -1,15 +1,13 @@
 class PresetsController < ApplicationController
-  respond_to :html, :json
+  respond_to :html, :json, :xml
   
   def index
     @presets = Preset.all
+    respond_with @presets
   end
 
   def new
     @preset = Preset.new
-    @preset.notifications = [Notification.new(:kind => 'email'), 
-                             Notification.new(:kind => 'network'), 
-                             Notification.new(:kind => 'filesystem')]
   end
   
   def create
