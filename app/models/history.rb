@@ -19,9 +19,9 @@ class History
       when 'yesterday'
         (Time.now.at_beginning_of_day - 1.day)..Time.now.at_beginning_of_day
       when 'week'
-        (Time.now.at_beginning_of_day - 7.days)..Time.now
+        7.days.ago.at_beginning_of_day..Time.now
       when 'month'
-        Time.now.at_beginning_of_month..Time.now
+        30.days.ago.at_beginning_of_month..Time.now
       when 'all'
         Time.new(1970,1,1)..Time.now
     end
