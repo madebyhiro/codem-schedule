@@ -21,11 +21,7 @@
     <%= job.host.try(:name) %>
   </td>
   <td class="progress">
-    <% if job.host %>
-      <%= link_to job.state.capitalize, "#{job.host.address}/jobs/#{job.remote_jobid}" %>
-    <% else %>
-      <%= job.state.capitalize %>
-    <% end %>
+    <%= job.state.capitalize %>
     
 		<% if job.state == 'transcoding' %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
@@ -33,5 +29,6 @@
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
       </div>
     <% end %>
+
   </td>
 <% end %>

@@ -9,6 +9,7 @@ Scheduler::Application.routes.draw do
     collection do
       get :completed
       get :failed
+      get :transcoding
     end
   end
   

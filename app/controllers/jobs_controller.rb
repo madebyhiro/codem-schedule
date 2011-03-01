@@ -1,18 +1,20 @@
 class JobsController < ApplicationController
   respond_to :json, :html
-  
+
   def index
     @history = History.new(params[:period])
     @jobs = Job.list(:page => params[:page])
   end
+
+  def transcoding
+    @jobs = Job.transcoding.list(:page => params[:page])
+  end
   
   def completed
-    @history = History.new(params[:period])
     @jobs = Job.completed.list(:page => params[:page])
   end
   
   def failed
-    @history = History.new(params[:period])
     @jobs = Job.failed.list(:page => params[:page])
   end
   

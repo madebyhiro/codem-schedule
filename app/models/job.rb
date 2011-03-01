@@ -10,6 +10,7 @@ class Job < ActiveRecord::Base
     
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
   scope :scheduled, lambda { where(:state => 'scheduled') }
+  scope :transcoding, lambda { where(:state => 'transcoding') }
   scope :completed, lambda { where(:state => 'complete') }
   scope :failed, lambda { where(:state => 'failed') }
   
