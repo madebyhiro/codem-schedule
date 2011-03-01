@@ -3,7 +3,7 @@ namespace :codem do
     desc "Enqueue only *one* ScheduleJob"
     task :enqueue_schedule_job => :environment do
       Codem::Jobs::ScheduleJob.ensure_only_one_instance_running!
-      Delayed::Job.enqueue Codem::Jobs::ScheduleJob.new(self)
+      Delayed::Job.enqueue Codem::Jobs::ScheduleJob.new
       puts "*** Enqueued ScheduledJob"
     end
     

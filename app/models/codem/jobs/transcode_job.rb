@@ -3,7 +3,7 @@ module Codem
     class TranscodeJob < Codem::Jobs::Base
       def perform
         status = job_status(job)
-
+        
         if status.empty?
           job.enter(:complete)
         else

@@ -1,4 +1,6 @@
 class JobsController < ApplicationController
+  respond_to :json, :html
+  
   def index
     @history = History.new(params[:period])
     @jobs = Job.list(:page => params[:page])
@@ -31,5 +33,12 @@ class JobsController < ApplicationController
   
   def show
     @job = Job.find(params[:id], :include => [:host, :preset, :state_changes])
+  end
+  
+  def update
+    attributes = Crack::JSON.parse(request.body.read)
+    Rails.logger.debug '*'*20
+    Rails.logger.debug attributes
+    render :nothing => true
   end
 end
