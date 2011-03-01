@@ -104,6 +104,10 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
   expected.should == actual
 end
 
+Then /^(?:|I )should see XML:$/ do |expected|
+  expected.should == last_response.body
+end
+
 Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if page.respond_to? :should
