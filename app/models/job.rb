@@ -1,5 +1,7 @@
 class Job < ActiveRecord::Base
   include Codem::Base
+  include HTTParty
+  format :json
   
   belongs_to :host
   belongs_to :preset
