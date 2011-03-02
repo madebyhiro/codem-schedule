@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
   scope :scheduled, lambda { where(:state => Codem::Scheduled) }
   scope :transcoding, lambda { where(:state => Codem::Transcoding) }
-  scope :completed, lambda { where(:state => Codem::Complete) }
+  scope :completed, lambda { where(:state => Codem::Completed) }
   scope :failed, lambda { where(:state => Codem::Failed) }
 
   def self.list(opts={})

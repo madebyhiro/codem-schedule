@@ -17,4 +17,7 @@
     </ol>
   <% end %>
   
+  <%= link_to 'Edit', edit_host_path(host) %>
+  <%= link_to 'Delete', host_path(host), :method => :delete, :confirm => "Are you sure?" %>
+  
 <% end %>

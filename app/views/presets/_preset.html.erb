@@ -1,6 +1,9 @@
 <%= content_tag_for :div, preset do %>
 
   <h2><%= preset.name %></h2>
-  <%= preset.parameters %>
+  <pre><%= preset.parameters %></pre>
+  
+  <%= link_to 'Edit', edit_preset_path(preset) %>
+  <%= link_to 'Delete', preset_path(preset), :method => :delete, :confirm => "Are you sure?" %>
   
 <% end %>

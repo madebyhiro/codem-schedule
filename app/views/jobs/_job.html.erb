@@ -14,7 +14,7 @@
   <td class="submitted" title="<%= I18n.l job.created_at %>">
     <%= time_ago_in_words job.created_at %> ago
   </td>
-  <td class="preset">
+  <td class="preset" title="<%= job.preset.parameters %>">
     <%= job.preset.name %>
   </td>
   <td class="host" title="<%= strip_tags host_name(job.host) if job.host %>">

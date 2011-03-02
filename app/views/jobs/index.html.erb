@@ -2,10 +2,10 @@
 
 <%= render "/shared/history" %>
 
-<%= link_to 'Add a job', new_job_path %>
+<%= new_job_link %>
 
 <%= render "jobs" %>
 
 <%= will_paginate @jobs %>
 
-<%= link_to 'Add a job', new_job_path %>
+<%= new_job_link %>

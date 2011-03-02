@@ -17,6 +17,27 @@ class PresetsController < ApplicationController
     else
       flash[:error] = "Preset could not be saved"
     end
-    respond_with @preset
+    respond_with @preset, :location => presets_path
+  end
+  
+  def edit
+    @preset = Preset.find(params[:id])
+  end
+  
+  def update
+    @preset = Preset.find(params[:id])
+    if @preset.update_attributes(params[:preset])
+      flash[:notice] = "Preset has been updated"
+    else
+      flash[:error] = "Preset could not be updated"
+    end
+    respond_with @preset, :location => presets_path
+  end
+  
+  def destroy
+    preset = Preset.find(params[:id])
+    preset.destroy
+    flash[:notice] = "Preset has been deleted"
+    respond_with preset
   end
 end
