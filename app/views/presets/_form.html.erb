@@ -13,55 +13,6 @@
     </ol>
 
   </fieldset>
-  
-  <fieldset>
-    <legend>Notifications</legend>
-
-      <nav>
-        <ol>
-          <li>
-            <fieldset>
-              <legend>Email</legend>
-            
-              <ol>
-                <li>
-                  <label>Enter a comma-separated list of email addresses:</label>
-                  <input name="preset[notifications_attributes][0][kind]" value="email" type="hidden" />
-                  <input name="preset[notifications_attributes][0][value]" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-          </li>
-
-          <li>
-            <fieldset>
-              <legend>Network</legend>
-              <ol>
-                <li>
-                  <label>Enter a network address:</label>
-                  <input name="preset[notifications_attributes][1][kind]" value="network" type="hidden" />
-                  <input name="preset[notifications_attributes][1][value]" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-          </li>
-
-          <li>
-            <fieldset>
-              <legend>Filesystem</legend>
-              <ol>
-                <li>
-                  <label>Enter a path</label>
-                  <input name="preset[notifications_attributes][2][kind]" value="filesystem" type="hidden" />
-                  <input name="preset[notifications_attributes][2][value]" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-          </li>
-        </ol>
-      </nav>
-    
-  </fieldset>
 
   <ol class="buttons">
     <li><%= f.submit %></li>

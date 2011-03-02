@@ -9,11 +9,25 @@
 	<tr class="odd">
 		<th>State</th>
 		<th>Date</th>
+		<th>Message</th>
 	</tr>
 	<% for state in @job.state_changes %>
 		<tr>
 			<td><%= state.state.capitalize %></td>
 			<td><%= I18n.l state.created_at %></td>
+			<td><%= state.message %></td>
 		</tr>
 	<% end %>
 </table>
+
+<h2>Preset parameters</h2>
+<pre><%= @job.preset.parameters %></pre>
+
+<% if @job.state == 'complete' %>
+  <h2>Output</h2>
+  <video src="/movies/<%= File.basename @job.destination_file %>" controls></video>
+
+  <p>
+    Encoding <strong><%= number_to_time @job.duration %></strong> seconds took <strong><%= number_to_time (@job.completed_at.to_i - @job.transcoding_started_at.to_i) %></strong> seconds and resulted in a file of <strong><%= number_to_human_size File.size(@job.destination_file), :precision => 5 %></strong>.
+  </p>
+<% end %>

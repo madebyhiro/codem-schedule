@@ -44,6 +44,10 @@ module Codem
       def enter_complete(parameters)
         update_attributes :progress => '100.00',
                           :completed_at => Time.now
-      end        
+      end
+      
+      def enter_failed(parameters)
+        Codem::Jobs::Base.remove_all_for(self)
+      end
   end
 end

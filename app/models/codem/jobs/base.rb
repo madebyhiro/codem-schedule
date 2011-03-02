@@ -6,7 +6,10 @@ module Codem
 
       def self.remove_all_for(job)
         Delayed::Job.all.each do |delayed_job|
-          delayed_job.destroy if delayed_job.payload_object.job == job
+          begin
+            delayed_job.destroy if delayed_job.payload_object.job == job
+          rescue Delayed::DeserializationError
+          end
         end
       end
       

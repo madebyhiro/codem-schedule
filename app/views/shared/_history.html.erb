@@ -8,10 +8,10 @@
 			<%= link_to_unless selected == 'yesterday', 'Yesterday', url_for(params.merge(:period => 'yesterday')) %>
 		</li>
 		<li class="<%= 'selected' if selected == 'week' %>">
-			<%= link_to_unless selected == 'week', 'This Week', url_for(params.merge(:period => 'week')) %>
+			<%= link_to_unless selected == 'week', '7 days', url_for(params.merge(:period => 'week')) %>
 		</li>
 		<li class="<%= 'selected' if selected == 'month' %>">
-			<%= link_to_unless selected == 'month', 'This Month', url_for(params.merge(:period => 'month')) %>
+			<%= link_to_unless selected == 'month', '30 days', url_for(params.merge(:period => 'month')) %>
 		</li>
 		<li class="<%= 'selected' if selected == 'all' %>">
 			<%= link_to_unless selected == 'all', 'All', url_for(params.merge(:period => 'all')) %>

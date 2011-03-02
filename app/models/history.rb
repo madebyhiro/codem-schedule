@@ -32,7 +32,7 @@ class History
   end
   
   def failed_jobs
-    @failed ||= jobs.where(:state => 'failed')
+    @failed ||= Job.where(:created_at => between).where(:state => 'failed')
   end
   
   def transcoding_jobs

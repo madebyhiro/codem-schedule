@@ -51,7 +51,7 @@ module Codem
             'source_file' => job.source_file,
             'destination_file' => job.destination_file,
             'encoder_options' => job.preset.parameters,
-            'callback_urls' => ["http://10.0.2.8:3000/jobs/#{job.id}"]
+            'callback_urls' => ["http://127.0.0.1:3000/jobs/#{job.id}"]
           }.to_json
         end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110301103457) do
+ActiveRecord::Schema.define(:version => 20110302122707) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20110301103457) do
     t.string   "state",                  :limit => 25, :default => "scheduled", :null => false
     t.datetime "transcoding_started_at"
     t.datetime "completed_at"
+    t.string   "last_status_message"
   end
 
   add_index "jobs", ["host_id"], :name => "index_jobs_on_host_id"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20110301103457) do
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message"
   end
 
 end

@@ -4,18 +4,22 @@ class JobsController < ApplicationController
   def index
     @history = History.new(params[:period])
     @jobs = Job.list(:page => params[:page])
+    respond_with @jobs
   end
 
   def transcoding
     @jobs = Job.transcoding.list(:page => params[:page])
+    respond_with @jobs
   end
   
   def completed
     @jobs = Job.completed.list(:page => params[:page])
+    respond_with @jobs
   end
   
   def failed
     @jobs = Job.failed.list(:page => params[:page])
+    respond_with @jobs
   end
   
   def new
@@ -26,21 +30,33 @@ class JobsController < ApplicationController
     @job = Job.new(params[:job])
     if @job.save
       flash[:notice] = "Job has been created"
-      redirect_to jobs_path
     else
       flash[:error] = "Job could not be saved"
-      render :action => "new"
     end
+    respond_with @job
   end
   
   def show
     @job = Job.find(params[:id], :include => [:host, :preset, :state_changes])
+    respond_with @job
   end
   
   def update
     attributes = Crack::JSON.parse(request.body.read)
-    Rails.logger.debug '*'*20
-    Rails.logger.debug attributes
-    render :nothing => true
+    
+    if job = Job.find_by_remote_jobid(attributes['id'])
+      job.update_attributes :last_status_message => attributes['message']
+      
+      case attributes['status']
+        when 'failed'
+          job.enter(:failed, attributes)
+        when 'success'
+          job.enter(:complete, attributes)
+      end
+      
+      respond_with job
+    else
+      render :nothing => true, :status => :not_found
+    end
   end
 end

@@ -5,10 +5,10 @@
   <td class="input_file" title="<%= job.source_file %>">
     <%= File.basename job.source_file %>
   </td>
-  <td class="duration" title="<%= job.duration %> seconds">
+  <td class="duration" title="<%= number_with_delimiter job.duration %> seconds">
     <%= number_to_time job.duration %>
   </td>
-  <td class="size" title="<%= job.filesize %> bytes">
+  <td class="size" title="<%= number_with_delimiter job.filesize %> bytes">
     <%= number_to_human_size job.filesize %>
   </td>
   <td class="submitted" title="<%= I18n.l job.created_at %>">
@@ -28,6 +28,8 @@
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
       </div>
+    <% elsif job.state == 'failed' %>
+      <p><%= job.last_status_message %></p>
     <% end %>
 
   </td>

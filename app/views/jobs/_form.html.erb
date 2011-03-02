@@ -8,8 +8,13 @@
     <ol>
       <li><%= f.label :source_file %></li>
       <li><%= f.text_field :source_file %></li>
-      <li><%= f.label :destination_file %></li>
-      <li><%= f.text_field :destination_file %></li>
+
+      <li><%= label_tag 'Output basepath' %></li>
+      <li><%= @job.basepath %></li>
+      
+      <li><%= f.label :output_file %></li>
+      <li><%= f.text_field :output_file %></li>
+      
       <li><%= f.label :preset_id %></li>
       <li><%= f.select :preset_id, options_for_select(Preset.all.map { |p| [p.name, p.id] }, @job.try(:preset_id) ) %></li>
     </ol>

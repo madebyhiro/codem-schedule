@@ -13,10 +13,22 @@ class Job < ActiveRecord::Base
   scope :transcoding, lambda { where(:state => 'transcoding') }
   scope :completed, lambda { where(:state => 'complete') }
   scope :failed, lambda { where(:state => 'failed') }
-  
+
   def self.list(opts={})
     paginate(:include => [:host, :preset],
              :order => "created_at DESC", 
              :page => opts[:page], :per_page => opts[:per_page] || 20)
+  end
+
+  def output_file
+    File.basename(destination_file || '')
+  end
+  
+  def basepath
+    File.join(Rails.root, 'public', 'movies')
+  end
+  
+  def output_file=(file)
+    self.destination_file = File.join(basepath, file)
   end
 end
