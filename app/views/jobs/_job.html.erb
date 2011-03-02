@@ -23,12 +23,12 @@
   <td class="progress">
     <%= job.state.capitalize %>
     
-		<% if job.state == 'transcoding' %>
+		<% if job.state == Codem::Transcoding %>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
       </div>
-    <% elsif job.state == 'failed' %>
+    <% elsif job.state == Codem::Failed %>
       <p><%= job.last_status_message %></p>
     <% end %>
 

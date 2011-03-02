@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  respond_to :json, :html
+  respond_to :json, :xml, :html
 
   def index
     @history = History.new(params[:period])

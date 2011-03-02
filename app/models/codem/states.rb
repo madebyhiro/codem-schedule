@@ -35,7 +35,7 @@ module Codem
       end
 
       def enter_on_hold(parameters)
-        unless state == 'on_hold'
+        unless state == Codem::OnHold
           Codem::Jobs::Base.remove_all_for(self)
           Delayed::Job.enqueue Codem::Jobs::OnHoldJob.new(self, parameters)
         end

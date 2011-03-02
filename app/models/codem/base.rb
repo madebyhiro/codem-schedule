@@ -1,4 +1,11 @@
 module Codem
+  Scheduled   = 'scheduled'
+  Queued      = 'queued'
+  Transcoding = 'transcoding'
+  OnHold      = 'on_hold'
+  Completed   = 'complete'
+  Failed      = 'failed'
+
   module Base
     def self.included(base)
       base.class_eval do
