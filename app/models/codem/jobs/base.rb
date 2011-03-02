@@ -32,7 +32,7 @@ module Codem
       
       def error(delayed_job, exception)
         if exception.is_a?(Errno::ECONNREFUSED)
-          job.enter(:on_hold)
+          job.enter(Codem::OnHold)
         end
       end
       

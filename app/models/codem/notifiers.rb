@@ -31,7 +31,7 @@ module Codem
       self.class.responders.each do |responder, responding_to|
         begin
           responder.notify(state, self)
-          Rails.logger.debug "Notified #{responder} of #{state} for #{self}"
+          Rails.logger.info "Notified #{responder} of #{state} for #{self}"
         rescue => e
           log_notifier_error(e, responder)
         end

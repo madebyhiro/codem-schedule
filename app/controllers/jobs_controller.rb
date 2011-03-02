@@ -50,9 +50,9 @@ class JobsController < ApplicationController
       
       case attributes['status']
         when 'failed'
-          job.enter(:failed, attributes)
+          job.enter(Codem::Failed, attributes)
         when 'success'
-          job.enter(:complete, attributes)
+          job.enter(Codem::Completed, attributes)
       end
       
       respond_with job

@@ -5,7 +5,7 @@ module Codem
         job.host.update_status
         
         if job.host.available
-          job.enter(:queued)
+          job.enter(Codem::Queued)
         else
           reschedule
         end

@@ -14,7 +14,7 @@ module Codem
     end
 
     def initial_state
-      :scheduled
+      Codem::Scheduled
     end
 
     protected

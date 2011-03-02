@@ -5,7 +5,7 @@ module Codem
         status = job_status(job)
         
         if status['status'] == 'processing'
-          job.enter(:transcoding, status)
+          job.enter(Codem::Transcoding, status)
         else
           reschedule
         end
