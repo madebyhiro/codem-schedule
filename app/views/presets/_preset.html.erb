@@ -1,4 +1,4 @@
-<%= content_tag_for :div, preset do %>
+<%= content_tag_for :li, preset, :class => cycle('left', 'right') do %>
 
   <h2><%= preset.name %></h2>
   <pre><%= preset.parameters %></pre>
