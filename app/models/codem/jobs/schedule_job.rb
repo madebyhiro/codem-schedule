@@ -25,7 +25,8 @@ module Codem
         scheduled_jobs.each do |job|
           if attributes = try_to_queue(host, job)
             job.update_attributes :host_id => host.id
-            job.enter(Codem::Queued, attributes)
+            job.update_attributes :remote_jobid => attributes['job_id']
+            job.enter(Codem::Transcoding, attributes)
           else
             return false
           end

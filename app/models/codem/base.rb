@@ -1,6 +1,5 @@
 module Codem
   Scheduled   = 'scheduled'
-  Queued      = 'queued'
   Transcoding = 'transcoding'
   OnHold      = 'on_hold'
   Completed   = 'complete'

@@ -22,13 +22,6 @@ module Codem
         Codem::Jobs::ScheduleJob.reschedule!
       end
       
-      def enter_queued(parameters)
-        if parameters['job_id']
-          update_attributes :remote_jobid => parameters['job_id']
-        end
-        Delayed::Job.enqueue Codem::Jobs::QueuedJob.new(self)
-      end
-      
       def enter_transcoding(parameters)
         update_attributes :transcoding_started_at => Time.now
       end
