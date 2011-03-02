@@ -11,15 +11,17 @@ class Job < ActiveRecord::Base
   validates_presence_of :preset_id
     
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
-  scope :scheduled, lambda { where(:state => 'scheduled') }
-  scope :transcoding, lambda { where(:state => 'transcoding') }
-  scope :completed, lambda { where(:state => 'complete') }
-  scope :failed, lambda { where(:state => 'failed') }
+  scope :scheduled, lambda { where(:state => Codem::Scheduled) }
+  scope :transcoding, lambda { where(:state => Codem::Transcoding) }
+  scope :completed, lambda { where(:state => Codem::Complete) }
+  scope :failed, lambda { where(:state => Codem::Failed) }
 
   def self.list(opts={})
-    paginate(:include => [:host, :preset],
-             :order => "created_at DESC", 
-             :page => opts[:page], :per_page => opts[:per_page] || 20)
+    jobs = paginate(:include => [:host, :preset],
+                    :order => "created_at DESC", 
+                    :page => opts[:page], :per_page => opts[:per_page] || 20)
+    jobs.map(&:update_status!)
+    jobs
   end
 
   def output_file
@@ -32,5 +34,14 @@ class Job < ActiveRecord::Base
   
   def output_file=(file)
     self.destination_file = File.join(basepath, file)
+  end
+  
+  def update_status!
+    if host && remote_jobid && state == Codem::Transcoding
+      status = self.class.get("#{host.address}/jobs/#{remote_jobid}")
+      update_attributes :progress => status['progress'], 
+                        :duration => status['duration'], 
+                        :filesize => status['filesize']
+    end
   end
 end

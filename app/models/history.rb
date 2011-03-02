@@ -28,15 +28,15 @@ class History
   end
   
   def completed_jobs
-    @completed ||= jobs.where(:state => 'complete')
+    @completed ||= jobs.where(:state => Codem::Completed)
   end
   
   def failed_jobs
-    @failed ||= Job.where(:created_at => between).where(:state => 'failed')
+    @failed ||= Job.where(:created_at => between).where(:state => Codem::Failed)
   end
   
   def transcoding_jobs
-    @transcoding ||= jobs.where(:state => 'transcoding')
+    @transcoding ||= jobs.where(:state => Codem::Transcoding)
   end
   
   def seconds_encoded

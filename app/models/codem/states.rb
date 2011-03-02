@@ -31,7 +31,6 @@ module Codem
       
       def enter_transcoding(parameters)
         update_attributes :transcoding_started_at => Time.now
-        Delayed::Job.enqueue Codem::Jobs::TranscodeJob.new(self, parameters)
       end
 
       def enter_on_hold(parameters)

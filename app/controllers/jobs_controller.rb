@@ -38,6 +38,7 @@ class JobsController < ApplicationController
   
   def show
     @job = Job.find(params[:id], :include => [:host, :preset, :state_changes])
+    @job.update_status!
     respond_with @job
   end
   
