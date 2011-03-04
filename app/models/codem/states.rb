@@ -9,7 +9,7 @@ module Codem
     def enter(state, parameters={})
       update_attributes :state => state
 
-      method = "enter_#{state}".to_sym
+      method = "enter_#{state}"
       self.send(method, parameters)
     end
 
