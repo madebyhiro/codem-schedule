@@ -1,8 +1,6 @@
 module Codem
   module Jobs
-    def self.queue(background_job, options={})
-      Delayed::Job.enqueue(background_job, options)
-    end
+    include Backend::Base
     
     class Base
       include HTTParty
@@ -24,7 +22,6 @@ module Codem
       end
       
       def reschedule(options={})
-        options[:run_at] ||= 5.seconds.from_now
         Codem::Jobs.queue self.class.new(job, parameters), options
       end
       
