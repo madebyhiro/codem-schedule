@@ -17,6 +17,17 @@ module Codem
       Codem::Scheduled
     end
 
+    def receive_transcoder_callback(attributes)
+      update_attributes :last_status_message => attributes['message']
+      
+      case attributes['status']
+        when 'failed'
+          enter(Codem::Failed, attributes)
+        when 'success'
+          enter(Codem::Completed, attributes)
+      end
+    end
+    
     protected
       def enter_scheduled(parameters)
         Codem::Jobs.queue Codem::Jobs::ScheduleJob.new(self, parameters)
@@ -28,9 +39,7 @@ module Codem
       end
 
       def enter_on_hold(parameters)
-        unless state == Codem::OnHold
-          Codem::Jobs.queue Codem::Jobs::OnHoldJob.new(self, parameters)
-        end
+        Codem::Jobs.queue Codem::Jobs::OnHoldJob.new(self, parameters)
       end
       
       def enter_complete(parameters)

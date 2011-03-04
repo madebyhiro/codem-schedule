@@ -46,15 +46,7 @@ class JobsController < ApplicationController
     attributes = Crack::JSON.parse(request.body.read)
     
     if job = Job.find_by_remote_jobid(attributes['id'])
-      job.update_attributes :last_status_message => attributes['message']
-      
-      case attributes['status']
-        when 'failed'
-          job.enter(Codem::Failed, attributes)
-        when 'success'
-          job.enter(Codem::Completed, attributes)
-      end
-      
+      job.receive_transcoder_callback(attributes)
       respond_with job
     else
       render :nothing => true, :status => :not_found
