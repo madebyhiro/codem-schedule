@@ -19,11 +19,12 @@ module Codem
 
     protected
       def enter_scheduled(parameters)
-        Codem::Jobs::ScheduleJob.reschedule!
+        Delayed::Job.enqueue Codem::Jobs::ScheduleJob.new(self, parameters)
       end
       
       def enter_transcoding(parameters)
-        update_attributes :transcoding_started_at => Time.now
+        update_attributes :remote_jobid => parameters['job_id'],
+                          :transcoding_started_at => Time.now
       end
 
       def enter_on_hold(parameters)

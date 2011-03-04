@@ -1,35 +1,28 @@
 module Codem
   module Jobs
     class ScheduleJob < Codem::Jobs::Base
-      def self.reschedule!
-        ensure_only_one_instance_running!
-        new.reschedule
-      end
-      
-      def self.ensure_only_one_instance_running!
-        Delayed::Job.all.each do |job|
-          job.destroy if job.payload_object.is_a?(Codem::Jobs::ScheduleJob)
-        end
-      end
-      
       def perform
-        if scheduled_jobs.any?
-          for host in available_hosts
-            next unless schedule_jobs_at(host)
-          end
+        for host in available_hosts
+          return if schedule_job_at(host, job)
         end
-        reschedule unless scheduled_jobs.empty?
+        reschedule
       end
 
-      def schedule_jobs_at(host)
-        scheduled_jobs.each do |job|
-          if attributes = try_to_queue(host, job)
-            job.update_attributes :host_id => host.id
-            job.update_attributes :remote_jobid => attributes['job_id']
-            job.enter(Codem::Transcoding, attributes)
-          else
-            return false
-          end
+      def schedule_job_at(host, job)
+        if attributes = try_to_queue(host, job)
+          job.update_attributes :host_id => host.id
+          job.enter(Codem::Transcoding, attributes)
+        else
+          return false
+        end
+      end
+
+      def try_to_queue(host, job)
+        begin
+          response = ScheduleJob.post("#{host.address}/jobs", :body => job_attributes_for_enqueue(job))
+          response.code == 202 ? response : false
+        rescue Errno::ECONNREFUSED
+          false
         end
       end
 
@@ -39,11 +32,6 @@ module Codem
 
       def scheduled_jobs
         Job.scheduled
-      end
-
-      def try_to_queue(host, job)
-        response = ScheduleJob.post("#{host.address}/jobs", :body => job_attributes_for_enqueue(job))
-        response.code == 202 ? response : false
       end
 
       protected

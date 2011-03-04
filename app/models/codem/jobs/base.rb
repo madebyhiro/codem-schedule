@@ -30,12 +30,6 @@ module Codem
         Delayed::Job.enqueue self.class.new(job, parameters), options
       end
       
-      def error(delayed_job, exception)
-        if exception.is_a?(Errno::ECONNREFUSED)
-          delayed_job.payload_object.enter(Codem::OnHold)
-        end
-      end
-      
       def failure
         reschedule
       end
