@@ -1,15 +1,13 @@
 module Codem
   module Jobs
+    def self.queue(background_job, options={})
+      Delayed::Job.enqueue(background_job, options)
+    end
+    
     class Base
       include HTTParty
       format :json
 
-      def self.remove_all_for(job)
-        Delayed::Job.all.each do |delayed_job|
-          delayed_job.destroy if delayed_job.payload_object.job == job
-        end
-      end
-      
       attr_accessor :job, :parameters
 
       def initialize(job=nil, parameters={})
@@ -27,7 +25,7 @@ module Codem
       
       def reschedule(options={})
         options[:run_at] ||= 5.seconds.from_now
-        Delayed::Job.enqueue self.class.new(job, parameters), options
+        Codem::Jobs.queue self.class.new(job, parameters), options
       end
       
       def failure

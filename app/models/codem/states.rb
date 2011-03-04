@@ -19,7 +19,7 @@ module Codem
 
     protected
       def enter_scheduled(parameters)
-        Delayed::Job.enqueue Codem::Jobs::ScheduleJob.new(self, parameters)
+        Codem::Jobs.queue Codem::Jobs::ScheduleJob.new(self, parameters)
       end
       
       def enter_transcoding(parameters)
@@ -29,8 +29,7 @@ module Codem
 
       def enter_on_hold(parameters)
         unless state == Codem::OnHold
-          Codem::Jobs::Base.remove_all_for(self)
-          Delayed::Job.enqueue Codem::Jobs::OnHoldJob.new(self, parameters)
+          Codem::Jobs.queue Codem::Jobs::OnHoldJob.new(self, parameters)
         end
       end
       
@@ -40,7 +39,6 @@ module Codem
       end
       
       def enter_failed(parameters)
-        Codem::Jobs::Base.remove_all_for(self)
       end
   end
 end
