@@ -26,7 +26,7 @@
 
 <% if @job.state == 'complete' %>
   <h2>Output</h2>
-  <video src="/movies/<%= File.basename @job.destination_file %>" controls></video>
+  <video src="/movies/<%= File.basename @job.destination_file %>" controls preload="none"></video>
 
   <p>
     Encoding <strong><%= number_to_time @job.duration %></strong> seconds took <strong><%= number_to_time (@job.completed_at.to_i - @job.transcoding_started_at.to_i) %></strong> seconds and resulted in a file of <strong><%= number_to_human_size File.size(@job.destination_file), :precision => 5 %></strong>.
