@@ -39,9 +39,15 @@ class Job < ActiveRecord::Base
   def update_status!
     if host && remote_jobid && state == Codem::Transcoding
       status = self.class.get("#{host.address}/jobs/#{remote_jobid}")
-      update_attributes :progress => status['progress'], 
+      update_attributes :progress => map_progress(status['progress']), 
                         :duration => status['duration'], 
                         :filesize => status['filesize']
     end
   end
+  
+  private
+    def map_progress(progress)
+      progress = progress.to_f
+      progress > 1 ? progress / 100.0 : progress
+    end
 end
