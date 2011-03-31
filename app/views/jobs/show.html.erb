@@ -21,6 +21,7 @@
 </table>
 
 <h2>Preset parameters</h2>
+<h3><%= @job.preset.name %></h3>
 <pre><%= @job.preset.parameters %></pre>
 
 <% if @job.state == 'complete' %>
