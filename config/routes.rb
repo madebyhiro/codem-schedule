@@ -13,7 +13,11 @@ Scheduler::Application.routes.draw do
     end
   end
   
-  resources :hosts
+  resources :hosts do
+    member do 
+      get 'status'
+    end
+  end
   
   resources :presets
   

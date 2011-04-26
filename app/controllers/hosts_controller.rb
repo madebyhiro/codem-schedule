@@ -1,9 +1,9 @@
 class HostsController < ApplicationController
   respond_to :xml, :json, :html
+  respond_to :js, :only => [:status]
   
   def index
     @hosts = Host.all
-    @hosts.map(&:update_status)
     respond_with @hosts
   end
   
@@ -42,5 +42,11 @@ class HostsController < ApplicationController
     host.destroy
     flash[:notice] = "Host has been deleted"
     respond_with host
+  end
+  
+  def status
+    @host = Host.find(params[:id])
+    @host.update_status
+    render :partial => "status", :locals => {:host => @host}
   end
 end

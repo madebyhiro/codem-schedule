@@ -31,7 +31,7 @@ class Host < ActiveRecord::Base
       self.total_slots          = response['max_slots']
       self.available_slots      = response['free_slots']
       self.available            = true
-    rescue Errno::ECONNREFUSED, SocketError
+    rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH
     end
 
     save

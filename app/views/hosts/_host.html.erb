@@ -1,21 +1,11 @@
 <%= content_tag_for :div, host, :class => "#{host.available ? 'up' : 'down'} #{cycle 'left', 'right'}" do %>
   <h2>
     <%= host_name host %>: <%= host.status %>
+    <%= image_tag 'spinner.gif', :class => 'spinner' %>
   </h2>
   
-  <% if host.available %>
-    <ol>
-      <li>
-        Available slots: <%= host.available_slots %>
-      </li>
-      <li>
-        Total slots: <%= host.total_slots %>
-      </li>
-      <li>
-        Used slots: <%= host.used_slots %>
-      </li>
-    </ol>
-  <% end %>
+  <div id="host_<%= host.id %>_status" class="host_status">
+  </div>
   
   <%= link_to 'Edit', edit_host_path(host) %>
   <%= link_to 'Delete', host_path(host), :method => :delete, :confirm => "Are you sure?" %>
