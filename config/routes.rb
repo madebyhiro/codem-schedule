@@ -15,7 +15,7 @@ Scheduler::Application.routes.draw do
   
   resources :hosts do
     member do 
-      get 'status'
+      get :status
     end
   end
   

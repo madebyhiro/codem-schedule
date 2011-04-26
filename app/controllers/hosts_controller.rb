@@ -1,6 +1,5 @@
 class HostsController < ApplicationController
   respond_to :xml, :json, :html
-  respond_to :js, :only => [:status]
   
   def index
     @hosts = Host.all
@@ -45,8 +44,9 @@ class HostsController < ApplicationController
   end
   
   def status
-    @host = Host.find(params[:id])
-    @host.update_status
-    render :partial => "status", :locals => {:host => @host}
+    if @host = Host.find_by_id(params[:id])
+      @host.update_status
+      render :partial => "status", :locals => {:host => @host}
+    end
   end
 end
