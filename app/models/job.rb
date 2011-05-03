@@ -7,14 +7,13 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   has_many :state_changes, :order => 'created_at', :dependent => :destroy
 
-  validates_presence_of :source_file, :destination_file, :allow_blank => false
-  validates_presence_of :preset_id
+  validates :source_file, :destination_file, :preset_id, :presence => true
     
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
-  scope :scheduled, lambda { where(:state => Codem::Scheduled) }
+  scope :scheduled,   lambda { where(:state => Codem::Scheduled) }
   scope :transcoding, lambda { where(:state => Codem::Transcoding) }
-  scope :completed, lambda { where(:state => Codem::Completed) }
-  scope :failed, lambda { where(:state => Codem::Failed) }
+  scope :completed,   lambda { where(:state => Codem::Completed) }
+  scope :failed,      lambda { where(:state => Codem::Failed) }
 
   def self.from_api(options)
     attrs = {}
@@ -22,7 +21,7 @@ class Job < ActiveRecord::Base
     attrs[:source_file]      = options['input']
     attrs[:destination_file] = options['output']
     attrs[:preset]           = Preset.find_by_name(options['preset'])
-    
+
     new(attrs)
   end
   
