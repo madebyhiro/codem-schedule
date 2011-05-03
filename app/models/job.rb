@@ -16,6 +16,16 @@ class Job < ActiveRecord::Base
   scope :completed, lambda { where(:state => Codem::Completed) }
   scope :failed, lambda { where(:state => Codem::Failed) }
 
+  def self.from_api(options)
+    attrs = {}
+
+    attrs[:source_file]      = options['input']
+    attrs[:destination_file] = options['output']
+    attrs[:preset]           = Preset.find_by_name(options['preset'])
+    
+    new(attrs)
+  end
+  
   def self.list(opts={})
     jobs = paginate(:include => [:host, :preset],
                     :order => "created_at DESC", 
