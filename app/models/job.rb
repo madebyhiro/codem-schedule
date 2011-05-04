@@ -6,12 +6,16 @@ class Job < ActiveRecord::Base
   Failed      = 'failed'
   
   belongs_to :preset
-  
-  scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
+
+  scope :scheduled,   :conditions => {:state => Scheduled}
+  scope :transcoding, :conditions => {:state => Transcoding}  
+  scope :on_hold,     :conditions => {:state => OnHold}
+  scope :completed,   :conditions => {:state => Completed}
+  scope :failed,      :conditions => {:state => Failed}
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
-  after_initialize :set_initial_state  
+  after_initialize :set_initial_state
 
   def self.from_api(options)
     new(:source_file => options['input'],

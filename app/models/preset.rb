@@ -3,4 +3,8 @@ class Preset < ActiveRecord::Base
   
   validates :name, :parameters, :presence => true
   validates :name, :uniqueness => true
+  
+  def self.from_api(attributes)
+    new(:name => attributes['name'], :parameters => attributes['parameters'])
+  end
 end

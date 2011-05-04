@@ -13,4 +13,10 @@ describe Job do
       job.preset.should == @preset
     end
   end
+  
+  context "setting initial state" do
+    it "should set the state to Scheduled" do
+      Job.new.state.should == Job::Scheduled
+    end
+  end
 end
