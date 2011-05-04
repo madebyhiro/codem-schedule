@@ -6,6 +6,8 @@ describe Transcoder do
       @preset = Preset.create!(:name => 'h264', :parameters => 'params')
       @job    = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset => @preset)
       @host   = Host.create!(:name => 'name', :url => 'url')
+
+      JSON.stub!(:parse).and_return({'foo' => 'bar'})
     end
 
     def do_schedule
@@ -18,7 +20,7 @@ describe Transcoder do
       end
       
       it "the job should enter transcoding" do
-        @job.should_receive(:enter).with(Job::Transcoding, :host => @host)
+        @job.should_receive(:enter).with(Job::Transcoding, {'foo' => 'bar', 'host_id' => @host.id})
         do_schedule
       end
     end

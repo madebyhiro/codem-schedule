@@ -20,7 +20,7 @@ describe States::Base do
   
   context "entering scheduled state" do
     it "should generate a new ScheduleJob" do
-      Jobs::ScheduleJob.should_receive(:new).with(@job, :foo => 'bar')
+      Jobs::ScheduleJob.should_receive(:new).with(@job, :foo => 'bar').and_return mock("Job", :perform => true)
       @job.enter(:scheduled, :foo => 'bar')
     end
   end

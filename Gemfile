@@ -9,4 +9,5 @@ gem 'rest-client'
 group :development, :test do
   gem 'rspec-rails'
   gem 'ZenTest'
+  gem 'simplecov', :require => false
 end

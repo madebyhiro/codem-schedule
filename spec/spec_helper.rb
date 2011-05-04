@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -24,4 +26,18 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+end
+
+SimpleCov.start do
+  add_group "Models", "app/models"
+  add_group "Controllers", do |src_file| 
+    src_file.filename =~ /app\/controllers/ && not(src_file.filename =~ /app\/controllers\/api/)
+  end
+  add_group "API Controllers", do |src_file|
+    src_file.filename =~ /app\/controllers\/api/
+  end
+  
+  add_filter do |src_file|
+    src_file.filename =~ /spec|config/
+  end
 end
