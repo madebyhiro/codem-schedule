@@ -1,6 +1,9 @@
-@import 'structure';
-@import 'history';
-@import 'jobs';
+@import 'structure.css';
+@import 'history.css';
+@import 'jobs.css';
+@import 'forms.css';
+@import 'hosts.css';
+@import 'presets.css';
 
 * {
 	margin:0;

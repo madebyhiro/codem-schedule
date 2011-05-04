@@ -11,6 +11,8 @@ class Job < ActiveRecord::Base
   
   scope :recent, :order => "updated_at DESC", :limit => 10, :include => [:host, :preset]
   
+  validates :source_file, :destination_file, :preset_id, :presence => true
+  
   def self.from_api(options)
     new(:source_file => options['input'],
         :destination_file => options['output'],

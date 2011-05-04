@@ -1,0 +1,8 @@
+ol.presets li {
+  margin: 1em 0;
+  border: 2px solid #cccccc;
+  padding: 1em;
+  width: 45%;
+}
+ol.presets li.left { float: left; }
+ol.presets li.right { float: Right; }

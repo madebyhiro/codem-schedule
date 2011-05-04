@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504093034) do
+ActiveRecord::Schema.define(:version => 20110504100112) do
+
+  create_table "hosts", :force => true do |t|
+    t.string   "name",                                 :null => false
+    t.string   "url",                                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "available",         :default => false
+    t.datetime "status_checked_at"
+  end
 
   create_table "jobs", :force => true do |t|
     t.string   "source_file",      :null => false
@@ -28,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20110504093034) do
     t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "parameters", :null => false
   end
 
   add_index "presets", ["name"], :name => "index_presets_on_name"

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Job do
   context "generating a job via the API" do
     before(:each) do
-      @preset = Preset.create!(:name => 'preset')
+      @preset = Preset.create!(:name => 'preset', :parameters => 'params')
     end
     
     it "should map the attributes correctly" do

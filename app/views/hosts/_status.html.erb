@@ -1,0 +1,13 @@
+<% if host.available %>
+  <ol>
+    <li>
+      Available slots: <%= host.available_slots %>
+    </li>
+    <li>
+      Total slots: <%= host.total_slots %>
+    </li>
+    <li>
+      Used slots: <%= host.used_slots %>
+    </li>
+  </ol>
+<% end %>

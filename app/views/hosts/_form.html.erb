@@ -1,0 +1,21 @@
+<%= form_for @host do |f| %>
+  
+  <%= f.error_messages %>
+  
+  <fieldset>
+    <legend>Host details</legend>
+    
+    <ol>
+      <li><%= f.label :url, :class => 'required' %></li>
+      <li><%= f.text_field :url %></li>
+      <li><%= f.label :name, 'Alias' %></li>
+      <li><%= f.text_field :name %></li>
+    </ol>
+    
+  </fieldset>
+
+  <ol class="buttons">
+    <li><%= f.submit %></li>
+  </ol>
+  
+<% end %>
