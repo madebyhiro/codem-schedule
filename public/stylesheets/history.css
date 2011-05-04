@@ -1,0 +1,79 @@
+div#history {
+	clear:both;
+	width:100%;
+	margin:1em 0;
+}
+
+div#history ol.nav {
+	float:right;
+	position:relative;
+	margin-top:-26px;
+}
+
+div#history ol.nav li {
+	border-top:2px solid #CCC;
+	border-right:2px solid #CCC;
+	float:left;
+	padding:0.25em 0.5em; 
+	font-weight:bold;
+}
+
+div#history ol.nav li a {
+	text-decoration:none;
+	color:black;
+}
+
+div#history ol.nav li a:hover {
+	text-decoration:underline;	
+}
+		
+div#history ol.nav li:first-child {
+	border-left:2px solid #CCC;
+}
+		
+div#history ol.nav li.selected {
+	border-color:#315863;
+	background-color:#315863;
+	color:white;
+}
+
+div#history table {
+	width:100%;
+	border:2px solid #CCC;
+	border-collapse:collapse;
+	font-size:13px;
+}
+
+div#history table td, div#history table th {
+	text-align:left;
+	padding:0 1em;
+	font-weight:bold;
+	border-left:1px solid #CCC;
+	border-right:1px solid #CCC;
+}
+		
+div#history table th {
+	color:#AAA;
+	padding-top:0.5em;
+	text-transform:uppercase;
+}
+			
+div#history table a {
+	color:#AAA;
+	text-decoration:none;
+}
+
+div#history table td {
+	padding-bottom:0.5em;
+	color:black;
+	font-size:15px;
+	color:#315863;
+}		
+
+div#history table td.success {
+	color:green;
+}
+		
+div#history table td.failed {
+	color:red;
+}

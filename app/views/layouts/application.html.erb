@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Scheduler</title>
+  <title><%= yield :title %> - Scheduler</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
-<%= yield %>
+<header>
+  <%= render "/layouts/menu" %>
+</header>
+
+<section id="content">
+  <% flash.each do |name, message| %>
+    <div id="<%= name %>"><%= h message %></div>
+  <% end %>
+  
+  <h1><%= yield :title %></h1>
+
+  <%= yield %>
+</section>
 
 </body>
 </html>
