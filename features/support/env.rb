@@ -6,6 +6,7 @@
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec/spec_helper')
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/world'
@@ -21,6 +22,8 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 # prefer to use XPath just remove this line and adjust any selectors in your
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
+
+World(Rack::Test::Methods)
 
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
