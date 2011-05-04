@@ -21,19 +21,4 @@ describe Job do
       job.preset.should == @preset
     end
   end
-  
-  it "should set the initial state to scheduled" do
-    Job.new.state.should == Job::Scheduled    
-  end
-  
-  context "entering a state" do
-    before(:each) do
-      @job = create_job
-    end
-    
-    it "should enter the specified state with parameters" do
-      @job.should_receive(:enter_void).with(:foo => 'bar')
-      @job.enter(:void, :foo => 'bar')
-    end
-  end
 end

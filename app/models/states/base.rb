@@ -2,8 +2,8 @@ module States
   module Base
     def self.included(base)
       base.class_eval do
-        after_create      { enter(initial_state) }
         after_initialize  :set_initial_state
+        after_create      { enter(initial_state) }
       end
     end
     
@@ -16,12 +16,18 @@ module States
       self.send("enter_#{state}", parameters)
     end
     
-    def enter_scheduled(params)
-    end
-    
-    private
+    protected
       def set_initial_state
         self.state ||= Job::Scheduled
+      end
+
+      def enter_scheduled(params)
+        Jobs::ScheduleJob.new(self, params)
+      end
+
+      def enter_transcoding(params)
+        update_attributes :remote_job_id => params['job_id'],
+                          :transcoding_started_at => Time.current
       end
   end
 end
