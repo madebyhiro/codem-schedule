@@ -8,6 +8,7 @@ class Job < ActiveRecord::Base
   Failed      = 'failed'
   
   belongs_to :preset
+  belongs_to :host
 
   scope :scheduled,   :conditions => { :state => Scheduled }
   scope :transcoding, :conditions => { :state => Transcoding }  

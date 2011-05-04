@@ -14,6 +14,7 @@ module States
     def enter(state, parameters={})
       update_attributes :state => state
       self.send("enter_#{state}", parameters)
+      self
     end
     
     protected
@@ -22,11 +23,12 @@ module States
       end
 
       def enter_scheduled(params)
-        Jobs::ScheduleJob.new(self, params)
+        Jobs::ScheduleJob.new(self, params).perform
       end
 
       def enter_transcoding(params)
-        update_attributes :remote_job_id => params['job_id'],
+        update_attributes :host_id => params['host_id'],
+                          :remote_job_id => params['job_id'],
                           :transcoding_started_at => Time.current
       end
   end

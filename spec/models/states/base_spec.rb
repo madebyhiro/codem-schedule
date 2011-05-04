@@ -12,8 +12,10 @@ describe States::Base do
   context "entering a state" do
     it "should enter the specified state with parameters" do
       @job.should_receive(:enter_void).with(:foo => 'bar')
-      @job.enter(:void, :foo => 'bar')
+      result = @job.enter(:void, :foo => 'bar')
+      result.should == @job
     end
+    
   end
   
   context "entering scheduled state" do

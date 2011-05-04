@@ -10,13 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504123511) do
+ActiveRecord::Schema.define(:version => 20110504132325) do
 
   create_table "hosts", :force => true do |t|
-    t.string   "name",       :null => false
-    t.string   "url",        :null => false
+    t.string   "name",                               :null => false
+    t.string   "url",                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "available",       :default => false
+    t.integer  "total_slots",     :default => 0
+    t.integer  "available_slots", :default => 0
   end
 
   create_table "jobs", :force => true do |t|
@@ -28,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110504123511) do
     t.string   "state",                  :null => false
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
+    t.integer  "host_id"
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"
