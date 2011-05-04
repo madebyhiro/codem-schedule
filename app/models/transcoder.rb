@@ -40,7 +40,7 @@ class Transcoder
         begin
           response = RestClient.send(method, url, attrs, :content_type => :json, :accept => :json)
           JSON::parse response
-        rescue Errno::ECONNREFUSED
+        rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH
           false
         end
       end

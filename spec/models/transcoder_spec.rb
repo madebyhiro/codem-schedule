@@ -76,9 +76,11 @@ describe Transcoder do
       do_post.should == {'foo' => 'bar'}
     end
     
-    it "should recover from a connection refused error" do
-      RestClient.stub!(:post).and_raise Errno::ECONNREFUSED
-      do_post.should == false
+    [Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+      it "should recover from #{ex}" do
+        RestClient.stub!(:post).and_raise ex
+        do_post.should == false
+      end
     end
   end
   
@@ -95,10 +97,12 @@ describe Transcoder do
       RestClient.should_receive(:get).with('url', 'attrs', :content_type => :json, :accept => :json)
       do_get
     end
-    
-    it "should recover from a connection refused error" do
-      RestClient.stub!(:get).and_raise Errno::ECONNREFUSED
-      do_get.should == false
+
+    [Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+      it "should recover from #{ex}" do
+        RestClient.stub!(:get).and_raise ex
+        do_get.should == false
+      end
     end
   end
 end
