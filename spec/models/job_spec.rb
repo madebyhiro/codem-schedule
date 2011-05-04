@@ -9,7 +9,7 @@ describe Job do
     }.merge!(attrs))
   end
   
-  context "generating a job via the API" do
+  describe "generating a job via the API" do
     before(:each) do
       @preset = Preset.create!(:name => 'preset', :parameters => 'params')
     end

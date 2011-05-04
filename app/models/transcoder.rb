@@ -4,10 +4,9 @@ class Transcoder
       job  = opts[:job]
       host = opts[:host]
 
-      response = post("#{host.url}/jobs", job_to_json(job))
+      attrs = post("#{host.url}/jobs", job_to_json(job))
 
-      if response && response.code == 202
-        attrs = JSON::parse(response)
+      if attrs
         attrs.merge!('host_id' => host.id)
         job.enter(Job::Transcoding, attrs)
       else
@@ -23,13 +22,27 @@ class Transcoder
         'callback_urls' => ["http://127.0.0.1:3000/api/jobs/#{job.id}"]
       }.to_json
     end
+
+    def status(host)
+      get("#{host.url}/jobs")
+    end
     
     def post(url, attrs)
-      begin
-        RestClient.post(url, attrs, :content_type => :json, :accept => :json)
-      rescue Errno::ECONNREFUSED
-        false
-      end        
+      send(:post, url, attrs)
     end
+        
+    def get(url, attrs)
+      send(:get, url, attrs)
+    end
+    
+    private
+      def send(method, url, attrs)
+        begin
+          response = RestClient.send(method, url, attrs, :content_type => :json, :accept => :json)
+          JSON::parse response
+        rescue Errno::ECONNREFUSED
+          false
+        end
+      end
   end
 end

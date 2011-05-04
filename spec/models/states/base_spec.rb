@@ -9,7 +9,7 @@ describe States::Base do
     Job.new.state.should == Job::Scheduled    
   end
   
-  context "entering a state" do
+  describe "entering a state" do
     it "should enter the specified state with parameters" do
       @job.should_receive(:enter_void).with(:foo => 'bar')
       result = @job.enter(:void, :foo => 'bar')
@@ -18,14 +18,14 @@ describe States::Base do
     
   end
   
-  context "entering scheduled state" do
+  describe "entering scheduled state" do
     it "should generate a new ScheduleJob" do
       Jobs::ScheduleJob.should_receive(:new).with(@job, :foo => 'bar').and_return mock("Job", :perform => true)
       @job.enter(:scheduled, :foo => 'bar')
     end
   end
   
-  context "entering transcoding state" do
+  describe "entering transcoding state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
       Time.stub!(:current).and_return @t

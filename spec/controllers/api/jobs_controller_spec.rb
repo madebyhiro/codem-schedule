@@ -45,6 +45,21 @@ describe Api::JobsController do
     # end
   end
   
+  describe "PUT 'update'" do
+    before(:each) do
+      create_job
+    end
+    
+    def do_put
+      put 'update', :id => @job.id
+    end
+    
+    it "should find the job" do
+      Job.should_receive(:find).with(@job.id)
+      do_put
+    end
+  end
+  
   describe "GET 'index'" do
     before(:each) do
       create_job
