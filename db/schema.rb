@@ -13,12 +13,10 @@
 ActiveRecord::Schema.define(:version => 20110504100112) do
 
   create_table "hosts", :force => true do |t|
-    t.string   "name",                                 :null => false
-    t.string   "url",                                  :null => false
+    t.string   "name",       :null => false
+    t.string   "url",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "available",         :default => false
-    t.datetime "status_checked_at"
   end
 
   create_table "jobs", :force => true do |t|
@@ -28,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20110504100112) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",            :null => false
-    t.datetime "completed_at"
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"

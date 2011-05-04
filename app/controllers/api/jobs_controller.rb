@@ -6,4 +6,9 @@ class Api::JobsController < ApplicationController
     job.save
     respond_with job, :location => api_job_url(job)
   end
+  
+  def show
+    job = Job.find(params[:id])
+    respond_with job
+  end
 end
