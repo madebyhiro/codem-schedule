@@ -3,7 +3,7 @@ class History
   
   attr_accessor :period
   
-  def initialize(period)
+  def initialize(period=nil)
     period = 'today' if period.nil?
     @period = period
   end
@@ -15,15 +15,15 @@ class History
   def between
     case period
       when 'today'
-        Time.now.at_beginning_of_day..Time.now
+        Time.current.at_beginning_of_day..Time.current
       when 'yesterday'
-        (Time.now.at_beginning_of_day - 1.day)..Time.now.at_beginning_of_day
+        (Time.current.at_beginning_of_day - 1.day)..Time.current.at_beginning_of_day
       when 'week'
-        7.days.ago.at_beginning_of_day..Time.now
+        7.days.ago.at_beginning_of_day..Time.current
       when 'month'
-        30.days.ago.at_beginning_of_month..Time.now
+        30.days.ago.at_beginning_of_day..Time.current
       when 'all'
-        Time.new(1970,1,1)..Time.now
+        Time.new(1970,1,1)..Time.current
     end
   end
   
