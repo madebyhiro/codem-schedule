@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe States::Base do
+describe Jobs::States do
   before(:each) do
     @job = Factory(:job)
   end

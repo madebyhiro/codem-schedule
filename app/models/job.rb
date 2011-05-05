@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  include States::Base
+  include Jobs::States
   
   Scheduled   = 'scheduled'
   Accepted    = 'accepted'

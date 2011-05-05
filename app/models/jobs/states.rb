@@ -1,5 +1,5 @@
-module States
-  module Base
+module Jobs
+  module States
     def self.included(base)
       base.class_eval do
         include ActiveModel::Dirty
