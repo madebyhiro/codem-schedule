@@ -23,19 +23,19 @@ class Transcoder
     end
     
     def host_status(host)
-      call_transcoder(:get, "#{host.url}/jobs")
+      get "#{host.url}/jobs"
     end
 
     def job_status(job)
-      call_transcoder(:get, "#{job.host.url}/jobs/#{job.remote_job_id}")
+      get "#{job.host.url}/jobs/#{job.remote_job_id}"
     end
     
-    def post(url, attrs={})
-      call_transcoder(:post, url, attrs)
+    def post(url, *attrs)
+      call_transcoder(:post, url, *attrs)
     end
         
-    def get(url, attrs={})
-      call_transcoder(:get, url, attrs)
+    def get(url, *attrs)
+      call_transcoder(:get, url, *attrs)
     end
     
     private
