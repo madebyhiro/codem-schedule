@@ -24,7 +24,7 @@ class Transcoder
     end
 
     def status(host)
-      get("#{host.url}/jobs")
+      call_transcoder(:get, "#{host.url}/jobs")
     end
     
     def post(url, attrs={})
@@ -36,11 +36,10 @@ class Transcoder
     end
     
     private
-      def call_transcoder(method, url, attrs={})
+      def call_transcoder(method, url, *attrs)
         begin
-          attrs.merge!(:content_type => :json)
-          attrs.merge!(:accept => :json)
-          response = RestClient.send(method, url, attrs)
+          attrs << { :content_type => :json, :accept => :json }
+          response = RestClient.send(method, url, *attrs)
           JSON::parse response
         rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, RestClient::ResourceNotFound
           false

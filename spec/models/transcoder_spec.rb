@@ -49,7 +49,7 @@ describe Transcoder do
   describe "getting a host's status" do
     before(:each) do
       @host = Host.create!(:name => 'name', :url => 'url')
-      Transcoder.stub!(:get).and_return true
+      Transcoder.stub!(:call_transcoder).and_return true
     end
     
     def do_get
@@ -57,7 +57,7 @@ describe Transcoder do
     end
     
     it "should get the status" do
-      Transcoder.should_receive(:get).with("url/jobs")
+      Transcoder.should_receive(:call_transcoder).with(:get, "url/jobs")
       do_get.should == true
     end
   end
@@ -72,7 +72,7 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:post).with('url', 'foo' => 'bar', :content_type => :json, :accept => :json)
+      RestClient.should_receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json})
       do_post.should == {'foo' => 'bar'}
     end
     
@@ -94,7 +94,7 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:get).with('url', 'foo' => 'bar', :content_type => :json, :accept => :json)
+      RestClient.should_receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json})
       do_get
     end
 
