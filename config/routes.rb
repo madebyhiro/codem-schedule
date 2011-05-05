@@ -26,5 +26,5 @@ Scheduler::Application.routes.draw do
 
   resources :presets, :hosts
   
-  root :to => 'jobs#index'
+  match '/' => redirect('/jobs')
 end
