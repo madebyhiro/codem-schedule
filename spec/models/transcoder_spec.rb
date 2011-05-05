@@ -19,9 +19,8 @@ describe Transcoder do
         Transcoder.stub!(:post).and_return({'foo' => 'bar'})
       end
       
-      it "the job should enter transcoding" do
-        @job.should_receive(:enter).with(Job::Accepted, {'foo' => 'bar', 'host_id' => @host.id})
-        do_schedule
+      it "should return the correct attributes" do
+        do_schedule.should == { 'host_id' => @host.id, 'foo' => 'bar' }
       end
     end
 

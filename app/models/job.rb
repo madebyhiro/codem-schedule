@@ -17,6 +17,8 @@ class Job < ActiveRecord::Base
   scope :accepted,    :conditions => { :state => Accepted }
   scope :success,     :conditions => { :state => Success }
   scope :failed,      :conditions => { :state => Failed }
+
+  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing]).order("id ASC") }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -27,13 +29,17 @@ class Job < ActiveRecord::Base
   end
   
   def update_status
-    if attrs = Transcoder.job_status(self)
-      enter(attrs['status'], attrs)
+    if state == Scheduled
+      enter(Job::Scheduled)
+    else
+      if attrs = Transcoder.job_status(self)
+        enter(attrs['status'], attrs)
+      end
     end
     self
   end
   
   def unfinished?
-    state == Accepted || state == Processing
+    state == Scheduled || state == Accepted || state == Processing
   end
 end

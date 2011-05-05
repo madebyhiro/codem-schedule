@@ -7,8 +7,7 @@ class Transcoder
       attrs = post("#{host.url}/jobs", job_to_json(job))
 
       if attrs
-        attrs.merge!('host_id' => host.id)
-        job.enter(Job::Accepted, attrs)
+        attrs.merge('host_id' => host.id)
       else
         false
       end

@@ -18,13 +18,36 @@ describe States::Base do
   end
   
   describe "entering scheduled state" do
-    it "should generate a new ScheduleJob" do
-      Jobs::ScheduleJob.should_receive(:new).with(@job, :foo => 'bar').and_return mock("Job", :perform => true)
-      @job.enter(:scheduled, :foo => 'bar')
+    before(:each) do
+      @host = Factory(:host)
+      Host.stub!(:with_available_slots).and_return [@host]
+      
+      Transcoder.stub!(:schedule).and_return 'attrs'
+    end
+    
+    def do_enter
+      @job.enter(Job::Scheduled)
+    end
+    
+    it "should try to schedule the job at the host" do
+      Transcoder.should_receive(:schedule).with(:host => @host, :job => @job)
+      do_enter
+    end
+    
+    it "should enter accepted" do
+      do_enter
+      @job.state.should == Job::Accepted
     end
     
     it "should generate a state change" do
-      @job.state_changes.last.state.should == Job::Scheduled
+      do_enter
+      @job.state_changes.last.state.should == Job::Accepted
+    end
+    
+    it "should stay scheduled if the job cannot be scheduled" do
+      Transcoder.stub!(:schedule).and_return false
+      do_enter
+      @job.state.should == Job::Scheduled
     end
   end
   

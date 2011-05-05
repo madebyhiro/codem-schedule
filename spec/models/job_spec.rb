@@ -17,7 +17,7 @@ describe Job do
   describe "updating a jobs status" do
     before(:each) do
       Transcoder.stub!(:job_status).and_return({ 'status' => 'foo', 'bar' => 'baz' })
-      @job = Job.new
+      @job = Job.new(:state => Job::Processing)
       @job.stub!(:enter).and_return true
     end
     
@@ -25,22 +25,39 @@ describe Job do
       @job.update_status
     end
     
-    it "should ask the transcoder for the jobs status " do
-      Transcoder.should_receive(:job_status).with(@job)
-      update
+    describe "as Scheduled" do
+      before(:each) do
+        @job.update_attributes :state => Job::Scheduled
+      end
+      
+      it "should re-enter scheduled" do
+        @job.should_receive(:enter).with(Job::Scheduled)
+        update
+      end
     end
     
-    it "should enter the correct state" do
-      @job.should_receive(:enter).with('foo', { 'status' => 'foo', 'bar' => 'baz'})
-      update
-    end
+    describe "other states" do
+      it "should ask the transcoder for the jobs status " do
+        Transcoder.should_receive(:job_status).with(@job)
+        update
+      end
     
-    it "should return self" do
-      update.should == @job
+      it "should enter the correct state" do
+        @job.should_receive(:enter).with('foo', { 'status' => 'foo', 'bar' => 'baz'})
+        update
+      end
+    
+      it "should return self" do
+        update.should == @job
+      end
     end
   end
   
   describe "unfinished" do
+    it "should be unfinished if Scheduled" do
+      Job.new(:state => Job::Scheduled).should be_unfinished
+    end
+
     it "should be unfinished if Accepted" do
       Job.new(:state => Job::Accepted).should be_unfinished
     end

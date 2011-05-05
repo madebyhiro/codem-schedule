@@ -29,7 +29,11 @@ module States
       end
 
       def enter_scheduled(params)
-        Jobs::ScheduleJob.new(self, params).perform
+        for host in Host.with_available_slots
+          if attrs = Transcoder.schedule(:host => host, :job => self)
+            enter(Job::Accepted, attrs)
+          end
+        end
       end
 
       def enter_accepted(params)
