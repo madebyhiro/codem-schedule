@@ -1,0 +1,47 @@
+<div id="history">
+	<ol class="nav">
+		<% selected = @history.period %>
+		<li class="<%= 'selected' if selected == 'today' %>">
+			<%= link_to_unless selected == 'today', 'Today', url_for(params.merge(:period => 'today')) %>
+		</li>
+		<li class="<%= 'selected' if selected == 'yesterday' %>">
+			<%= link_to_unless selected == 'yesterday', 'Yesterday', url_for(params.merge(:period => 'yesterday')) %>
+		</li>
+		<li class="<%= 'selected' if selected == 'week' %>">
+			<%= link_to_unless selected == 'week', '7 days', url_for(params.merge(:period => 'week')) %>
+		</li>
+		<li class="<%= 'selected' if selected == 'month' %>">
+			<%= link_to_unless selected == 'month', '30 days', url_for(params.merge(:period => 'month')) %>
+		</li>
+		<li class="<%= 'selected' if selected == 'all' %>">
+			<%= link_to_unless selected == 'all', 'All', url_for(params.merge(:period => 'all')) %>
+		</li>
+	</ol>
+	<table>
+		<tr>
+			<th>Completed</th>
+			<th>Failed</th>
+			<th>Time encoded</th>
+			<th>Average processing time</th>
+			<th>Average queue time</th>
+		</tr>
+		<tr>
+			<td class="success" title="<%= @history.completed_jobs.size %> out of <%= @history.jobs.size %> completed">
+				<%= @history.completed_jobs.size %>
+			</td>
+			<td class="failed" title="<%= @history.failed_jobs.size %> out of <%= @history.jobs.size %> failed">
+				<%= @history.failed_jobs.size %>
+			</td>
+			<td title="<%= number_with_delimiter @history.seconds_encoded %> seconds">
+				<%= number_to_time @history.seconds_encoded %>
+			</td>
+			<td title="<%= number_with_delimiter @history.average_processing_time %> seconds">
+				<%= number_to_time @history.average_processing_time %>
+			</td>
+			<td title="<%= number_with_delimiter @history.average_queue_time %> seconds">
+				<%= number_to_time @history.average_queue_time %>
+			</td>
+		</tr>
+	</table>
+</div>
+

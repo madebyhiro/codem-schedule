@@ -4,10 +4,21 @@ describe JobsController do
   describe "GET 'index'" do
     before(:each) do
       Job.stub!(:recents).and_return 'recent'
+      History.stub!(:new).and_return 'history'
     end
     
     def do_get
-      get 'index'
+      get 'index', :period => 'period'
+    end
+    
+    it "should generate the correct history" do
+      History.should_receive(:new).with('period')
+      do_get
+    end
+    
+    it "should assign the history for the view" do
+      do_get
+      assigns[:history].should == 'history'
     end
     
     it "should find the recent jobs" do

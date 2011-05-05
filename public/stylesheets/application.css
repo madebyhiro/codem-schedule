@@ -105,3 +105,69 @@ form fieldset li label {
 }
 form fieldset li input { width: 70%; }
 form fieldset li textarea { width: 70%; }
+
+div#history {
+  clear: both;
+  width: 100%;
+  margin: 1em 0;
+}
+div#history ol.nav {
+  float: right;
+  position: relative;
+  margin-top: -26px;
+}
+div#history ol.nav li {
+  border-top: 2px solid #cccccc;
+  border-right: 2px solid #cccccc;
+  float: left;
+  padding: 0.25em 0.5em;
+  font-weight: bold;
+}
+div#history ol.nav li a {
+  text-decoration: none;
+  color: black;
+}
+div#history ol.nav li a:hover { text-decoration: underline; }
+div#history ol.nav li:first-child { border-left: 2px solid #cccccc; }
+div#history ol.nav li.selected {
+  border-color: #315863;
+  background-color: #315863;
+  color: white;
+}
+div#history table {
+  width: 100%;
+  border: 2px solid #cccccc;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+div#history table td {
+  text-align: left;
+  padding: 0 1em;
+  font-weight: bold;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+}
+div#history table th {
+  text-align: left;
+  padding: 0 1em;
+  font-weight: bold;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+}
+div#history table th {
+  color: #aaaaaa;
+  padding-top: 0.5em;
+  text-transform: uppercase;
+}
+div#history table th a {
+  color: #aaaaaa;
+  text-decoration: none;
+}
+div#history table td {
+  padding-bottom: 0.5em;
+  color: black;
+  font-size: 15px;
+  color: #315863;
+}
+div#history table td.success { color: green; }
+div#history table td.failed { color: red; }

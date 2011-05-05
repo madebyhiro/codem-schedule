@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   def index
-    @jobs = Job.recents(params[:page])
+    @history = History.new(params[:period])
+    @jobs    = Job.recents(params[:page])
   end
   
   def show
