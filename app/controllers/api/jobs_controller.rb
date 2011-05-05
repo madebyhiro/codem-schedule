@@ -1,6 +1,26 @@
 class Api::JobsController < Api::ApiController
   def index
-    respond_with Job.all
+    jobs_index(Job.scoped)
+  end
+
+  def scheduled
+    jobs_index(Job.scheduled)
+  end
+  
+  def transcoding
+    jobs_index(Job.transcoding)
+  end
+  
+  def on_hold
+    jobs_index(Job.on_hold)
+  end
+  
+  def completed
+    jobs_index(Job.completed)
+  end
+  
+  def failed
+    jobs_index(Job.failed)
   end
   
   def create
@@ -19,23 +39,8 @@ class Api::JobsController < Api::ApiController
     respond_with job
   end
   
-  def scheduled
-    respond_with Job.scheduled
-  end
-  
-  def transcoding
-    respond_with Job.transcoding
-  end
-  
-  def on_hold
-    respond_with Job.on_hold
-  end
-  
-  def completed
-    respond_with Job.completed
-  end
-  
-  def failed
-    respond_with Job.failed
-  end
+  private
+    def jobs_index(jobs)
+      respond_with jobs.page(params[:page]).per(20)
+    end
 end
