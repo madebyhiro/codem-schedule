@@ -47,8 +47,7 @@ class History
     return 0 unless completed_jobs.any?
     
     total_time = completed_jobs.inject(0) do |sum, job|
-      diff = job.completed_at.to_i - job.transcoding_started_at.to_i
-      sum + diff
+      sum + (job.completed_at - job.transcoding_started_at)
     end
     
     total_time / completed_jobs.size
@@ -58,8 +57,7 @@ class History
     return 0 unless completed_jobs.any?
     
     total_time = completed_jobs.inject(0) do |sum, job|
-      diff = job.transcoding_started_at.to_i - job.created_at.to_i
-      sum + diff
+      sum + (job.transcoding_started_at - job.created_at)
     end
     
     total_time / completed_jobs.size
