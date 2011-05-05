@@ -66,17 +66,26 @@ describe History do
   it "should return the correct number of seconds encoded" do
     @history.stub!(:completed_jobs).and_return [double(Job, :duration => 10), double(Job, :duration => 2)]
     @history.seconds_encoded.should == 12
+    
+    @history.stub!(:completed_jobs).and_return []
+    @history.seconds_encoded.should == 0
   end
   
   it "should return the correct average processing time" do
     @history.stub!(:completed_jobs).and_return [double(Job, :completed_at => 20, :transcoding_started_at => 10), 
                                                 double(Job, :completed_at => 10, :transcoding_started_at => 5)]
     @history.average_processing_time.should == 7
+    
+    @history.stub!(:completed_jobs).and_return []
+    @history.average_processing_time.should == 0
   end
 
   it "should return the correct average queue time" do
     @history.stub!(:completed_jobs).and_return [double(Job, :created_at => 10, :transcoding_started_at => 20), 
                                                 double(Job, :created_at => 10, :transcoding_started_at => 30)]
     @history.average_queue_time.should == 15
+    
+    @history.stub!(:completed_jobs).and_return []
+    @history.average_queue_time.should == 0
   end
 end
