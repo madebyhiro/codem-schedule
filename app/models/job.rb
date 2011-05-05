@@ -3,8 +3,9 @@ class Job < ActiveRecord::Base
   
   Scheduled   = 'scheduled'
   Transcoding = 'transcoding'
+  Processing  = 'processing'
   OnHold      = 'on_hold'
-  Completed   = 'complete'
+  Success     = 'success'
   Failed      = 'failed'
   
   belongs_to :preset
@@ -13,7 +14,7 @@ class Job < ActiveRecord::Base
   scope :scheduled,   :conditions => { :state => Scheduled }
   scope :transcoding, :conditions => { :state => Transcoding }  
   scope :on_hold,     :conditions => { :state => OnHold }
-  scope :completed,   :conditions => { :state => Completed }
+  scope :success,     :conditions => { :state => Success }
   scope :failed,      :conditions => { :state => Failed }
   
   validates :source_file, :destination_file, :preset_id, :presence => true

@@ -41,5 +41,11 @@ module States
       def enter_failed(params)
         update_attributes :message => params['message']
       end
+      
+      def enter_success(params)
+        update_attributes :completed_at => Time.current,
+                          :message => params['message'],
+                          :progress => 1.0
+      end
   end
 end

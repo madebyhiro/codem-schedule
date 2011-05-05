@@ -3,7 +3,7 @@ class Api::JobsController < Api::ApiController
   def scheduled;    jobs_index(Job.scheduled); end
   def transcoding;  jobs_index(Job.transcoding); end
   def on_hold;      jobs_index(Job.on_hold); end
-  def completed;    jobs_index(Job.completed); end
+  def success;      jobs_index(Job.success); end
   def failed;       jobs_index(Job.failed); end
   
   def create

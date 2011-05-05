@@ -66,4 +66,22 @@ describe States::Base do
       @job.message.should == 'msg'
     end
   end
+  
+  describe "entering success state" do
+    before(:each) do
+      @t = Time.new(2011, 1, 2, 3, 4, 5)
+      Time.stub!(:current).and_return @t
+    end
+    
+    def do_enter
+      @job.enter(Job::Success, {'message' => 'msg'})
+    end
+    
+    it "should set the parameters" do
+      do_enter
+      @job.message.should == 'msg'
+      @job.completed_at.should == @t
+      @job.progress.should == 1.0
+    end
+  end
 end

@@ -5,7 +5,7 @@ Scheduler::Application.routes.draw do
         get :scheduled
         get :transcoding
         get :on_hold
-        get :completed
+        get :success
         get :failed
       end
     end

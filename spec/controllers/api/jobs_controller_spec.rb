@@ -157,22 +157,22 @@ describe Api::JobsController do
     end
   end
   
-  describe "GET 'completed'" do
+  describe "GET 'success'" do
     before(:each) do
       create_job
-      @job.update_attributes(:state => Job::Completed)
+      @job.update_attributes(:state => Job::Success)
     end
     
     def do_get(format)
-      get 'completed', :format => format
+      get 'success', :format => format
     end
     
-    it "shows completed jobs as JSON" do
+    it "shows success jobs as JSON" do
       do_get(:json)
       response.body.should == [@job].to_json
     end
     
-    it "shows completed jobs as XML" do
+    it "shows success jobs as XML" do
       do_get(:xml)
       response.body.should == [@job].to_xml
     end
