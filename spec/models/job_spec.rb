@@ -34,5 +34,9 @@ describe Job do
       @job.should_receive(:enter).with('foo', { 'status' => 'foo', 'bar' => 'baz'})
       update
     end
+    
+    it "should return self" do
+      update.should == @job
+    end
   end
 end

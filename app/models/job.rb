@@ -29,5 +29,6 @@ class Job < ActiveRecord::Base
     if attrs = Transcoder.job_status(self)
       enter(attrs['status'], attrs)
     end
+    self
   end
 end

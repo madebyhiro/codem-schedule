@@ -16,5 +16,7 @@ class Host < ActiveRecord::Base
     end
     
     save
+    
+    self
   end
 end

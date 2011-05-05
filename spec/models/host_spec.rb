@@ -51,6 +51,10 @@ describe Host do
         update
         @host.available_slots.should == 1
       end
+      
+      it "should return self" do
+        update.should == @host
+      end
     end
     
     describe "down" do
@@ -61,6 +65,10 @@ describe Host do
       it "should not be available" do
         update
         @host.should_not be_available
+      end
+
+      it "should return self" do
+        update.should == @host
       end
     end
   end
