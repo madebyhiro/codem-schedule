@@ -18,7 +18,7 @@ class Transcoder
         'source_file' => job.source_file,
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
-        'callback_urls' => [callback_url(job)]
+        'callback_urls' => [ [job.callback_url, job.to_param].join('/') ]
       }.to_json
     end
     
@@ -47,10 +47,6 @@ class Transcoder
         rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, RestClient::ResourceNotFound
           false
         end
-      end
-
-      def callback_url(job)
-        [job.callback_url, job.to_param].join('/')
       end
   end
 end
