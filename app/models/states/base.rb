@@ -31,5 +31,9 @@ module States
                           :remote_job_id => params['job_id'],
                           :transcoding_started_at => Time.current
       end
+      
+      def enter_failed(params)
+        update_attributes :message => params[:message]
+      end
   end
 end

@@ -15,6 +15,7 @@ class Api::JobsController < Api::ApiController
   
   def update
     job = Job.find(params[:id])
+    job.enter(params[:status], params)
     respond_with job, :location => api_job_url(job)
   end
   
