@@ -1,0 +1,86 @@
+header nav {
+  display: block;
+  clear: both;
+  background-color: #333333;
+}
+header nav ol {
+  max-width: 960px;
+  margin: 0 auto;
+  height: 3em;
+  padding: 0 1em;
+}
+header nav ol li {
+  float: left;
+  padding: 8px 10px;
+  color: white;
+  font-weight: bold;
+}
+header nav ol li a {
+  color: white;
+  font-weight: bold;
+}
+header nav ol li:first-child { padding-left: 0; }
+section#content {
+  margin: 0 auto;
+  max-width: 960px;
+  border: 2px solid #cccccc;
+  border-top: 0;
+  padding: 1em;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, clean, sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+}
+ol, ul { list-style: none; }
+pre { white-space: normal; }
+h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+h2 {
+  margin: 0.5em 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+h2.inline {
+  display: inline;
+  margin-right: 0.5em;
+}
+table.items {
+  margin: 0.5em 0;
+  margin-bottom: 1em;
+  width: 100%;
+  border-collapse: collapse;
+}
+table.items tr td {
+  padding: 0.25em 0.5em;
+  border: 1px solid #cccccc;
+  text-align: left;
+}
+table.items tr th {
+  padding: 0.25em 0.5em;
+  border: 1px solid #cccccc;
+  text-align: left;
+}
+table.items tr.odd { background-color: #f6f6f6; }
+table.items tr.even { background-color: #ffffff; }
+table.items thead tr th { font-weight: bold; }
+table.items tr td.progress div.bar {
+	width:200px;
+	overflow:hidden;
+	height:15px;
+	border:1px solid #CCC;
+	background-color:#DDD;
+}
+table.items tr td.progress div.bar div.progress {
+  background-color:#315863;
+  height:100%;
+}
+video { margin-bottom: 0.5em; }
+pre { margin: 0; }

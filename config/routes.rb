@@ -17,4 +17,14 @@ Scheduler::Application.routes.draw do
     
     resources :presets
   end
+  
+  resources :jobs do
+    collection do
+      get :fetch
+    end
+  end
+
+  resources :presets, :hosts
+  
+  root :to => 'jobs#index'
 end

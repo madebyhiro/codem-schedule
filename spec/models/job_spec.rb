@@ -36,7 +36,7 @@ describe Job do
       end
     end
     
-    describe "other states" do
+    describe "unfinished" do
       describe "success" do
         it "should ask the transcoder for the jobs status " do
           Transcoder.should_receive(:job_status).with(@job)
@@ -64,6 +64,31 @@ describe Job do
         end
       end
     end
+    
+    describe "finished" do
+      before(:each) do
+        @job.stub!(:finished?).and_return true
+      end
+      
+      it "should not get the status" do
+        Transcoder.should_not_receive(:job_status)
+        update
+      end
+      
+      it "should return self" do
+        update.should == @job
+      end
+    end
+  end
+
+  describe "finished" do
+    it "should be finished if Success" do
+      Job.new(:state => Job::Success).should be_finished
+    end
+
+    it "should be finished if Failed" do
+      Job.new(:state => Job::Failed).should be_finished
+    end
   end
   
   describe "unfinished" do
@@ -81,6 +106,26 @@ describe Job do
 
     it "should be unfinished if Processing" do
       Job.new(:state => Job::OnHold).should be_unfinished
+    end
+  end
+  
+  describe "getting the recent jobs" do
+    before(:each) do
+      @job = double(Job)
+      Job.stub_chain(:recent, :page, :per).and_return [@job]
+    end
+    
+    def recents
+      Job.recents
+    end
+    
+    it "should fetch the recent jobs" do
+      Job.should_receive(:recent)
+      recents
+    end
+    
+    it "should return the jobs" do
+      recents.should == [@job]
     end
   end
 end
