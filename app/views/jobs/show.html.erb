@@ -9,13 +9,13 @@
 <table class="items">
 	<tr class="odd">
 		<th>State</th>
-		<th>Date</th>
+		<th>Occured</th>
 		<th>Message</th>
 	</tr>
 	<% for state in @job.state_changes %>
 		<tr>
 			<td><%= state.state.capitalize %></td>
-			<td><%= I18n.l state.created_at %></td>
+			<td title="<%= I18n.l state.created_at %>"><%= time_ago_in_words state.created_at, :include_seconds => true %> ago</td>
 			<td><%= state.message %></td>
 		</tr>
 	<% end %>

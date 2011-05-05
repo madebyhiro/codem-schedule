@@ -23,7 +23,8 @@ describe JobsController do
   
   describe "GET 'show'" do
     before(:each) do
-      Job.stub!(:find).and_return 'job'
+      @job = double(Job, :update_status => true)
+      Job.stub!(:find).and_return @job
     end
     
     def do_get
@@ -37,7 +38,12 @@ describe JobsController do
     
     it "should assign the job for the view" do
       do_get
-      assigns[:job].should == 'job'
+      assigns[:job].should == @job
+    end
+    
+    it "should update the status" do
+      @job.should_receive(:update_status)
+      do_get
     end
   end
 end

@@ -5,5 +5,6 @@ class JobsController < ApplicationController
   
   def show
     @job = Job.find(params[:id])
+    @job.update_status
   end
 end
