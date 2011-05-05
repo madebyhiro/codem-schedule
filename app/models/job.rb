@@ -23,4 +23,10 @@ class Job < ActiveRecord::Base
         :destination_file => options['output'],
         :preset => Preset.find_by_name(options['preset']))
   end
+  
+  def update_status
+    if attrs = Transcoder.job_status(self)
+      enter(attrs['status'], attrs)
+    end
+  end
 end

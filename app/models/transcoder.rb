@@ -23,12 +23,12 @@ class Transcoder
       }.to_json
     end
     
-    def callback_url(job)
-      [job.callback_url, job.to_param].join('/')
-    end
-
     def status(host)
       call_transcoder(:get, "#{host.url}/jobs")
+    end
+
+    def job_status(job)
+      call_transcoder(:get, "#{job.host.url}/jobs/#{job.remote_job_id}")
     end
     
     def post(url, attrs={})
@@ -48,6 +48,10 @@ class Transcoder
         rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, RestClient::ResourceNotFound
           false
         end
+      end
+
+      def callback_url(job)
+        [job.callback_url, job.to_param].join('/')
       end
   end
 end

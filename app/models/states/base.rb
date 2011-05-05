@@ -32,6 +32,12 @@ module States
                           :transcoding_started_at => Time.current
       end
       
+      def enter_processing(params)
+        self.update_attributes :progress => params['progress'],
+                               :duration => params['duration'],
+                               :filesize => params['filesize']
+      end
+      
       def enter_failed(params)
         update_attributes :message => params[:message]
       end

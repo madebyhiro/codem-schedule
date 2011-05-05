@@ -21,6 +21,7 @@ class Api::JobsController < Api::ApiController
   
   def show
     job = Job.find(params[:id])
+    job.update_status
     respond_with job
   end
   

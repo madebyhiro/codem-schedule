@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505092155) do
+ActiveRecord::Schema.define(:version => 20110505094607) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name",                               :null => false
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(:version => 20110505092155) do
     t.integer  "host_id"
     t.string   "callback_url"
     t.string   "message"
+    t.float    "progress"
+    t.integer  "duration"
+    t.integer  "filesize"
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"
