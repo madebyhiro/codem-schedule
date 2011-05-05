@@ -11,6 +11,7 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   belongs_to :host
 
+  default_scope :order => ["created_at DESC"]
   scope :scheduled,   :conditions => { :state => Scheduled }
   scope :transcoding, :conditions => { :state => Transcoding }  
   scope :on_hold,     :conditions => { :state => OnHold }
