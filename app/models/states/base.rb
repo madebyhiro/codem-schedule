@@ -33,13 +33,13 @@ module States
       end
       
       def enter_processing(params)
-        self.update_attributes :progress => params['progress'],
-                               :duration => params['duration'],
-                               :filesize => params['filesize']
+        update_attributes :progress => params['progress'],
+                          :duration => params['duration'],
+                          :filesize => params['filesize']
       end
       
       def enter_failed(params)
-        update_attributes :message => params[:message]
+        update_attributes :message => params['message']
       end
   end
 end

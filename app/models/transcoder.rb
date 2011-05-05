@@ -23,7 +23,7 @@ class Transcoder
       }.to_json
     end
     
-    def status(host)
+    def host_status(host)
       call_transcoder(:get, "#{host.url}/jobs")
     end
 

@@ -42,4 +42,28 @@ describe States::Base do
       @job.state.should == Job::Transcoding
     end
   end
+  
+  describe "entering processing state" do
+    def do_enter
+      @job.enter('processing', {'progress' => 1, 'duration' => 2, 'filesize' => 3})
+    end
+    
+    it "should set the parameters" do
+      do_enter
+      @job.progress.should == 1
+      @job.duration.should == 2
+      @job.filesize.should == 3
+    end
+  end
+  
+  describe "entering failed state" do
+    def do_enter
+      @job.enter(Job::Failed, {'message' => 'msg'})
+    end
+    
+    it "should set the parameters" do
+      do_enter
+      @job.message.should == 'msg'
+    end
+  end
 end

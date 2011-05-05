@@ -9,7 +9,7 @@ class Host < ActiveRecord::Base
   def update_status
     self.available = false
       
-    if attrs = Transcoder.status(self)
+    if attrs = Transcoder.host_status(self)
       self.total_slots          = attrs['max_slots']
       self.available_slots      = attrs['free_slots']
       self.available            = true

@@ -34,7 +34,7 @@ describe Host do
     
     describe "up" do
       before(:each) do
-        Transcoder.stub!(:status).and_return({'max_slots' => 2, 'free_slots' => 1})
+        Transcoder.stub!(:host_status).and_return({'max_slots' => 2, 'free_slots' => 1})
       end
       
       it "should be available" do
@@ -55,7 +55,7 @@ describe Host do
     
     describe "down" do
       before(:each) do
-        Transcoder.stub!(:status).and_return false
+        Transcoder.stub!(:host_status).and_return false
       end
       
       it "should not be available" do

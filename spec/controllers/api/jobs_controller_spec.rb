@@ -27,10 +27,17 @@ describe Api::JobsController do
   describe "GET 'show'" do
     before(:each) do
       create_job
+      @job.stub!(:update_status)
+      Job.stub!(:find).and_return @job
     end
     
-    def do_get(format)
+    def do_get(format=:json)
       get 'show', :id => @job.id, :format => format
+    end
+    
+    it "should update the job's status" do
+      @job.should_receive(:update_status)
+      do_get
     end
     
     it "shows a job as JSON" do
@@ -48,14 +55,21 @@ describe Api::JobsController do
   describe "PUT 'update'" do
     before(:each) do
       create_job
+      @job.stub!(:enter)
+      Job.stub!(:find).and_return @job
     end
     
     def do_put
-      put 'update', :id => @job.id
+      put 'update', :id => @job.id, :status => 'status'
     end
     
     it "should find the job" do
       Job.should_receive(:find).with(@job.id)
+      do_put
+    end
+    
+    it "should enter the correct state" do
+      @job.should_receive(:enter).with('status', {"status"=>"status", "id"=>@job.id, "controller"=>"api/jobs", "action"=>"update"})
       do_put
     end
   end

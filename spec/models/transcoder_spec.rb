@@ -53,11 +53,28 @@ describe Transcoder do
     end
     
     def do_get
-      Transcoder.status(@host)
+      Transcoder.host_status(@host)
     end
     
     it "should get the status" do
       Transcoder.should_receive(:call_transcoder).with(:get, "url/jobs")
+      do_get.should == true
+    end
+  end
+  
+  describe "getting a job's status" do
+    before(:each) do
+      @host = Host.create!(:name => 'name', :url => 'url')
+      @job  = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset_id => 1, :host => @host, :remote_job_id => 1)
+      Transcoder.stub!(:call_transcoder).and_return true
+    end
+    
+    def do_get
+      Transcoder.job_status(@job)
+    end
+    
+    it "should get the status" do
+      Transcoder.should_receive(:call_transcoder).with(:get, "url/jobs/1")
       do_get.should == true
     end
   end
