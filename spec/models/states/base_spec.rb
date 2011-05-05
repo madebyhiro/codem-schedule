@@ -15,13 +15,16 @@ describe States::Base do
       result = @job.enter(:void, :foo => 'bar')
       result.should == @job
     end
-    
   end
   
   describe "entering scheduled state" do
     it "should generate a new ScheduleJob" do
       Jobs::ScheduleJob.should_receive(:new).with(@job, :foo => 'bar').and_return mock("Job", :perform => true)
       @job.enter(:scheduled, :foo => 'bar')
+    end
+    
+    it "should generate a state change" do
+      @job.state_changes.last.state.should == Job::Scheduled
     end
   end
   
@@ -41,11 +44,16 @@ describe States::Base do
       @job.transcoding_started_at.should == @t
       @job.state.should == Job::Transcoding
     end
+    
+    it "should generate a state change" do
+      do_enter
+      @job.state_changes.last.state.should == Job::Transcoding
+    end
   end
   
   describe "entering processing state" do
     def do_enter
-      @job.enter('processing', {'progress' => 1, 'duration' => 2, 'filesize' => 3})
+      @job.enter(Job::Processing, {'progress' => 1, 'duration' => 2, 'filesize' => 3})
     end
     
     it "should set the parameters" do
@@ -53,6 +61,11 @@ describe States::Base do
       @job.progress.should == 1
       @job.duration.should == 2
       @job.filesize.should == 3
+    end
+    
+    it "should generate a state change" do
+      do_enter
+      @job.state_changes.last.state.should == Job::Processing
     end
   end
   
@@ -64,6 +77,13 @@ describe States::Base do
     it "should set the parameters" do
       do_enter
       @job.message.should == 'msg'
+    end
+    
+    it "should generate a state change" do
+      do_enter
+      change = @job.state_changes.last
+      change.state.should == Job::Failed
+      change.message.should == 'msg'
     end
   end
   
@@ -82,6 +102,13 @@ describe States::Base do
       @job.message.should == 'msg'
       @job.completed_at.should == @t
       @job.progress.should == 1.0
+    end
+    
+    it "should generate a state change" do
+      do_enter
+      change = @job.state_changes.last
+      change.state.should == Job::Success
+      change.message.should == 'msg'
     end
   end
 end

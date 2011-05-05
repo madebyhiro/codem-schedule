@@ -10,6 +10,8 @@ class Job < ActiveRecord::Base
   
   belongs_to :preset
   belongs_to :host
+  
+  has_many :state_changes, :dependent => :destroy
 
   default_scope :order => ["created_at DESC"]
   scope :scheduled,   :conditions => { :state => Scheduled }

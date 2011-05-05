@@ -8,6 +8,10 @@ Scheduler::Application.routes.draw do
         get :success
         get :failed
       end
+
+      member do
+        resources :state_changes
+      end
     end
     
     resources :presets

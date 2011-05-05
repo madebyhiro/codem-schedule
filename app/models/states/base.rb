@@ -2,6 +2,7 @@ module States
   module Base
     def self.included(base)
       base.class_eval do
+        include ActiveModel::Dirty
         after_initialize  :set_initial_state
         after_create      { enter(initial_state) }
       end
@@ -11,9 +12,14 @@ module States
       Job::Scheduled
     end
     
-    def enter(state, parameters={})
-      update_attributes :state => state
-      self.send("enter_#{state}", parameters)
+    def enter(state, params={})
+      self.state = state
+      if state_changed?
+        self.state_changes << StateChange.new(:state => state, :message => params['message'])
+      end
+      save
+      
+      self.send("enter_#{state}", params)
       self
     end
     

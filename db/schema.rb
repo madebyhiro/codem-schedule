@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505100818) do
+ActiveRecord::Schema.define(:version => 20110505102112) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name",                               :null => false
@@ -50,5 +50,15 @@ ActiveRecord::Schema.define(:version => 20110505100818) do
   end
 
   add_index "presets", ["name"], :name => "index_presets_on_name"
+
+  create_table "state_changes", :force => true do |t|
+    t.integer  "job_id"
+    t.string   "state"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "state_changes", ["job_id"], :name => "index_state_changes_on_job_id"
 
 end
