@@ -27,20 +27,22 @@ class Transcoder
       get("#{host.url}/jobs")
     end
     
-    def post(url, attrs)
-      send(:post, url, attrs)
+    def post(url, attrs={})
+      call_transcoder(:post, url, attrs)
     end
         
-    def get(url, attrs)
-      send(:get, url, attrs)
+    def get(url, attrs={})
+      call_transcoder(:get, url, attrs)
     end
     
     private
-      def send(method, url, attrs)
+      def call_transcoder(method, url, attrs={})
         begin
-          response = RestClient.send(method, url, attrs, :content_type => :json, :accept => :json)
+          attrs.merge!(:content_type => :json)
+          attrs.merge!(:accept => :json)
+          response = RestClient.send(method, url, attrs)
           JSON::parse response
-        rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH
+        rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, RestClient::ResourceNotFound
           false
         end
       end
