@@ -20,7 +20,7 @@ describe Transcoder do
       end
       
       it "the job should enter transcoding" do
-        @job.should_receive(:enter).with(Job::Transcoding, {'foo' => 'bar', 'host_id' => @host.id})
+        @job.should_receive(:enter).with(Job::Accepted, {'foo' => 'bar', 'host_id' => @host.id})
         do_schedule
       end
     end

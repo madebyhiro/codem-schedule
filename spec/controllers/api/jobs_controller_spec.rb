@@ -115,16 +115,16 @@ describe Api::JobsController do
     end
   end
 
-  describe "GET 'transcoding'" do
+  describe "GET 'accepted'" do
     before(:each) do
       create_job
-      @job.update_attributes(:state => Job::Transcoding)
-      Job.stub_chain(:transcoding, :page, :per).and_return [@job]
+      @job.update_attributes(:state => Job::Accepted)
+      Job.stub_chain(:accepted, :page, :per).and_return [@job]
       @job.stub!(:update_status)
     end
     
     def do_get(format)
-      get 'transcoding', :format => format
+      get 'accepted', :format => format
     end
     
     it "should update the job's status" do
@@ -132,12 +132,40 @@ describe Api::JobsController do
       do_get(:json)
     end
     
-    it "shows transcoding jobs as JSON" do
+    it "shows accepted jobs as JSON" do
       do_get(:json)
       response.body.should == [@job].to_json
     end
     
-    it "shows transcoding jobs as XML" do
+    it "shows accepted jobs as XML" do
+      do_get(:xml)
+      response.body.should == [@job].to_xml
+    end
+  end
+  
+  describe "GET 'processing'" do
+    before(:each) do
+      create_job
+      @job.update_attributes(:state => Job::Processing)
+      Job.stub_chain(:processing, :page, :per).and_return [@job]
+      @job.stub!(:update_status)
+    end
+    
+    def do_get(format)
+      get 'processing', :format => format
+    end
+    
+    it "should update the job's status" do
+      @job.should_receive(:update_status)
+      do_get(:json)
+    end
+    
+    it "shows processing jobs as JSON" do
+      do_get(:json)
+      response.body.should == [@job].to_json
+    end
+    
+    it "shows processing jobs as XML" do
       do_get(:xml)
       response.body.should == [@job].to_xml
     end

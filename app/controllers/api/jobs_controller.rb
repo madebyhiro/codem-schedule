@@ -1,7 +1,8 @@
 class Api::JobsController < Api::ApiController
   def index;        jobs_index(Job.scoped); end
   def scheduled;    jobs_index(Job.scheduled); end
-  def transcoding;  jobs_index(Job.transcoding); end
+  def accepted;     jobs_index(Job.accepted); end
+  def processing;   jobs_index(Job.processing); end
   def on_hold;      jobs_index(Job.on_hold); end
   def success;      jobs_index(Job.success); end
   def failed;       jobs_index(Job.failed); end
@@ -28,13 +29,7 @@ class Api::JobsController < Api::ApiController
   private
     def jobs_index(jobs)
       jobs = jobs.page(params[:page]).per(20)
-
-      jobs.select do |job| 
-        if job.state == Job::Processing || job.state == Job::Transcoding
-          job.update_status
-        end
-      end
-
+      jobs.select(&:unfinished?).map(&:update_status)
       respond_with jobs
     end
 end

@@ -28,26 +28,26 @@ describe States::Base do
     end
   end
   
-  describe "entering transcoding state" do
+  describe "entering accepted state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
       Time.stub!(:current).and_return @t
     end
     
     def do_enter
-      @job.enter(Job::Transcoding, { 'job_id' => 2 })
+      @job.enter(Job::Accepted, { 'job_id' => 2 })
     end
     
     it "should set the parameters" do
       do_enter
       @job.remote_job_id.should == 2
       @job.transcoding_started_at.should == @t
-      @job.state.should == Job::Transcoding
+      @job.state.should == Job::Accepted
     end
     
     it "should generate a state change" do
       do_enter
-      @job.state_changes.last.state.should == Job::Transcoding
+      @job.state_changes.last.state.should == Job::Accepted
     end
   end
   

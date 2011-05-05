@@ -8,7 +8,7 @@ class Transcoder
 
       if attrs
         attrs.merge!('host_id' => host.id)
-        job.enter(Job::Transcoding, attrs)
+        job.enter(Job::Accepted, attrs)
       else
         false
       end

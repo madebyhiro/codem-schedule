@@ -32,7 +32,7 @@ module States
         Jobs::ScheduleJob.new(self, params).perform
       end
 
-      def enter_transcoding(params)
+      def enter_accepted(params)
         update_attributes :host_id => params['host_id'],
                           :remote_job_id => params['job_id'],
                           :transcoding_started_at => Time.current

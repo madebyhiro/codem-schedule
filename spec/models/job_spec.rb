@@ -39,4 +39,14 @@ describe Job do
       update.should == @job
     end
   end
+  
+  describe "unfinished" do
+    it "should be unfinished if Accepted" do
+      Job.new(:state => Job::Accepted).should be_unfinished
+    end
+
+    it "should be unfinished if Processing" do
+      Job.new(:state => Job::Processing).should be_unfinished
+    end
+  end
 end
