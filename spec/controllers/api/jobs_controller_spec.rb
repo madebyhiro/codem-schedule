@@ -10,8 +10,8 @@ describe Api::JobsController do
   end
   
   describe "POST 'create'" do
-    def do_post
-      post "create", :input => 'input', :output => 'output', :preset => 'h264'
+    def do_post(format=:json)
+      post "create", :input => 'input', :output => 'output', :preset => 'h264', :format => format
     end
     
     it "creates jobs" do
@@ -21,6 +21,11 @@ describe Api::JobsController do
       job.source_file.should == 'input'
       job.destination_file.should == 'output'
       job.preset.name.should == 'h264'
+    end
+    
+    it "should redirect to /jobs if :html" do
+      do_post(:html)
+      response.should redirect_to(jobs_path)
     end
   end
   

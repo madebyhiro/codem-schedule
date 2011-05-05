@@ -7,4 +7,7 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @job.update_status
   end
+  
+  def new
+  end
 end

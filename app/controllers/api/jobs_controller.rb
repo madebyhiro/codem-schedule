@@ -11,7 +11,10 @@ class Api::JobsController < Api::ApiController
     job = Job.from_api(params)
     job.callback_url = api_jobs_url
     job.save
-    respond_with job, :location => api_job_url(job)
+
+    respond_with job, :location => api_job_url(job) do |format|
+      format.html { redirect_to jobs_path }
+    end
   end
   
   def update

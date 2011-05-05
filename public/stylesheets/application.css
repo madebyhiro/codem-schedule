@@ -84,3 +84,24 @@ table.items tr td.progress div.bar div.progress {
 }
 video { margin-bottom: 0.5em; }
 pre { margin: 0; }
+
+form {
+  margin: 1em 0;
+  padding: 1em;
+  border: 2px solid #cccccc;
+}
+form fieldset {
+  border: 0;
+  margin: 1em 0;
+  padding: 1em;
+  font-size: 14px;
+}
+form fieldset legend { font-weight: bold; }
+form fieldset li { margin: 0.5em 0; }
+form fieldset li label {
+  display: block;
+  width: 20%;
+  float: left;
+}
+form fieldset li input { width: 70%; }
+form fieldset li textarea { width: 70%; }
