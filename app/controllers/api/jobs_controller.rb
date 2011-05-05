@@ -3,7 +3,6 @@ class Api::JobsController < Api::ApiController
   def scheduled;    jobs_index(Job.scheduled); end
   def accepted;     jobs_index(Job.accepted); end
   def processing;   jobs_index(Job.processing); end
-  def on_hold;      jobs_index(Job.on_hold); end
   def success;      jobs_index(Job.success); end
   def failed;       jobs_index(Job.failed); end
   

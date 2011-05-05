@@ -171,27 +171,6 @@ describe Api::JobsController do
     end
   end
   
-  describe "GET 'on_hold'" do
-    before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::OnHold)
-    end
-    
-    def do_get(format)
-      get 'on_hold', :format => format
-    end
-    
-    it "shows on hold jobs as JSON" do
-      do_get(:json)
-      response.body.should == [@job].to_json
-    end
-    
-    it "shows on hold jobs as XML" do
-      do_get(:xml)
-      response.body.should == [@job].to_xml
-    end
-  end
-  
   describe "GET 'success'" do
     before(:each) do
       create_job

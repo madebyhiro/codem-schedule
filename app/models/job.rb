@@ -4,7 +4,6 @@ class Job < ActiveRecord::Base
   Scheduled   = 'scheduled'
   Accepted    = 'accepted'
   Processing  = 'processing'
-  OnHold      = 'on_hold'
   Success     = 'success'
   Failed      = 'failed'
   
@@ -16,7 +15,6 @@ class Job < ActiveRecord::Base
   default_scope :order => ["created_at DESC"]
   scope :scheduled,   :conditions => { :state => Scheduled }
   scope :accepted,    :conditions => { :state => Accepted }
-  scope :on_hold,     :conditions => { :state => OnHold }
   scope :success,     :conditions => { :state => Success }
   scope :failed,      :conditions => { :state => Failed }
   
