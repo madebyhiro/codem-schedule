@@ -3,7 +3,8 @@ require 'spec_helper'
 describe JobsController do
   describe "GET 'index'" do
     before(:each) do
-      Job.stub!(:recents).and_return 'recent'
+      @job = double(Job, :update_status => true)
+      Job.stub!(:recents).and_return [@job]
       History.stub!(:new).and_return 'history'
     end
     
@@ -28,7 +29,12 @@ describe JobsController do
     
     it "should assign the recent jobs for the view" do
       do_get
-      assigns[:jobs].should == 'recent'
+      assigns[:jobs].should == [@job]
+    end
+    
+    it "should update the statuses" do
+      @job.should_receive(:update_status)
+      do_get
     end
   end
   

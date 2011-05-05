@@ -32,7 +32,6 @@ class Job < ActiveRecord::Base
         :preset => Preset.find_by_name(options['preset']))
   end
 
-  # TODO actually update recent jobs
   def self.recents(page=nil)
     recent.page(page).per(20)
   end
