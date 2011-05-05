@@ -1,3 +1,4 @@
+header,section { display:block; }
 header nav {
   display: block;
   clear: both;
@@ -82,7 +83,10 @@ table.items tr td.progress div.bar div.progress {
   background-color:#315863;
   height:100%;
 }
-video { margin-bottom: 0.5em; }
+video { 
+	display:block;
+	margin-bottom: 0.5em; 
+}
 pre { margin: 0; }
 
 form {
