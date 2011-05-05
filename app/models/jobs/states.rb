@@ -15,12 +15,16 @@ module Jobs
     def enter(state, params={})
       self.state = state
       if state_changed?
-        self.state_changes << StateChange.new(:state => state, :message => params['message'])
+        add_state_change(:state => state, :message => params['message'])
       end
       save
       
       self.send("enter_#{state}", params)
       self
+    end
+    
+    def add_state_change(attrs)
+      self.state_changes.build(attrs)
     end
     
     protected

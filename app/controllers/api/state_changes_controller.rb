@@ -7,6 +7,6 @@ class Api::StateChangesController < Api::ApiController
   
   private
     def find_job
-      @job = Job.find(params[:id], :include => :state_changes)
+      @job = Job.find(params[:id])
     end
 end
