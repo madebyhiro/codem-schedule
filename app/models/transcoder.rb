@@ -4,9 +4,7 @@ class Transcoder
       job  = opts[:job]
       host = opts[:host]
 
-      attrs = post("#{host.url}/jobs", job_to_json(job))
-
-      if attrs
+      if attrs = post("#{host.url}/jobs", job_to_json(job))
         attrs.merge('host_id' => host.id)
       else
         false

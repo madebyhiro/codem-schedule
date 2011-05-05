@@ -48,6 +48,10 @@ module States
                           :filesize => params['filesize']
       end
       
+      def enter_on_hold(params)
+        
+      end
+      
       def enter_failed(params)
         update_attributes :message => params['message']
       end

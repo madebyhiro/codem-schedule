@@ -37,18 +37,31 @@ describe Job do
     end
     
     describe "other states" do
-      it "should ask the transcoder for the jobs status " do
-        Transcoder.should_receive(:job_status).with(@job)
-        update
-      end
+      describe "success" do
+        it "should ask the transcoder for the jobs status " do
+          Transcoder.should_receive(:job_status).with(@job)
+          update
+        end
     
-      it "should enter the correct state" do
-        @job.should_receive(:enter).with('foo', { 'status' => 'foo', 'bar' => 'baz'})
-        update
-      end
+        it "should enter the correct state" do
+          @job.should_receive(:enter).with('foo', { 'status' => 'foo', 'bar' => 'baz'})
+          update
+        end
     
-      it "should return self" do
-        update.should == @job
+        it "should return self" do
+          update.should == @job
+        end
+      end
+      
+      describe "failed" do
+        before(:each) do
+          Transcoder.stub!(:job_status).and_return false
+        end
+        
+        it "should enter on hold" do
+          @job.should_receive(:enter).with(Job::OnHold)
+          update
+        end
       end
     end
   end
@@ -64,6 +77,10 @@ describe Job do
 
     it "should be unfinished if Processing" do
       Job.new(:state => Job::Processing).should be_unfinished
+    end
+
+    it "should be unfinished if Processing" do
+      Job.new(:state => Job::OnHold).should be_unfinished
     end
   end
 end

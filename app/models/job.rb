@@ -4,6 +4,7 @@ class Job < ActiveRecord::Base
   Scheduled   = 'scheduled'
   Accepted    = 'accepted'
   Processing  = 'processing'
+  OnHold      = 'on_hold'
   Success     = 'success'
   Failed      = 'failed'
   
@@ -16,9 +17,10 @@ class Job < ActiveRecord::Base
   scope :scheduled,   :conditions => { :state => Scheduled }
   scope :accepted,    :conditions => { :state => Accepted }
   scope :success,     :conditions => { :state => Success }
+  scope :on_hold,     :conditions => { :state => OnHold }
   scope :failed,      :conditions => { :state => Failed }
 
-  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing]).order("id ASC") }
+  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]).order("id ASC") }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -34,12 +36,14 @@ class Job < ActiveRecord::Base
     else
       if attrs = Transcoder.job_status(self)
         enter(attrs['status'], attrs)
+      else
+        enter(Job::OnHold)
       end
     end
     self
   end
   
   def unfinished?
-    state == Scheduled || state == Accepted || state == Processing
+    state == Scheduled || state == Accepted || state == Processing || state == OnHold
   end
 end
