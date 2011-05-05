@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  options[:host] = 'http://127.0.0.1:3000'
+  opts.on('-H', '--host [HOST]', "Host to connect to, defaults to 127.0.0.1:3000") do |h|
+    options[:host] = h
+  end
+  
+  opts.on('-i', '--input [FILE]', "Input file to convert") do |i|
+    options[:input] = i
+  end
+  
+  opts.on('-o', '--output [FILE]', "Output file to write to") do |o|
+    options[:output] = o
+  end
+  
+  opts.on('-p', '--preset [NAME]', "Codem preset to use") do |p|
+    options[:preset] = p
+  end
+  
+  opts.on('-h', '--help', 'Display this screen') do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!
+
+args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}"
+cmd  = "curl -d '#{args}' '#{options[:host]}/api/jobs'"
+
+Kernel.exec(cmd)
