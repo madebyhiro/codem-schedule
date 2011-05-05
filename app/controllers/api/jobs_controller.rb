@@ -27,6 +27,14 @@ class Api::JobsController < Api::ApiController
   
   private
     def jobs_index(jobs)
-      respond_with jobs.page(params[:page]).per(20)
+      jobs = jobs.page(params[:page]).per(20)
+
+      jobs.select do |job| 
+        if job.state == Job::Processing || job.state == Job::Transcoding
+          job.update_status
+        end
+      end
+
+      respond_with jobs
     end
 end

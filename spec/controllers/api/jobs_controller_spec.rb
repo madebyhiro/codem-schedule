@@ -119,10 +119,17 @@ describe Api::JobsController do
     before(:each) do
       create_job
       @job.update_attributes(:state => Job::Transcoding)
+      Job.stub_chain(:transcoding, :page, :per).and_return [@job]
+      @job.stub!(:update_status)
     end
     
     def do_get(format)
       get 'transcoding', :format => format
+    end
+    
+    it "should update the job's status" do
+      @job.should_receive(:update_status)
+      do_get(:json)
     end
     
     it "shows transcoding jobs as JSON" do
