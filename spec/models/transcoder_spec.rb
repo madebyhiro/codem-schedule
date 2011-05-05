@@ -4,7 +4,7 @@ describe Transcoder do
   describe "scheduling a job" do
     before(:each) do
       @preset = Preset.create!(:name => 'h264', :parameters => 'params')
-      @job    = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset => @preset)
+      @job    = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset => @preset, :callback_url => 'callback_url')
       @host   = Host.create!(:name => 'name', :url => 'url')
 
       Transcoder.stub!(:post)
@@ -41,7 +41,7 @@ describe Transcoder do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'callback_urls' => ["http://127.0.0.1:3000/api/jobs/#{@job.id}"]
+        'callback_urls' => ["callback_url/#{@job.to_param}"]
       }.to_json
     end
   end

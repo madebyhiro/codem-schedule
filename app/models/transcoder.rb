@@ -19,8 +19,12 @@ class Transcoder
         'source_file' => job.source_file,
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
-        'callback_urls' => ["http://127.0.0.1:3000/api/jobs/#{job.id}"]
+        'callback_urls' => [callback_url(job)]
       }.to_json
+    end
+    
+    def callback_url(job)
+      [job.callback_url, job.to_param].join('/')
     end
 
     def status(host)

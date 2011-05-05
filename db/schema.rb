@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504132325) do
+ActiveRecord::Schema.define(:version => 20110505090744) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name",                               :null => false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110504132325) do
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
+    t.string   "callback_url"
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"

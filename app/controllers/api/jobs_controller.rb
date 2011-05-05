@@ -1,30 +1,14 @@
 class Api::JobsController < Api::ApiController
-  def index
-    jobs_index(Job.scoped)
-  end
-
-  def scheduled
-    jobs_index(Job.scheduled)
-  end
-  
-  def transcoding
-    jobs_index(Job.transcoding)
-  end
-  
-  def on_hold
-    jobs_index(Job.on_hold)
-  end
-  
-  def completed
-    jobs_index(Job.completed)
-  end
-  
-  def failed
-    jobs_index(Job.failed)
-  end
+  def index;        jobs_index(Job.scoped); end
+  def scheduled;    jobs_index(Job.scheduled); end
+  def transcoding;  jobs_index(Job.transcoding); end
+  def on_hold;      jobs_index(Job.on_hold); end
+  def completed;    jobs_index(Job.completed); end
+  def failed;       jobs_index(Job.failed); end
   
   def create
     job = Job.from_api(params)
+    job.callback_url = api_jobs_url
     job.save
     respond_with job, :location => api_job_url(job)
   end
