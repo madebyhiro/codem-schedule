@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Transcoder do
   describe "scheduling a job" do
     before(:each) do
-      @preset = Preset.create!(:name => 'h264', :parameters => 'params')
-      @job    = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset => @preset, :callback_url => 'callback_url')
-      @host   = Host.create!(:name => 'name', :url => 'url')
+      @preset = Factory(:preset)
+      @job    = Factory(:job, :preset_id => @preset.id)
+      @host   = Factory(:host)
 
       Transcoder.stub!(:post)
     end
@@ -48,7 +48,7 @@ describe Transcoder do
 
   describe "getting a host's status" do
     before(:each) do
-      @host = Host.create!(:name => 'name', :url => 'url')
+      @host = Factory(:host)
       Transcoder.stub!(:call_transcoder).and_return true
     end
     
@@ -64,8 +64,8 @@ describe Transcoder do
   
   describe "getting a job's status" do
     before(:each) do
-      @host = Host.create!(:name => 'name', :url => 'url')
-      @job  = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset_id => 1, :host => @host, :remote_job_id => 1)
+      @host = Factory(:host)
+      @job  = Factory(:job, :host_id => @host.id)
       Transcoder.stub!(:call_transcoder).and_return true
     end
     

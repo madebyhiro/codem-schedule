@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Jobs::ScheduleJob do
   before(:each) do
-    @subject = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset_id => 1)
+    @host    = Factory(:host)
+    @subject = Factory(:job)
     @job     = Jobs::ScheduleJob.new(@subject)
-    @host    = Host.create!(:name => 'name', :url => 'url')
     
     Host.stub!(:with_available_slots).and_return [@host]
     Transcoder.stub!(:schedule)

@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Job do
   describe "generating a job via the API" do
     before(:each) do
-      @preset = Preset.create!(:name => 'preset', :parameters => 'params')
+      @preset = Factory(:preset)
     end
     
     it "should map the attributes correctly" do
-      job = Job.from_api({"input" => "input", "output" => "output", "preset" => "preset"})
+      job = Job.from_api({"input" => "input", "output" => "output", "preset" => @preset.name})
       job.source_file.should == 'input'
       job.destination_file.should == 'output'
       job.preset.should == @preset

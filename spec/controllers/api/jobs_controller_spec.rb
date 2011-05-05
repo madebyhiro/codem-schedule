@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Api::JobsController do
   before(:each) do
-    @preset = Preset.create!(:name => 'h264', :parameters => 'params')
+    @preset = Factory(:preset)
   end
 
   def create_job
-    @job = Job.create!(:source_file => 'input', :destination_file => 'output', :preset => @preset)
+    @job = Factory(:job)
   end
   
   describe "POST 'create'" do

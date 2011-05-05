@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Api::PresetsController do
   def create_preset
-    @preset = Preset.create!(:name => 'name', :parameters => 'params')
+    @preset = Factory(:preset)
   end
   
   describe "POST 'create'" do

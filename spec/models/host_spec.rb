@@ -25,7 +25,7 @@ describe Host do
   
   describe "updating a host's status" do
     before(:each) do
-      @host = Host.create!(:name => 'name', :url => 'url')
+      @host = Factory(:host)
     end
     
     def update

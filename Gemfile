@@ -11,4 +11,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'ZenTest'
   gem 'simplecov', :require => false
+	gem 'factory_girl_rails'
 end

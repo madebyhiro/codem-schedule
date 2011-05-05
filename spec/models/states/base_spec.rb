@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe States::Base do
   before(:each) do
-    @job = Job.create!(:source_file => 'source', :destination_file => 'dest', :preset_id => 1)
+    @job = Factory(:job)
   end
   
   it "should set the initial state to scheduled" do
