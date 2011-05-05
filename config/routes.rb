@@ -18,13 +18,7 @@ Scheduler::Application.routes.draw do
     resources :presets
   end
   
-  resources :jobs do
-    collection do
-      get :fetch
-    end
-  end
-
-  resources :presets, :hosts
+  resources :jobs, :presets, :hosts
   
   match '/' => redirect('/jobs')
 end
