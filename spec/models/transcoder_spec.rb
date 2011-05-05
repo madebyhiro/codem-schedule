@@ -88,11 +88,11 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json})
+      RestClient.should_receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
       do_post.should == {'foo' => 'bar'}
     end
     
-    [RestClient::ResourceNotFound, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
       it "should recover from #{ex}" do
         RestClient.stub!(:post).and_raise ex
         do_post.should == false
@@ -110,11 +110,11 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json})
+      RestClient.should_receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
       do_get
     end
 
-    [RestClient::ResourceNotFound, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
       it "should recover from #{ex}" do
         RestClient.stub!(:get).and_raise ex
         do_get.should == false
