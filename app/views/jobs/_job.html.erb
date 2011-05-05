@@ -1,3 +1,4 @@
+
 <%= content_tag_for :tr, job, :class => "#{cycle('even', 'odd')} #{job.state}" do %>
   <td class="id">
     <%= link_to job.id, job %>
@@ -20,17 +21,14 @@
   <td class="host" title="<%= strip_tags host_name(job.host) if job.host %>">
     <%= job.host.try(:name) %>
   </td>
-  <td class="progress">
+  <td class="progress <%= job.state %>" title="<%= job.message %>">
     <%= job.state.capitalize %>
     
-		<% if job.state == Job::Processing %>
+		<%- if job.state == Job::Processing -%>
       : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
       <div class="bar">
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
       </div>
-    <% elsif job.state == Job::Failed %>
-      <p><%= job.message %></p>
-    <% end %>
-
+    <%- end -%>
   </td>
 <% end %>
