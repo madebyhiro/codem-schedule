@@ -35,10 +35,10 @@
 			<td title="<%= number_with_delimiter @history.seconds_encoded %> seconds">
 				<%= number_to_time @history.seconds_encoded %>
 			</td>
-			<td title="<%= number_with_delimiter @history.average_processing_time %> seconds">
+			<td title="<%= number_with_precision @history.average_processing_time %> seconds">
 				<%= number_to_time @history.average_processing_time %>
 			</td>
-			<td title="<%= number_with_delimiter @history.average_queue_time %> seconds">
+			<td title="<%= number_with_precision @history.average_queue_time %> seconds">
 				<%= number_to_time @history.average_queue_time %>
 			</td>
 		</tr>

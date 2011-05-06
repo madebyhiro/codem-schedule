@@ -6,4 +6,12 @@ module JobsHelper
   def new_job_link
     link_to 'New job', new_job_path
   end
+  
+  def encoding_time(job)
+    job.completed_at.to_i - job.transcoding_started_at.to_i
+  end
+  
+  def destination_filesize(job)
+    File.size(job.destination_file)
+  end
 end
