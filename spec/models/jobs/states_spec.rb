@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Jobs::States do
   before(:each) do
     @job = Factory(:job)
+    @job.stub!(:notify_responders)
   end
 
   it "should set the initial state to scheduled" do
@@ -11,10 +12,23 @@ describe Jobs::States do
   end
   
   describe "entering a state" do
+    def do_enter
+      @job.stub!(:enter_void)
+      @job.enter(:void, :foo => 'bar')
+    end
+    
     it "should enter the specified state with parameters" do
       @job.should_receive(:enter_void).with(:foo => 'bar')
-      result = @job.enter(:void, :foo => 'bar')
-      result.should == @job
+      do_enter
+    end
+    
+    it "should notify the responders" do
+      @job.should_receive(:notify_responders)
+      do_enter
+    end
+    
+    it "should return the job" do
+      do_enter.should == @job
     end
   end
   

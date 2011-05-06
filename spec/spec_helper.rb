@@ -1,4 +1,5 @@
 require 'simplecov'
+
 SimpleCov.start 'rails' do
   add_group "Controllers", do |src_file| 
     src_file.filename =~ /app\/controllers/ && not(src_file.filename =~ /app\/controllers\/api/)

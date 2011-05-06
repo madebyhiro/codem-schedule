@@ -9,7 +9,7 @@ class Api::JobsController < Api::ApiController
   
   def create
     job = Job.from_api(params, :callback_url => lambda { |job| api_job_url(job) })
-    if job.save
+    if job.valid?
       response.headers["X-State-Changes-Location"] = api_state_changes_url(job)
       respond_with job, :location => api_job_url(job) do |format|
         format.html { redirect_to jobs_path }

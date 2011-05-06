@@ -1,5 +1,6 @@
 class Job < ActiveRecord::Base
   include Jobs::States
+  include Jobs::Notifications
   
   Scheduled   = 'scheduled'
   Accepted    = 'accepted'

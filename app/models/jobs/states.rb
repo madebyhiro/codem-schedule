@@ -13,8 +13,10 @@ module Jobs
     
     def enter(state, params={})
       self.state = state
+
       if state_changed?
         add_state_change(:state => state, :message => params['message'])
+        notify_responders
       end
       save
       

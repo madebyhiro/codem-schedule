@@ -2,9 +2,14 @@
 
 require 'optparse'
 
+ARGV << "-h" if ARGV.empty?
+
 options = {}
 
 optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: codem [OPTIONS]"
+  opts.separator ""
+  
   options[:host] = 'http://127.0.0.1:3000'
   opts.on('-H', '--host [HOST]', "Host to connect to, defaults to 127.0.0.1:3000") do |h|
     options[:host] = h
@@ -18,16 +23,16 @@ optparse = OptionParser.new do |opts|
     options[:output] = o
   end
   
-  opts.on('-p', '--preset [NAME]', "Codem preset to use") do |p|
+  opts.on('-p', '--preset [NAME]', "Preset to use") do |p|
     options[:preset] = p
   end
   
   options[:verbose] = ''
-  opts.on('-v', '--verbose', "Print verbose output") do |v|
-    options[:verbose] = '-i '
+  opts.on('-v', '--verbose', "Print curl's verbose output") do |v|
+    options[:verbose] = '-i'
   end
   
-  opts.on('-h', '--help', 'Display this screen') do
+  opts.on_tail('-h', '--help', 'Display this screen') do
     puts opts
     exit
   end
@@ -36,6 +41,6 @@ end
 optparse.parse!
 
 args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}"
-cmd  = "curl #{options[:verbose]}-d '#{args}' '#{options[:host]}/api/jobs'"
+cmd  = "curl #{options[:verbose]} -d '#{args}' '#{options[:host]}/api/jobs'"
 
 Kernel.exec(cmd)
