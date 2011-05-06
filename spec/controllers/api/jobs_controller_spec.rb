@@ -10,22 +10,40 @@ describe Api::JobsController do
   end
   
   describe "POST 'create'" do
-    def do_post(format=:json)
-      post "create", :input => 'input', :output => 'output', :preset => 'h264', :format => format
-    end
+    describe "valid request" do
+      def do_post(format=:json)
+        post "create", :input => 'input', :output => 'output', :preset => 'h264', :format => format
+      end
     
-    it "creates jobs" do
-      do_post
+      it "creates jobs" do
+        do_post
 
-      job = Job.last
-      job.source_file.should == 'input'
-      job.destination_file.should == 'output'
-      job.preset.name.should == 'h264'
+        job = Job.last
+        job.source_file.should == 'input'
+        job.destination_file.should == 'output'
+        job.preset.name.should == 'h264'
+        job.callback_url.should == api_job_url(job)
+      end
+    
+      it "should redirect to /jobs if :html" do
+        do_post(:html)
+        response.should redirect_to(jobs_path)
+      end
     end
     
-    it "should redirect to /jobs if :html" do
-      do_post(:html)
-      response.should redirect_to(jobs_path)
+    describe "invalid request" do
+      def do_post(format=:json)
+        post "create", :input => 'input', :preset => 'h264', :format => format
+      end
+      
+      it "should not create jobs" do
+        lambda { do_post }.should_not change(Job, :count)
+      end
+      
+      it "should render /jobs/new if :html" do
+        do_post(:html)
+        response.should render_template('/jobs/new')
+      end
     end
   end
   

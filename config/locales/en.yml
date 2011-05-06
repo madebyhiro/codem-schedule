@@ -2,4 +2,9 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      job:        
+        source_file: 'Input file'
+        destination_file: 'Output file'
+        preset_id: 'Preset'

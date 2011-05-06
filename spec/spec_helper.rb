@@ -6,6 +6,9 @@ SimpleCov.start 'rails' do
   add_group "API Controllers", do |src_file|
     src_file.filename =~ /app\/controllers\/api/
   end
+  add_filter do |src_file| 
+    src_file.filename =~ /vendor/
+  end
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'

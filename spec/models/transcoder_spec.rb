@@ -40,7 +40,7 @@ describe Transcoder do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'callback_urls' => ["callback_url/#{@job.to_param}"]
+        'callback_urls' => ["callback_url"]
       }.to_json
     end
   end
