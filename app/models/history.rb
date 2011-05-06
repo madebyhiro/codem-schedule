@@ -9,7 +9,7 @@ class History
   end
   
   def jobs
-    @jobs ||= Job.where(:completed_at => between)
+    @jobs ||= Job.where(:created_at => between)
   end
   
   def between
