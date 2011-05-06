@@ -7,6 +7,7 @@ describe Jobs::States do
 
   it "should set the initial state to scheduled" do
     Job.new.state.should == Job::Scheduled
+    Job.new.initial_state.should == Job::Scheduled
   end
   
   describe "entering a state" do
