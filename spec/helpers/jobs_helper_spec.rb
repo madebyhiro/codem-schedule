@@ -16,6 +16,11 @@ describe JobsHelper do
     encoding_time(job).should == 5
   end
   
+  it "should return 0 for any weird encoding times" do
+    job = double(Job, :completed_at => nil, :transcoding_started_at => 1)
+    encoding_time(job).should == 0
+  end
+  
   it "should return the correct filesize of the destination file" do
     File.should_receive(:size).with('foo').and_return 2_000
     job = double(Job, :destination_file => 'foo')

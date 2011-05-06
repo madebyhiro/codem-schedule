@@ -19,7 +19,7 @@ class Job < ActiveRecord::Base
   scope :on_hold,     :conditions => { :state => OnHold }, :order => ["created_at DESC"]
   scope :failed,      :conditions => { :state => Failed }, :order => ["created_at DESC"]
 
-  scope :recent, :limit => 25, :include => [:host, :preset], :order => ["created_at DESC"]
+  scope :recent, :include => [:host, :preset], :order => ["created_at DESC"]
   
   scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]) }
   
@@ -39,7 +39,7 @@ class Job < ActiveRecord::Base
   end
 
   def self.recents(page=nil)
-    recent.page(page).per(20)
+    recent.page(page).per(25)
   end
   
   def update_status

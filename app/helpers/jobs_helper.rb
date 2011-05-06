@@ -8,7 +8,8 @@ module JobsHelper
   end
   
   def encoding_time(job)
-    job.completed_at.to_i - job.transcoding_started_at.to_i
+    time = job.completed_at.to_i - job.transcoding_started_at.to_i
+    time < 0 ? 0 : time
   end
   
   def destination_filesize(job)

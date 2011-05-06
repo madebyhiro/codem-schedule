@@ -31,4 +31,7 @@
       </div>
     <%- end -%>
   </td>
+	<td class="completed_after" title="<%= encoding_time job %> seconds">
+		<%= number_to_time encoding_time(job) %>
+	</td>
 <% end %>
