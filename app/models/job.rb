@@ -13,16 +13,15 @@ class Job < ActiveRecord::Base
   
   has_many :state_changes, :dependent => :destroy
 
-  default_scope :order => ["created_at DESC"]
-  scope :scheduled,   :conditions => { :state => Scheduled }
-  scope :accepted,    :conditions => { :state => Accepted }
-  scope :success,     :conditions => { :state => Success }
-  scope :on_hold,     :conditions => { :state => OnHold }
-  scope :failed,      :conditions => { :state => Failed }
+  scope :scheduled,   :conditions => { :state => Scheduled }, :order => ["created_at DESC"]
+  scope :accepted,    :conditions => { :state => Accepted }, :order => ["created_at DESC"]
+  scope :success,     :conditions => { :state => Success }, :order => ["created_at DESC"]
+  scope :on_hold,     :conditions => { :state => OnHold }, :order => ["created_at DESC"]
+  scope :failed,      :conditions => { :state => Failed }, :order => ["created_at DESC"]
 
-  scope :recent, :limit => 25, :include => [:host, :preset]
+  scope :recent, :limit => 25, :include => [:host, :preset], :order => ["created_at DESC"]
   
-  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]).order("id ASC") }
+  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
