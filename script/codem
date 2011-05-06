@@ -22,6 +22,11 @@ optparse = OptionParser.new do |opts|
     options[:preset] = p
   end
   
+  options[:verbose] = ''
+  opts.on('-v', '--verbose', "Print verbose output") do |v|
+    options[:verbose] = '-i '
+  end
+  
   opts.on('-h', '--help', 'Display this screen') do
     puts opts
     exit
@@ -31,6 +36,6 @@ end
 optparse.parse!
 
 args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}"
-cmd  = "curl -d '#{args}' '#{options[:host]}/api/jobs'"
+cmd  = "curl #{options[:verbose]}-d '#{args}' '#{options[:host]}/api/jobs'"
 
 Kernel.exec(cmd)

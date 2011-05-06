@@ -24,7 +24,12 @@ describe Api::JobsController do
         job.preset.name.should == 'h264'
         job.callback_url.should == api_job_url(job)
       end
-    
+
+      it "should set the state changes header" do
+        do_post
+        response.headers['X-State-Changes-Location'].should == api_state_changes_url(Job.last)
+      end
+      
       it "should redirect to /jobs if :html" do
         do_post(:html)
         response.should redirect_to(jobs_path)

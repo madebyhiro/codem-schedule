@@ -5,12 +5,36 @@ describe Job do
     before(:each) do
       @preset = Factory(:preset)
     end
+
+    describe "successfull save" do
+      before(:each) do
+        @job = Job.from_api({"input" => "input", "output" => "output", "preset" => @preset.name}, :callback_url => lambda { |job| "callback_#{job.id}" })
+      end
+      
+      it "should map the attributes correctly" do
+        @job.source_file.should == 'input'
+        @job.destination_file.should == 'output'
+        @job.preset.should == @preset
+        @job.callback_url.should == "callback_#{@job.id}"
+      end
+      
+      it "should be saved" do
+        @job.should_not be_new_record
+      end
     
-    it "should map the attributes correctly" do
-      job = Job.from_api({"input" => "input", "output" => "output", "preset" => @preset.name})
-      job.source_file.should == 'input'
-      job.destination_file.should == 'output'
-      job.preset.should == @preset
+      it "should be in the scheduled state" do
+        @job.state.should == Job::Scheduled
+      end
+    end
+    
+    describe "failed save" do
+      before(:each) do
+        @job = Job.from_api({}, {})
+      end
+      
+      it "should not be saved" do
+        @job.should be_new_record
+      end
     end
   end
   

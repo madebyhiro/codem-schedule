@@ -26,10 +26,17 @@ class Job < ActiveRecord::Base
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
-  def self.from_api(options)
-    new(:source_file => options['input'],
-        :destination_file => options['output'],
-        :preset => Preset.find_by_name(options['preset']))
+  def self.from_api(options, opts)
+    job = new(:source_file => options['input'],
+              :destination_file => options['output'],
+              :preset => Preset.find_by_name(options['preset']))
+
+    if job.save
+      job.update_attributes :callback_url => opts[:callback_url].call(job)
+      job.enter(Job::Scheduled)
+    end
+    
+    job
   end
 
   def self.recents(page=nil)

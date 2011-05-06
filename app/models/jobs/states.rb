@@ -4,7 +4,6 @@ module Jobs
       base.class_eval do
         include ActiveModel::Dirty
         after_initialize  :set_initial_state
-        after_create      { enter(initial_state) }
       end
     end
     

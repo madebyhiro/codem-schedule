@@ -8,16 +8,15 @@ class Api::JobsController < Api::ApiController
   def failed;       jobs_index(Job.failed); end
   
   def create
-    @job = Job.from_api(params)
-    if @job.save
-      @job.update_attributes :callback_url => api_job_url(@job)
-
-      respond_with @job, :location => api_job_url(@job) do |format|
+    job = Job.from_api(params, :callback_url => lambda { |job| api_job_url(job) })
+    if job.save
+      response.headers["X-State-Changes-Location"] = api_state_changes_url(job)
+      respond_with job, :location => api_job_url(job) do |format|
         format.html { redirect_to jobs_path }
       end
     else
-      respond_with @job do |format|
-        format.html { render "/jobs/new"}
+      respond_with job do |format|
+        format.html { @job = job; render "/jobs/new"}
       end
     end
   end

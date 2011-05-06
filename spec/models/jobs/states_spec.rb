@@ -4,9 +4,9 @@ describe Jobs::States do
   before(:each) do
     @job = Factory(:job)
   end
-  
+
   it "should set the initial state to scheduled" do
-    Job.new.state.should == Job::Scheduled    
+    Job.new.state.should == Job::Scheduled
   end
   
   describe "entering a state" do
