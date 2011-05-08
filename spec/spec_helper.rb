@@ -7,6 +7,9 @@ SimpleCov.start 'rails' do
   add_group "API Controllers", do |src_file|
     src_file.filename =~ /app\/controllers\/api/
   end
+  add_group 'Mailers', do |src_file|
+    src_file.filename =~ /app\/mailers/
+  end
   add_filter do |src_file| 
     src_file.filename =~ /vendor/
   end
