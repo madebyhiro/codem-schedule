@@ -21,9 +21,44 @@ describe JobsHelper do
     encoding_time(job).should == 0
   end
   
-  it "should return the correct filesize of the destination file" do
-    File.should_receive(:size).with('foo').and_return 2_000
-    job = double(Job, :destination_file => 'foo')
-    destination_filesize(job).should == 2_000
+  describe "destination filesize" do
+    before(:each) do
+      @job = double(Job, :destination_file => 'foo')
+    end
+    
+    def filesize
+      destination_filesize(@job)
+    end
+    
+    it "should return the correct filesize" do
+      File.should_receive(:size).with('foo').and_return 2_000
+      filesize.should == 2_000
+    end
+    
+    it "should handle missing files correctly" do
+      File.stub!(:size).and_raise Errno::ENOENT
+      filesize.should == 'unknown (file gone)'
+    end
+  end
+  
+  
+  describe "notification dates" do
+    before(:each) do
+      job  = double(Job, :completed_at => 10)
+      @not = double(Notification, :notified_at => 20, :job => job)
+    end
+    
+    def notify
+      notified_at @not
+    end
+    
+    it "should return the correct number" do
+      notify.should == '00:00:10'
+    end
+    
+    it "should handle not sent notifications" do
+      @not.stub!(:notified_at).and_return nil
+      notify.should == nil
+    end
   end
 end

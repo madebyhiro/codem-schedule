@@ -21,6 +21,28 @@
 	<% end %>
 </table>
 
+
+<h2>Notifications</h2>
+
+<table class="items">
+	<tr class="odd">
+		<th>Type</th>
+		<th>Value</th>
+		<th>State</th>
+		<th>After</th>
+	</tr>
+	<% for notification in @job.notifications %>
+		<tr>
+			<td><%= notification.name %></td>
+			<td><%= auto_link(notification.value).html_safe %></td>
+			<td><%= notification.state.titleize %></td>
+			<td title="<%= I18n.l notification.notified_at if notification.notified_at %>">
+				<%= notified_at notification %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+
 <h2>Preset parameters</h2>
 <pre><%= @job.preset.parameters %></pre>
 

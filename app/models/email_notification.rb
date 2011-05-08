@@ -1,5 +1,5 @@
 class EmailNotification < Notification
-  def notify!(opts)
+  def do_notify!(opts)
     Emailer.state_change(:job => opts[:job], 
                          :state => opts[:state], 
                          :to => self.value).deliver

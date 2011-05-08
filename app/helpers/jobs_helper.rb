@@ -13,6 +13,17 @@ module JobsHelper
   end
   
   def destination_filesize(job)
-    File.size(job.destination_file)
+    begin
+      File.size(job.destination_file)
+    rescue Errno::ENOENT
+      'unknown (file gone)'
+    end
   end
+  
+  def notified_at(notification)
+    return nil if notification.notified_at.blank?
+    
+    num = notification.notified_at.to_i - notification.job.completed_at.to_i
+    num == 0 ? '00:00:00' : number_to_time(num)
+	end
 end

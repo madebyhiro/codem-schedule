@@ -22,4 +22,63 @@ describe Notification do
       Notification.from_api('foo@bar.com,foo.com').should == ['email', 'url']
     end
   end
+  
+  it "should return the correct name" do
+    EmailNotification.new.name.should == 'Email'
+    UrlNotification.new.name.should   == 'Url'
+  end
+  
+  it "should have the correct initial state" do
+    Notification.new.initial_state.should == Job::Scheduled
+    Notification.new.state.should == Job::Scheduled
+  end
+  
+  describe "when notifying" do
+    before(:each) do
+      @t = Time.new(2011, 1, 2, 3, 4, 5)
+      Time.stub!(:now).and_return @t
+      @not = Notification.new
+      @not.stub!(:do_notify!)
+    end
+    
+    def do_notify
+      @not.notify!('args')
+    end
+
+    it "should perform the notification" do
+      @not.should_receive(:notify!).with('args')
+      do_notify
+    end
+    
+    it "should set the notified at" do
+      do_notify
+      @not.notified_at.should == @t
+    end
+    
+    it "should return self" do
+      do_notify.should == @not
+    end
+    
+    describe "success" do
+      before(:each) do
+        @not.stub!(:do_notify!).and_return true
+      end
+      
+      it "should update the status to success" do
+        do_notify
+        @not.state.should == Job::Success
+      end
+    end
+    
+    describe "failed" do
+      before(:each) do
+        @not.stub!(:do_notify!).and_raise "Foo"
+      end
+
+      it "should update the status to failed" do
+        do_notify
+        @not.state.should == Job::Failed
+      end
+    end
+  end
 end
