@@ -12,7 +12,7 @@ class Job < ActiveRecord::Base
   belongs_to :host
   
   has_many :state_changes, :dependent => :destroy
-  has_many :notifications, :as => :origin
+  has_many :notifications, :dependent => :destroy
 
   scope :scheduled,   :conditions => { :state => Scheduled }, :order => ["created_at DESC"]
   scope :accepted,    :conditions => { :state => Accepted }, :order => ["created_at DESC"]

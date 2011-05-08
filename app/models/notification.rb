@@ -1,5 +1,4 @@
 class Notification < ActiveRecord::Base
-  belongs_to :origin, :polymorphic => true
   belongs_to :job
 
   after_initialize :set_initial_state
@@ -29,10 +28,6 @@ class Notification < ActiveRecord::Base
   
   def initial_state
     Job::Scheduled
-  end
-  
-  def ==(other)
-    self.value == other.value && self.type == other.type
   end
   
   private

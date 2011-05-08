@@ -7,7 +7,7 @@ describe Api::PresetsController do
   
   describe "POST 'create'" do
     def do_post
-      post 'create', :name => 'name', :parameters => 'params', :notify => 'foo@bar.com,http://url.com'
+      post 'create', :name => 'name', :parameters => 'params'
     end
     
     it "creates presets" do
@@ -15,7 +15,6 @@ describe Api::PresetsController do
       preset = Preset.last
       preset.name.should == 'name'
       preset.parameters.should == 'params'
-      preset.notifications.map(&:value) == ['foo@bar.com', 'http://url.com']
     end
   end
   
