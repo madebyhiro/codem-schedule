@@ -26,4 +26,9 @@ module JobsHelper
     num = notification.notified_at.to_i - notification.job.completed_at.to_i
     num == 0 ? '00:00:00' : number_to_time(num)
 	end
+	
+	def compression_rate(job)
+	  pct = (destination_filesize(job).to_f / job.filesize.to_f) * 100.0
+	  '%.2f' % pct
+	end
 end

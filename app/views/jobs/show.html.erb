@@ -53,6 +53,6 @@
   <p>
     Encoding <strong title="<%= number_with_delimiter @job.duration %> seconds"><%= number_to_time @job.duration %></strong> seconds 
 		took <strong title="<%= number_with_delimiter encoding_time(@job) %> seconds"><%= number_to_time encoding_time(@job) %></strong> seconds 
-		and resulted in a file of <strong title="<%= number_with_delimiter destination_filesize(@job) %> bytes"><%= number_to_human_size destination_filesize(@job), :precision => 5 %></strong>.
+		and resulted in a file of <strong title="<%= number_with_delimiter destination_filesize(@job) %> bytes"><%= number_to_human_size destination_filesize(@job), :precision => 5 %></strong> which is <strong><%= compression_rate @job %>%</strong> of the original.
   </p>
 <% end %>
