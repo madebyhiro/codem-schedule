@@ -44,12 +44,12 @@ describe JobsHelper do
   
   describe "notification dates" do
     before(:each) do
-      job  = double(Job, :completed_at => 10)
-      @not = double(Notification, :notified_at => 20, :job => job)
+      @job = double(Job, :completed_at => 10)
+      @not = double(Notification, :notified_at => 20)
     end
     
     def notify
-      notified_at @not
+      notified_at @not, @job
     end
     
     it "should return the correct number" do

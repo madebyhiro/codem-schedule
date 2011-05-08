@@ -71,5 +71,9 @@ module Jobs
       def notify
         notifications.each { |n| n.notify!(:job => self, :state => state) }
       end
+      
+      def all_notifications
+        (self.notification + self.preset.notifications).uniq
+      end
   end
 end

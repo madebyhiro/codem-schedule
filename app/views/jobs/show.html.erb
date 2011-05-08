@@ -37,7 +37,7 @@
 			<td><%= auto_link(notification.value).html_safe %></td>
 			<td><%= notification.state.titleize %></td>
 			<td title="<%= I18n.l notification.notified_at if notification.notified_at %>">
-				<%= notified_at notification %>
+				<%= notified_at notification, @job %>
 			</td>
 		</tr>
 	<% end %>

@@ -1,4 +1,4 @@
-%w(hosts jobs presets state_changes).each do |name|
+%w(hosts jobs presets state_changes notifications).each do |name|
   ActiveRecord::Base.connection.execute("TRUNCATE #{name}")
 end
 
