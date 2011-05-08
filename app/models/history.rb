@@ -60,6 +60,7 @@ class History
       sum + (job.transcoding_started_at - job.created_at)
     end
     
-    total_time / completed_jobs.size
+    num = total_time / completed_jobs.size
+    num < 1 ? 1 : num
   end
 end

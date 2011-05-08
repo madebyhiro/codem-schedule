@@ -31,7 +31,7 @@
       </div>
     <%- end -%>
   </td>
-	<td class="completed_after" title="<%= encoding_time job %> seconds">
+	<td class="completed_after" title="<%= I18n.l job.completed_at if job.completed_at %> seconds">
 		<%= number_to_time encoding_time(job) %>
 	</td>
 <% end %>

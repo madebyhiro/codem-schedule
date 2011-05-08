@@ -31,4 +31,10 @@ module JobsHelper
 	  pct = (destination_filesize(job).to_f / job.filesize.to_f) * 100.0
 	  '%.2f' % pct
 	end
+	
+  def number_to_time(seconds)
+    return nil if seconds.to_i < 1
+    time = Time.gm(2000,1,1) + seconds.to_i
+    Time.at(time).utc.strftime("%H:%M:%S")
+  end
 end

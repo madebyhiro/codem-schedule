@@ -67,4 +67,14 @@ describe JobsHelper do
     job = double(Job, :filesize => 2_000)
     compression_rate(job).should == '50.00'
   end
+  
+  describe "number to time" do
+    it "should return nil if seconds < 1" do
+      number_to_time(0.5).should == nil
+    end
+    
+    it "should return the correct string" do
+      number_to_time(234976).should == '17:16:16'
+    end
+  end
 end
