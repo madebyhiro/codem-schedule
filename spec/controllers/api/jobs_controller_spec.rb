@@ -147,7 +147,7 @@ describe Api::JobsController do
     before(:each) do
       create_job
       @job.update_attributes(:state => Job::Accepted)
-      Job.stub_chain(:accepted, :page, :per).and_return [@job]
+      Job.stub_chain(:accepted, :order, :page, :per).and_return [@job]
       @job.stub!(:update_status)
     end
     
@@ -175,7 +175,7 @@ describe Api::JobsController do
     before(:each) do
       create_job
       @job.update_attributes(:state => Job::Processing)
-      Job.stub_chain(:processing, :page, :per).and_return [@job]
+      Job.stub_chain(:processing, :order, :page, :per).and_return [@job]
       @job.stub!(:update_status)
     end
     
@@ -203,7 +203,7 @@ describe Api::JobsController do
     before(:each) do
       create_job
       @job.update_attributes(:state => Job::OnHold)
-      Job.stub_chain(:on_hold, :page, :per).and_return [@job]
+      Job.stub_chain(:on_hold, :order, :page, :per).and_return [@job]
       @job.stub!(:update_status)
     end
     

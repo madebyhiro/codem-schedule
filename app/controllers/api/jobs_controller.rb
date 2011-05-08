@@ -35,7 +35,7 @@ class Api::JobsController < Api::ApiController
   
   private
     def jobs_index(jobs)
-      jobs = jobs.page(params[:page]).per(20)
+      jobs = jobs.order("created_at DESC").page(params[:page]).per(20)
       jobs.select(&:unfinished?).map(&:update_status)
       respond_with jobs
     end
