@@ -12,6 +12,7 @@ class Job < ActiveRecord::Base
   belongs_to :host
   
   has_many :state_changes, :dependent => :destroy
+  has_many :notifications, :dependent => :destroy
 
   scope :scheduled,   :conditions => { :state => Scheduled }, :order => ["created_at DESC"]
   scope :accepted,    :conditions => { :state => Accepted }, :order => ["created_at DESC"]
@@ -28,7 +29,8 @@ class Job < ActiveRecord::Base
   def self.from_api(options, opts)
     job = new(:source_file => options['input'],
               :destination_file => options['output'],
-              :preset => Preset.find_by_name(options['preset']))
+              :preset => Preset.find_by_name(options['preset']),
+              :notifications => Notification.from_api(options[:notify]))
 
     if job.save
       job.update_attributes :callback_url => opts[:callback_url].call(job)

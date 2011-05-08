@@ -22,11 +22,6 @@ describe Jobs::States do
       do_enter
     end
     
-    it "should notify the responders" do
-      @job.should_receive(:notify_responders)
-      do_enter
-    end
-    
     it "should return the job" do
       do_enter.should == @job
     end
@@ -123,6 +118,11 @@ describe Jobs::States do
       change.state.should == Job::Failed
       change.message.should == 'msg'
     end
+
+    it "should send notifications" do
+      @job.should_receive(:notify)
+      do_enter
+    end
   end
   
   describe "entering success state" do
@@ -147,6 +147,11 @@ describe Jobs::States do
       change = @job.state_changes.last
       change.state.should == Job::Success
       change.message.should == 'msg'
+    end
+    
+    it "should send notifications" do
+      @job.should_receive(:notify)
+      do_enter
     end
   end
 end

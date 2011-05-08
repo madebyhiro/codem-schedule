@@ -17,7 +17,7 @@ describe History do
   
   it "should return the correct jobs" do
     @history.stub!(:between).and_return 'between'
-    Job.should_receive(:where).with(:completed_at => 'between')
+    Job.should_receive(:where).with(:created_at => 'between')
     @history.jobs
   end
   

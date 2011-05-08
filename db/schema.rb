@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505102112) do
+ActiveRecord::Schema.define(:version => 20110506171223) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name",                               :null => false
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(:version => 20110505102112) do
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "job_id"
+    t.string   "type"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["job_id"], :name => "index_notifications_on_job_id"
 
   create_table "presets", :force => true do |t|
     t.string   "name",       :null => false

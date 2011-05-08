@@ -27,6 +27,10 @@ optparse = OptionParser.new do |opts|
     options[:preset] = p
   end
   
+  opts.on('-n', '--notify [LIST]', "List of emails and/or urls separated by comma's to notify when the job is completed") do |n|
+    options[:notify] = n
+  end
+  
   options[:verbose] = ''
   opts.on('-v', '--verbose', "Print curl's verbose output") do |v|
     options[:verbose] = '-i'
@@ -40,7 +44,7 @@ end
 
 optparse.parse!
 
-args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}"
+args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}&notify=#{options[:notify]}"
 cmd  = "curl #{options[:verbose]} -d '#{args}' '#{options[:host]}/api/jobs'"
 
 Kernel.exec(cmd)

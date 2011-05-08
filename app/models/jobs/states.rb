@@ -16,7 +16,6 @@ module Jobs
 
       if state_changed?
         add_state_change(:state => state, :message => params['message'])
-        notify_responders
       end
       save
       
@@ -59,12 +58,18 @@ module Jobs
       
       def enter_failed(params)
         update_attributes :message => params['message']
+        notify
       end
       
       def enter_success(params)
         update_attributes :completed_at => Time.current,
                           :message => params['message'],
                           :progress => 1.0
+        notify
+      end
+      
+      def notify
+        notifications.each { |n| n.notify!(:job => self, :state => state) }
       end
   end
 end
