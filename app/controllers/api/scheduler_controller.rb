@@ -1,6 +1,5 @@
 class Api::SchedulerController < Api::ApiController
   def schedule
-    Runner.schedule!
-    render :nothing => true
+    respond_with Runner.schedule!
   end
 end

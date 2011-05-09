@@ -1,7 +1,7 @@
 class Runner
   def self.schedule!
-    jobs.each do |job| 
-      job.enter(job.state)
+    jobs.collect do |job| 
+      job.update_status
     end
   end
   
