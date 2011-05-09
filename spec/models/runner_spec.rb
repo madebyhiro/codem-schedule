@@ -10,10 +10,10 @@ describe Runner do
   end
   
   it "should process the correct jobs" do
-    job = double(Job, :state => 'state', :enter => true)
+    job = double(Job)
     Runner.stub!(:jobs).and_return [job]
     
-    job.should_receive(:enter).with('state')
-    Runner.schedule!
+    job.should_receive(:update_status).and_return 'updated'
+    Runner.schedule!.should == ['updated']
   end
 end
