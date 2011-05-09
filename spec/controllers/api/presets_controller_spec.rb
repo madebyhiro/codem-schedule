@@ -6,8 +6,8 @@ describe Api::PresetsController do
   end
   
   describe "POST 'create'" do
-    def do_post
-      post 'create', :name => 'name', :parameters => 'params'
+    def do_post(format=:json)
+      post 'create', :name => 'name', :parameters => 'params', :format => format
     end
     
     it "creates presets" do
@@ -15,6 +15,16 @@ describe Api::PresetsController do
       preset = Preset.last
       preset.name.should == 'name'
       preset.parameters.should == 'params'
+    end
+    
+    it "should redirect to /presets if :html" do
+      do_post(:html)
+      response.should redirect_to(presets_path)
+    end
+    
+    it "should render /presets/new if invalid and :html" do
+      post 'create', :name => 'name', :format => :html
+      response.should render_template('/presets/new')
     end
   end
   

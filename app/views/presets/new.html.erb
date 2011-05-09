@@ -1,0 +1,24 @@
+<% title 'New preset' %>
+
+<%= form_tag api_presets_path do %>
+	
+	<%= error_messages_for @preset %>
+	
+	<fieldset>
+    <legend>Preset</legend>
+    
+    <ol>
+      <li><%= label_tag :name %></li>
+      <li><%= text_field_tag :name, @preset.try(:name) %></li>
+
+      <li><%= label_tag :parameters %></li>
+      <li><%= text_area_tag :parameters, @preset.try(:parameters) %></li>
+    </ol>
+    
+  </fieldset>
+  
+  <ol class="buttons">
+    <li><%= submit_tag 'Create Preset' %></li>
+  </ol>
+
+<% end %>

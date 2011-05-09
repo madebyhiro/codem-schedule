@@ -5,7 +5,7 @@ class Preset < ActiveRecord::Base
   validates :name, :uniqueness => true
   
   def self.from_api(attributes)
-    new(:name => attributes['name'], 
-        :parameters => attributes['parameters'])
+    create(:name => attributes['name'], 
+           :parameters => attributes['parameters'])
   end
 end

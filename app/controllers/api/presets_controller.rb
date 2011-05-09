@@ -5,8 +5,16 @@ class Api::PresetsController < Api::ApiController
   
   def create
     preset = Preset.from_api(params)
-    preset.save
-    respond_with preset, :location => api_preset_url(preset)
+    
+    if preset.valid?
+      respond_with preset, :location => api_preset_url(preset) do |format|
+        format.html { redirect_to presets_path }
+      end
+    else
+      respond_with preset do |format|
+        format.html { @preset = preset; render "/presets/new"}
+      end
+    end
   end
   
   def show
