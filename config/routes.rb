@@ -18,6 +18,8 @@ Scheduler::Application.routes.draw do
     match '/schedule' => 'scheduler#schedule'
     
     resources :presets
+    
+    resources :hosts
   end
   
   resources :jobs, :presets, :hosts

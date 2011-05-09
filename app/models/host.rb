@@ -1,5 +1,15 @@
 class Host < ActiveRecord::Base
   has_many :jobs
+
+  validates :name, :url, :presence => true
+
+  def self.from_api(opts)
+    host = new(:name => opts['name'], :url => opts['url'])
+    if host.save
+      host.update_status
+    end
+    host
+  end
   
   def self.with_available_slots
     all.map(&:update_status)

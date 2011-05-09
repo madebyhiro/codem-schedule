@@ -1,6 +1,33 @@
 require 'spec_helper'
 
 describe Host do
+  describe "creating via the api" do
+    before(:each) do
+    end
+    
+    def create_host
+      Host.from_api('name' => 'name', 'url' => 'url')
+    end
+    
+    it "should map the parameters" do
+      create_host
+      host = Host.last
+      host.name.should == 'name'
+      host.url.should == 'url'
+    end
+    
+    it "should update the status" do
+      host = mock("Host", :save => true)
+      Host.stub!(:new).and_return host
+      host.should_receive(:update_status)
+      create_host
+    end
+    
+    it "should return the host" do
+      create_host.should == Host.last
+    end
+  end
+  
   describe "returning hosts with available slots" do
     before(:each) do
       @up   = double(Host, :update_status => true, :available_slots => 1)
