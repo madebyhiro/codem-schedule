@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Api::HostsController do
+  before(:each) do
+    Transcoder.stub!(:host_status).and_return {}
+  end
+  
   def create_host
     @host = Factory(:host)
   end

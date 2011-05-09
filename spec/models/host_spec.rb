@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Host do
+  before(:each) do
+    Transcoder.stub!(:host_status).and_return {}
+  end
+  
   describe "creating via the api" do
-    before(:each) do
-    end
-    
     def create_host
       Host.from_api('name' => 'name', 'url' => 'url')
     end

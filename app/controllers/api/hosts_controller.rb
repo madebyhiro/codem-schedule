@@ -1,6 +1,8 @@
 class Api::HostsController < Api::ApiController
   def index
-    respond_with Host.all
+    hosts = Host.all
+    hosts.map(&:update_status)
+    respond_with hosts
   end
   
   def create
@@ -18,6 +20,8 @@ class Api::HostsController < Api::ApiController
   end
   
   def show
-    respond_with Host.find(params[:id])
+    host = Host.find(params[:id])
+    host.update_status
+    respond_with host
   end
 end

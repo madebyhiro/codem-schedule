@@ -29,8 +29,10 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    addressable (2.2.5)
     arel (2.0.9)
     builder (2.1.2)
+    crack (0.1.8)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -93,6 +95,9 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
+    webmock (1.6.2)
+      addressable (>= 2.2.2)
+      crack (>= 0.1.7)
 
 PLATFORMS
   ruby
@@ -107,3 +112,4 @@ DEPENDENCIES
   rest-client
   rspec-rails
   simplecov
+  webmock

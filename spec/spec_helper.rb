@@ -1,3 +1,4 @@
+require 'webmock/rspec'
 require 'simplecov'
 
 SimpleCov.start 'rails' do
@@ -42,3 +43,5 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 end
+
+WebMock.disable_net_connect!
