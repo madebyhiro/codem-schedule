@@ -6,6 +6,6 @@ class Runner
   end
   
   def self.jobs
-    Job.scheduled + Job.on_hold
+    Job.scheduled + Job.on_hold + Job.processing
   end
 end
