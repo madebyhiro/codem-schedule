@@ -125,6 +125,44 @@ describe Jobs::States do
     end
   end
   
+  describe "entering on hold state" do
+    before(:each) do
+      @host = double(Host, :available? => true, :update_status => true)
+      @job.stub!(:host).and_return @host
+    end
+
+    def do_enter
+      @job.enter(Job::OnHold)
+    end
+    
+    it "should update the status of the host" do
+      @job.host.should_receive(:update_status)
+      do_enter
+    end
+    
+    describe "host is available" do
+      before(:each) do
+        @host.stub!(:available?).and_return true
+      end
+      
+      it "should enter scheduled" do
+        do_enter
+        @job.state.should == Job::Scheduled
+      end
+    end
+
+    describe "host is not available" do
+      before(:each) do
+        @host.stub!(:available?).and_return false
+      end
+      
+      it "should remain on hold" do
+        do_enter
+        @job.state.should == Job::OnHold
+      end
+    end
+  end
+  
   describe "entering success state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)

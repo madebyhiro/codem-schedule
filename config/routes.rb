@@ -14,6 +14,8 @@ Scheduler::Application.routes.draw do
         resources :state_changes
       end
     end
+
+    match '/schedule' => 'scheduler#schedule'
     
     resources :presets
   end

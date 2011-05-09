@@ -53,7 +53,8 @@ module Jobs
       end
       
       def enter_on_hold(params)
-        
+        host.update_status
+        enter(Job::Scheduled) if host.available?
       end
       
       def enter_failed(params)
