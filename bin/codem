@@ -4,47 +4,102 @@ require 'optparse'
 
 ARGV << "-h" if ARGV.empty?
 
-options = {}
+def command?(command)
+  system("which #{ command} > /dev/null 2>&1")
+end
 
-optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: codem [OPTIONS]"
-  opts.separator ""
-  
-  options[:host] = 'http://127.0.0.1:3000'
-  opts.on('-H', '--host [HOST]', "Host to connect to, defaults to 127.0.0.1:3000") do |h|
-    options[:host] = h
+class CodemCommand
+  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent
+  def initialize
+    options = {}
+
+    optparse = OptionParser.new do |opts|
+      opts.banner = "Usage: codem [OPTIONS]"
+      opts.separator ""
+
+      options[:host] = 'http://127.0.0.1:3000'
+      opts.on('-H', '--host [HOST]', "Host to connect to, defaults to 127.0.0.1:3000") do |h|
+        options[:host] = h
+      end
+
+      opts.on('-i', '--input [FILE]', "Input file to convert") do |i|
+        options[:input] = i
+      end
+
+      opts.on('-o', '--output [FILE]', "Output file to write to") do |o|
+        options[:output] = o
+      end
+
+      opts.on('-p', '--preset [NAME]', "Preset to use") do |p|
+        options[:preset] = p
+      end
+
+      opts.on('-n', '--notify [LIST]', "List of emails and/or urls separated by comma's to notify when the job is completed") do |n|
+        options[:notify] = n
+      end
+
+      options[:verbose] = false
+      opts.on('-v', '--verbose', "Print verbose output") do |v|
+        options[:verbose] = true
+      end
+      
+      options[:silent] = false
+      opts.on('-s', '--silent', 'Be silent; no output') do |s|
+        options[:silent] = true
+      end
+
+      opts.on_tail('-h', '--help', 'Display this screen') do
+        puts opts
+        exit
+      end
+    end
+
+    optparse.parse!
+    
+    @input   = options[:input]
+    @output  = options[:output]
+    @preset  = options[:preset]
+    @host    = options[:host]
+    @verbose = options[:verbose]
+    @silent  = options[:silent]
+    @host    = options[:host]
+    
+    unless @input && @output && @preset
+      puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
+      exit 1
+    end
   end
   
-  opts.on('-i', '--input [FILE]', "Input file to convert") do |i|
-    options[:input] = i
+  def args
+    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}'"
   end
   
-  opts.on('-o', '--output [FILE]', "Output file to write to") do |o|
-    options[:output] = o
+  def run
+    puts Kernel.exec("#{command} #{url} #{'>/dev/null 2>&1' if silent}")
   end
   
-  opts.on('-p', '--preset [NAME]', "Preset to use") do |p|
-    options[:preset] = p
-  end
-  
-  opts.on('-n', '--notify [LIST]', "List of emails and/or urls separated by comma's to notify when the job is completed") do |n|
-    options[:notify] = n
-  end
-  
-  options[:verbose] = ''
-  opts.on('-v', '--verbose', "Print curl's verbose output") do |v|
-    options[:verbose] = '-i'
-  end
-  
-  opts.on_tail('-h', '--help', 'Display this screen') do
-    puts opts
-    exit
+  def url
+    "'#{@host}/api/jobs'"
   end
 end
 
-optparse.parse!
+class CurlCodem < CodemCommand
+  def command
+    "curl #{'-v' if verbose} #{'-s' if silent} -d #{args}"
+  end
+end
 
-args = "input=#{options[:input]}&output=#{options[:output]}&preset=#{options[:preset]}&notify=#{options[:notify]}"
-cmd  = "curl #{options[:verbose]} -d '#{args}' '#{options[:host]}/api/jobs'"
+class WgetCodem < CodemCommand
+  def command
+    "wget #{verbose ? '-v' : '-nv -q'} -O- --post-data #{args}"
+  end
+end
 
-Kernel.exec(cmd)
+if command?('curl')
+  CurlCodem.new.run
+elsif command?('wget')
+  WgetCodem.new.run
+else
+  puts "Sorry, Could not find `curl' or `wget' in the current $PATH:"
+  puts "#{ `echo $PATH` }"
+end
