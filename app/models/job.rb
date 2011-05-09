@@ -16,7 +16,7 @@ class Job < ActiveRecord::Base
 
   scope :scheduled,   :conditions => { :state => Scheduled }, :order => ["created_at DESC"]
   scope :accepted,    :conditions => { :state => Accepted }, :order => ["created_at DESC"]
-  scope :processing,  :conditions => { :state => Processing }, :order => ["created_at"]
+  scope :processing,  :conditions => { :state => Processing }, :order => ["created_at DESC"]
   scope :success,     :conditions => { :state => Success }, :order => ["created_at DESC"]
   scope :on_hold,     :conditions => { :state => OnHold }, :order => ["created_at DESC"]
   scope :failed,      :conditions => { :state => Failed }, :order => ["created_at DESC"]
