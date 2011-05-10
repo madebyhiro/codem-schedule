@@ -27,12 +27,12 @@ class Api::PresetsController < Api::ApiController
   #
   # === Parameters
   # All parameters are required
-  # name:: Name of the preset
-  # params:: Parameters to use
+  # <tt>name</tt>:: Name of the preset
+  # <tt>params</tt>:: Parameters to use
   #
   # === Response codes
-  # success:: <tt>201 created</tt>
-  # failed::  <tt>406 Unprocessable Entity</tt>
+  # <tt>success</tt>:: <tt>201 created</tt>
+  # <tt>failed</tt>::  <tt>406 Unprocessable Entity</tt>
   #
   # === Example
   #   $ curl -d 'name=webm&parameters=params' http://localhost:3000/api/presets
@@ -45,7 +45,7 @@ class Api::PresetsController < Api::ApiController
   #     "params",
   #     "updated_at":"2011-05-10T14:44:07Z"}
   #   }
-def create
+  def create
     preset = Preset.from_api(params)
     
     if preset.valid?
@@ -62,7 +62,7 @@ def create
   # == Displays a preset
   #
   # === Parameters
-  # id:: Id of the preset to display
+  # <tt>id</tt>:: Id of the preset to display
   #
   # === Example
   #   $ curl curl http://localhost:3000/api/presets/1

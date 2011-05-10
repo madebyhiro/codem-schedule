@@ -3,12 +3,12 @@
 # == States
 # A job can be in one of the following states:
 #
-# scheduled::   Scheduled to be sent to the Transcoder instances
-# accepted::    Accepted by a Transcoder instance, waiting to start processing
-# processing::  Being processed by a Transcoder Instance
-# \on_hold::    Waiting for a Transcoder to become responsive again
-# success::     Successfully completed
-# failed::      An error occured
+# <tt>scheduled</tt>::   Scheduled to be sent to the Transcoder instances
+# <tt>accepted</tt>::    Accepted by a Transcoder instance, waiting to start processing
+# <tt>processing</tt>::  Being processed by a Transcoder Instance
+# <tt>\on_hold</tt>::    Waiting for a Transcoder to become responsive again
+# <tt>success</tt>::     Successfully completed
+# <tt>failed</tt>::      An error occured
 #
 # == Pagination
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
@@ -55,18 +55,18 @@ class Api::JobsController < Api::ApiController
   # The header <tt>X-Notifications-Location</tt> contains the location of the notifications endpoint for this job.
   #
   # === Parameters
-  # input, output and preset are required parameters
-  # input:: Input file to process
-  # output:: Output file to write to
-  # preset:: Preset name to use
-  # notify:: A list of email addresses and urls separated by commas.
+  # <tt>input</tt>, <tt>output</tt> and <tt>preset</tt> are required parameters, <tt>notify</tt> is optional.
+  # <tt>input</tt>:: Input file to process
+  # <tt>output</tt>:: Output file to write to
+  # <tt>preset</tt>:: Preset name to use
+  # <tt>notify</tt>:: A list of email addresses and urls separated by commas.
   #
   # If a job enters the completed or failed state, a notification will be sent to the emails and urls specified in the 
   # <tt>notify</tt> parameter. Urls will receive a POST request with the JSON representation of the job as body.
   #
   # === Response codes
-  # success:: <tt>201 created</tt>
-  # failed::  <tt>406 Unprocessable Entity</tt>
+  # <tt>success</tt>:: <tt>201 created</tt>
+  # <tt>failed</tt>::  <tt>406 Unprocessable Entity</tt>
   #
   # === Example
   #   $ curl -d 'input=/tmp/foo.flv&output=/tmp/bar.mp4&preset=h264' http://localhost:3000/api/jobs
@@ -120,7 +120,7 @@ class Api::JobsController < Api::ApiController
   # The displayed job will have its status updated to provide an up-to-date view of attributes.
   #
   # === Parameters
-  # id:: The id of the job to show
+  # <tt>id</tt>:: The id of the job to show
   #
   # === Example
   #   {

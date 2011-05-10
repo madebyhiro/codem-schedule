@@ -7,11 +7,11 @@ class Api::StateChangesController < Api::ApiController
   
   # == Lists state changes for the specified job
   #
-  # A state changes gets created the first time a job enters this state. Along with the actual state, the timestamp of it
-  # happening, the message from the Transcoder instance will be stored.
+  # A state changes gets created the first time a job enters this state. Along with the actual state and the timestamp of it
+  # happening, the message from the Transcoder instance will be stored if present.
   #
   # === Parameters
-  # id::   The id of the job
+  # <tt>id</tt>::   The id of the job
   #
   # === Example
   # The normal flow would be: <tt>accepted</tt>, <tt>processing</tt>, <tt>success</tt>:

@@ -14,7 +14,7 @@ class Api::NotificationsController < Api::ApiController
   # == Returns a list of notifications for a job
   #
   # === Parameters
-  # id:: Id of the job to show notifications for
+  # <tt>id</tt>:: Id of the job to show notifications for
   #
   # === Example
   #   $ curl http://localhost:3000/api/jobs/15/notifications.json

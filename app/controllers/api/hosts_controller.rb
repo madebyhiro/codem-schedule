@@ -32,12 +32,12 @@ class Api::HostsController < Api::ApiController
   # the created host is returned. If the request could not be completed, a list of errors will be returned.
   #
   # === Parameters
-  # name:: The name of the host
-  # url::  The url of the host
+  # <tt>name</tt>:: The name of the host
+  # <tt>url</tt>::  The url of the host
   #
   # === Response codes
-  # success:: <tt>201 created</tt>
-  # failed::  <tt>406 Unprocessable Entity</tt>
+  # <tt>success</tt>:: <tt>201 created</tt>
+  # <tt>failed</tt>::  <tt>406 Unprocessable Entity</tt>
   #
   # === Example 
   #   $ curl -d 'name=transcoder&url=http://transcoder.com' http://localhost:3000/api/hosts
@@ -73,7 +73,7 @@ class Api::HostsController < Api::ApiController
   # The host will have its status updated to provide an up-to-date view of the slots.
   # 
   # === Parameters
-  # id:: The id of the host to show
+  # <tt>id</tt>:: The id of the host to show
   #
   # === Example
   #   $ curl http://localhost:3000/api/hosts/1

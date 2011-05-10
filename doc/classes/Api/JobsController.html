@@ -48,22 +48,22 @@
             A job can be in one of the following states:
             </p>
             <table>
-            <tr><td valign="top">scheduled:</td><td>Scheduled to be sent to the Transcoder instances
+            <tr><td valign="top"><tt>scheduled</tt>:</td><td>Scheduled to be sent to the Transcoder instances
             
             </td></tr>
-            <tr><td valign="top">accepted:</td><td>Accepted by a Transcoder instance, waiting to start processing
+            <tr><td valign="top"><tt>accepted</tt>:</td><td>Accepted by a Transcoder instance, waiting to start processing
             
             </td></tr>
-            <tr><td valign="top">processing:</td><td>Being processed by a Transcoder Instance
+            <tr><td valign="top"><tt>processing</tt>:</td><td>Being processed by a Transcoder Instance
             
             </td></tr>
-            <tr><td valign="top">on_hold:</td><td>Waiting for a Transcoder to become responsive again
+            <tr><td valign="top"><tt>on_hold</tt>:</td><td>Waiting for a Transcoder to become responsive again
             
             </td></tr>
-            <tr><td valign="top">success:</td><td>Successfully completed
+            <tr><td valign="top"><tt>success</tt>:</td><td>Successfully completed
             
             </td></tr>
-            <tr><td valign="top">failed:</td><td>An error occured
+            <tr><td valign="top"><tt>failed</tt>:</td><td>An error occured
             
             </td></tr>
             </table>
@@ -73,7 +73,7 @@
             display that particular page of jobs. Jobs are paginated with 25 jobs per
             page. For example, to get the 5th page of successfully completed jobs, use:
             </p>
-            <pre>http://host.com/api/jobs?page=5</pre>
+            <pre>http://host.com/api/jobs/completed?page=5</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
@@ -148,19 +148,20 @@
                   </p>
                   <h3>Parameters</h3>
                   <p>
-                  input, output and preset are required parameters
+                  <tt>input</tt>, <tt>output</tt> and <tt>preset</tt> are required
+                  parameters, <tt>notify</tt> is optional.
                   </p>
                   <table>
-                  <tr><td valign="top">input:</td><td>Input file to process
+                  <tr><td valign="top"><tt>input</tt>:</td><td>Input file to process
                   
                   </td></tr>
-                  <tr><td valign="top">output:</td><td>Output file to write to
+                  <tr><td valign="top"><tt>output</tt>:</td><td>Output file to write to
                   
                   </td></tr>
-                  <tr><td valign="top">preset:</td><td>Preset name to use
+                  <tr><td valign="top"><tt>preset</tt>:</td><td>Preset name to use
                   
                   </td></tr>
-                  <tr><td valign="top">notify:</td><td>A list of email addresses and urls separated by commas.
+                  <tr><td valign="top"><tt>notify</tt>:</td><td>A list of email addresses and urls separated by commas.
                   
                   </td></tr>
                   </table>
@@ -172,10 +173,10 @@
                   </p>
                   <h3>Response codes</h3>
                   <table>
-                  <tr><td valign="top">success:</td><td><tt>201 created</tt>
+                  <tr><td valign="top"><tt>success</tt>:</td><td><tt>201 created</tt>
                   
                   </td></tr>
-                  <tr><td valign="top">failed:</td><td><tt>406 Unprocessable Entity</tt>
+                  <tr><td valign="top"><tt>failed</tt>:</td><td><tt>406 Unprocessable Entity</tt>
                   
                   </td></tr>
                   </table>
@@ -302,7 +303,7 @@
                   </p>
                   <h3>Parameters</h3>
                   <table>
-                  <tr><td valign="top">id:</td><td>The id of the job to show
+                  <tr><td valign="top"><tt>id</tt>:</td><td>The id of the job to show
                   
                   </td></tr>
                   </table>
