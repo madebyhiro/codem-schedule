@@ -92,7 +92,7 @@ describe Transcoder do
       do_post.should == {'foo' => 'bar'}
     end
     
-    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
         RestClient.stub!(:post).and_raise ex
         do_post.should == false
@@ -114,7 +114,7 @@ describe Transcoder do
       do_get
     end
 
-    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
         RestClient.stub!(:get).and_raise ex
         do_get.should == false

@@ -7,6 +7,7 @@ Scheduler::Application.routes.draw do
         get :processing
         get :on_hold
         get :success
+        get :completed
         get :failed
       end
 
