@@ -1,17 +1,20 @@
-# = Lists state changes of a specified job
+# = State Changes Controller
 #
 # Whenever a job enteres a state for the first time, a state change will be generated and stored in the database.
-# This allowes to get an overview of the progress of the job, from scheduled to completed.
+# This allowes to get an overview of the progress of the job, from <tt>scheduled</tt> to <tt>completed</tt>.
 class Api::StateChangesController < Api::ApiController
   before_filter :find_job
   
   # == Lists state changes for the specified job
   #
+  # A state changes gets created the first time a job enters this state. Along with the actual state, the timestamp of it
+  # happening, the message from the Transcoder instance will be stored.
+  #
   # === Parameters
-  # id:: The id of the job
+  # id::   The id of the job
   #
   # === Example
-  # The normal flow would be: accepted, processing, success:
+  # The normal flow would be: <tt>accepted</tt>, <tt>processing</tt>, <tt>success</tt>:
   #   [
   #     {
   #       state_change: {
@@ -45,7 +48,7 @@ class Api::StateChangesController < Api::ApiController
   #     }
   #   ]
   def index
-    respond_with @job.state_changes.page(params[:page]).per(20)
+    respond_with @job.state_changes
   end
   
   private #:nodoc:

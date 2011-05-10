@@ -45,7 +45,8 @@
             <h1>Scheduler Controller</h1>
             <p>
             This controller manages the flow of jobs by updating the status for
-            noteable jobs.
+            noteable jobs. A good practice would be to call this endpoint from
+            something like <tt>cron</tt> every 2 minutes or the like.
             </p>
           </div>
           <div id='method-list'>
@@ -68,15 +69,16 @@
                   <h2>Update the statuses for all relevant jobs</h2>
                   <p>
                   All unfinished jobs will have their statuses updated, and are returned in
-                  the response. A job is unfinished if it&#8217;s state is either scheduled,
-                  accepted, processing or on hold.
+                  the response. A job is unfinished if it&#8217;s state is either
+                  <tt>scheduled</tt>, <tt>accepted</tt>, <tt>processing</tt> or <tt>on
+                  hold</tt>.
                   </p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'>    <span class="ruby-comment cmt"># File app/controllers/api/scheduler_controller.rb, line 9</span>&#x000A; 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schedule</span>&#x000A;10:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Runner</span>.<span class="ruby-identifier">schedule!</span>&#x000A;11:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000018-source'>    <span class="ruby-comment cmt"># File app/controllers/api/scheduler_controller.rb, line 11</span>&#x000A;11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schedule</span>&#x000A;12:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Runner</span>.<span class="ruby-identifier">schedule!</span>&#x000A;13:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

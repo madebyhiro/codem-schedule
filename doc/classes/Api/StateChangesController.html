@@ -42,11 +42,11 @@
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1>Lists state changes of a specified job</h1>
+            <h1>State Changes Controller</h1>
             <p>
             Whenever a job enteres a state for the first time, a state change will be
             generated and stored in the database. This allowes to get an overview of
-            the progress of the job, from scheduled to completed.
+            the progress of the job, from <tt>scheduled</tt> to <tt>completed</tt>.
             </p>
           </div>
           <div id='method-list'>
@@ -75,7 +75,8 @@
                   </table>
                   <h3>Example</h3>
                   <p>
-                  The normal flow would be: accepted, processing, success:
+                  The normal flow would be: <tt>accepted</tt>, <tt>processing</tt>,
+                  <tt>success</tt>:
                   </p>
                   <pre>[&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 73&#x000A;      created_at: &quot;2011-05-09T13:53:31Z&quot;&#x000A;      message: &quot;The transcoder accepted your job.&quot;&#x000A;      updated_at: &quot;2011-05-09T13:53:31Z&quot;&#x000A;      state: &quot;accepted&quot;&#x000A;    }&#x000A;  },&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 74&#x000A;      created_at: &quot;2011-05-09T13:53:41Z&quot;&#x000A;      message: null&#x000A;      updated_at: &quot;2011-05-09T13:53:41Z&quot;&#x000A;      state: &quot;processing&quot;&#x000A;    }&#x000A;  },&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 75&#x000A;      created_at: &quot;2011-05-09T13:58:18Z&quot;&#x000A;      message: &quot;ffmpeg finished succesfully.&quot;&#x000A;      updated_at: &quot;2011-05-09T13:58:18Z&quot;&#x000A;      state: &quot;success&quot;&#x000A;    }&#x000A;  }&#x000A;]</pre>
                 </div>
