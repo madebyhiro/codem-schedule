@@ -1,21 +1,21 @@
 # = The Codem scheduler API
 #
-# = Resources
+# == Resources
 # The following resources can be viewed and manipulated through this API.
 #
-# == Hosts
+# === Hosts
 # Creating and viewing of hosts.
 # A host is a representation of a Codem \Transcoder instance.
 # 
-# === Endpoints
+# ==== Endpoints
 # GET  /api/hosts::     See Api::HostsController#index
 # POST /api/hosts::     See Api::HostsController#create
 # GET  /api/hosts/:id:: See Api::HostsController#show
 #
-# == Jobs
+# === Jobs
 # Creating and viewing of hosts.
 #
-# === Endpoints
+# ==== Endpoints
 # GET /api/jobs::             See Api::JobsController#index
 # GET /api/jobs/scheduled::   See Api::JobsController#scheduled
 # GET /api/jobs/accepted::    See Api::JobsController#accepted
@@ -26,23 +26,23 @@
 # POST /api/jobs::            See Api::JobsController#create
 # GET /api/jobs/:id::         See Api::JobsController#show
 #
-# == Presets
+# === Presets
 # Creating and viewing of presets.
 #
-# === Endpoints
+# ==== Endpoints
 # GET /api/presets::    See Api::PresetsController#index
 # POST /api/presets::   See Api::PresetsController#create
 # GET /api/presets/id:: See Api::PresetsController#show
 #
-# == State Changes
+# === State Changes
 # Viewing of state changes of a job.
 #
-# === Endpoints
+# ==== Endpoints
 # GET /api/jobs/:id/state_changes:: See Api::StateChangesController#index
 #
-# == Scheduling
+# === Scheduling
 #
-# === Endpoints
+# ==== Endpoints
 # GET /api/scheduler::    See Api::SchedulerController#schedule
 module Api
   # = Base API controller
