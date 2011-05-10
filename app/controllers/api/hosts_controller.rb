@@ -1,4 +1,4 @@
-# = API Controller dealing with Hosts.
+# = Hosts controller
 class Api::HostsController < Api::ApiController
   # == Displays a list of hosts
   #
@@ -6,8 +6,19 @@ class Api::HostsController < Api::ApiController
   #
   # === Example
   #   $ curl http://localhost:3000/api/hosts
-  #   [{"host":{"available":true,"available_slots":1,"created_at":"2011-05-09T11:59:52Z","id":1,
-  #             "name":"Localhost","total_slots":1,"updated_at":"2011-05-09T13:53:31Z","url":"http://127.0.0.1:8080"}}]
+  #
+  #   [
+  #      {"host":{
+  #        "available":true,
+  #        "available_slots":1,
+  #        "created_at":"2011-05-09T11:59:52Z",
+  #        "id":1,
+  #        "name":"Localhost",
+  #        "total_slots":1,
+  #        "updated_at":"2011-05-09T13:53:31Z",
+  #        "url":"http://127.0.0.1:8080"}
+  #      }
+  #    ]
   def index
     hosts = Host.all
     hosts.map(&:update_status)
@@ -29,8 +40,18 @@ class Api::HostsController < Api::ApiController
   # === Example 
   #   $ curl -d 'name=transcoder&url=http://transcoder.com' http://localhost:3000/api/hosts
   #
-  #   {"host":{"available":true,"available_slots":10,"created_at":"2011-05-09T15:32:53Z","id":6,
-  #            "name":"transcoder","total_slots":10,"updated_at":"2011-05-09T15:32:53Z","url":"http://transcoder.com"}}
+  #   {
+  #     "host": {
+  #       "available":true,
+  #       "available_slots":10,
+  #       "created_at":"2011-05-09T15:32:53Z",
+  #       "id":6,
+  #        "name":"transcoder",
+  #        "total_slots":10,
+  #        "updated_at":"2011-05-09T15:32:53Z",
+  #        "url":"http://transcoder.com"
+  #     }
+  #   }
   def create
     host = Host.from_api(params)
 
@@ -55,8 +76,17 @@ class Api::HostsController < Api::ApiController
   # === Example
   #   $ curl http://localhost:3000/api/hosts/1
   #
-  #   {"host":{"available":true,"available_slots":1,"created_at":"2011-05-09T11:59:52Z","id":1,
-  #            "name":"Localhost","total_slots":1,"updated_at":"2011-05-09T13:53:31Z","url":"http://127.0.0.1:8080"}}   
+  #   {
+  #      "host":{
+  #        "available":true,
+  #        "available_slots":1,
+  #        "created_at":"2011-05-09T11:59:52Z",
+  #        "id":1,
+  #        "name":"Localhost",
+  #        "total_slots":1,
+  #        "updated_at":"2011-05-09T13:53:31Z",
+  #        "url":"http://127.0.0.1:8080"}
+  #      }
   def show
     host = Host.find(params[:id])
     host.update_status

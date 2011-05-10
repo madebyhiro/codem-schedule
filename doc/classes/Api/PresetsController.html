@@ -25,10 +25,10 @@
   <body class='page'>
     <div class='class' id='wrapper'>
       <div class='header'>
-        <h1 class='name'>
+        <div class='name'>
           <span class='type'>Class</span>
           Api::PresetsController
-        </h1>
+        </div>
         <ol class='paths'>
           <li>
             <a href="../../files/app/controllers/api/presets_controller_rb.html">app/controllers/api/presets_controller.rb</a>
@@ -41,55 +41,108 @@
       </div>
       <div id='content'>
         <div id='text'>
+          <div id='description'>
+            <h1>Presets Controller</h1>
+            <p>
+            A preset represents command line options for ffmpeg sent to the Transcoder
+            </p>
+          </div>
           <div id='method-list'>
             <h2>Methods</h2>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000005">create</a></li>
-              <li><a href="#M000004">index</a></li>
-              <li><a href="#M000006">show</a></li>
+              <li><a href="#M000015">create</a></li>
+              <li><a href="#M000014">index</a></li>
+              <li><a href="#M000016">show</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000005'>
-                <a name='M000005'></a>
+              <div class='method public-instance' id='method-M000015'>
+                <a name='M000015'></a>
                 <div class='synopsis'>
                   <span class='name'>create</span>
                   <span class='arguments'>()</span>
                 </div>
+                <div class='description'>
+                  <h2>Creates a preset</h2>
+                  <p>
+                  Creates a preset using the specified parameters, which are all required. If
+                  the request was valid, the created preset is returned. If the request could
+                  not be completed, a list of errors will be returned.
+                  </p>
+                  <h3>Parameters</h3>
+                  <p>
+                  All parameters are required
+                  </p>
+                  <table>
+                  <tr><td valign="top">name:</td><td>Name of the preset
+                  
+                  </td></tr>
+                  <tr><td valign="top">params:</td><td>Parameters to use
+                  
+                  </td></tr>
+                  </table>
+                  <h3>Response codes</h3>
+                  <table>
+                  <tr><td valign="top">success:</td><td><tt>201 created</tt>
+                  
+                  </td></tr>
+                  <tr><td valign="top">failed:</td><td><tt>406 Unprocessable Entity</tt>
+                  
+                  </td></tr>
+                  </table>
+                  <h3>Example</h3>
+                  <pre>$ curl -d 'name=webm&amp;parameters=params' http://localhost:3000/api/presets&#x000A;&#x000A;{&quot;preset&quot;:{&#x000A;  &quot;created_at&quot;:&quot;2011-05-10T14:44:07Z&quot;,&#x000A;  &quot;id&quot;:3,&#x000A;  &quot;name&quot;:&quot;webm&quot;,&#x000A;  &quot;parameters&quot;:&#x000A;  &quot;params&quot;,&#x000A;  &quot;updated_at&quot;:&quot;2011-05-10T14:44:07Z&quot;}&#x000A;}</pre>
+                </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000005-source'>    <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 6</span>&#x000A; 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A; 7:     <span class="ruby-identifier">preset</span> = <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>)&#x000A; 8:     &#x000A; 9:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset</span>.<span class="ruby-identifier">valid?</span>&#x000A;10:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">preset</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_preset_url</span>(<span class="ruby-identifier">preset</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;11:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">presets_path</span> }&#x000A;12:       <span class="ruby-keyword kw">end</span>&#x000A;13:     <span class="ruby-keyword kw">else</span>&#x000A;14:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">preset</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;15:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@preset</span> = <span class="ruby-identifier">preset</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/presets/new&quot;</span>}&#x000A;16:       <span class="ruby-keyword kw">end</span>&#x000A;17:     <span class="ruby-keyword kw">end</span>&#x000A;18:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000015-source'>    <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 48</span>&#x000A;48: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A;49:     <span class="ruby-identifier">preset</span> = <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>)&#x000A;50:     &#x000A;51:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">preset</span>.<span class="ruby-identifier">valid?</span>&#x000A;52:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">preset</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_preset_url</span>(<span class="ruby-identifier">preset</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;53:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">presets_path</span> }&#x000A;54:       <span class="ruby-keyword kw">end</span>&#x000A;55:     <span class="ruby-keyword kw">else</span>&#x000A;56:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">preset</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;57:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@preset</span> = <span class="ruby-identifier">preset</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/presets/new&quot;</span>}&#x000A;58:       <span class="ruby-keyword kw">end</span>&#x000A;59:     <span class="ruby-keyword kw">end</span>&#x000A;60:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000004'>
-                <a name='M000004'></a>
+              <div class='method public-instance' id='method-M000014'>
+                <a name='M000014'></a>
                 <div class='synopsis'>
                   <span class='name'>index</span>
                   <span class='arguments'>()</span>
                 </div>
+                <div class='description'>
+                  <h2>Returns a list of presets</h2>
+                  <h2>Example:</h2>
+                  <pre>$ curl http://localhost:3000/api/presets&#x000A;&#x000A;[&#x000A;  {&quot;preset&quot;:{&#x000A;    &quot;created_at&quot;:&quot;2011-05-09T11:59:53Z&quot;,&#x000A;    &quot;id&quot;:1,&#x000A;    &quot;name&quot;:&quot;h264&quot;,&#x000A;    &quot;parameters&quot;:&quot;-acodec libfaac -ab 96k -ar 44100 -vcodec libx264 -vb 416k -vpre slow -vpre baseline -s 320x180 -y&quot;,&#x000A;    &quot;updated_at&quot;:&quot;2011-05-09T11:59:53Z&quot;}&#x000A;  }&#x000A;]</pre>
+                </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000004-source'>   <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 2</span>&#x000A;2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>&#x000A;3:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">all</span>&#x000A;4:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000014-source'>    <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 19</span>&#x000A;19:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>&#x000A;20:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">all</span>&#x000A;21:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000006'>
-                <a name='M000006'></a>
+              <div class='method public-instance' id='method-M000016'>
+                <a name='M000016'></a>
                 <div class='synopsis'>
                   <span class='name'>show</span>
                   <span class='arguments'>()</span>
                 </div>
+                <div class='description'>
+                  <h2>Displays a preset</h2>
+                  <h3>Parameters</h3>
+                  <table>
+                  <tr><td valign="top">id:</td><td>Id of the preset to display
+                  
+                  </td></tr>
+                  </table>
+                  <h3>Example</h3>
+                  <pre>$ curl curl http://localhost:3000/api/presets/1&#x000A;&#x000A;{&quot;preset&quot;:{&#x000A;  &quot;created_at&quot;:&quot;2011-05-10T14:44:07Z&quot;,&#x000A;  &quot;id&quot;:3,&#x000A;  &quot;name&quot;:&quot;webm&quot;,&#x000A;  &quot;parameters&quot;:&#x000A;  &quot;params&quot;,&#x000A;  &quot;updated_at&quot;:&quot;2011-05-10T14:44:07Z&quot;}&#x000A;}</pre>
+                </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000006-source'>    <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 20</span>&#x000A;20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;21:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;22:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000016-source'>    <span class="ruby-comment cmt"># File app/controllers/api/presets_controller.rb, line 78</span>&#x000A;78:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;79:     <span class="ruby-identifier">respond_with</span> <span class="ruby-constant">Preset</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;80:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

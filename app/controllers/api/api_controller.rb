@@ -1,5 +1,7 @@
-# = API module
-# The Codem scheduler API.
+# = The Codem scheduler API
+#
+# = Resources
+# The following resources can be viewed and manipulated through this API.
 #
 # == Hosts
 # Creating and viewing of hosts.

@@ -31,13 +31,13 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2011-05-10 14:03:09 +0200</span>
+          <span class='datetime'>2011-05-10 15:50:53 +0200</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1>API Controller dealing with jobs.</h1>
+            <h1>Jobs controller</h1>
             <h2>States</h2>
             <p>
             A job can be in one of the following states:
@@ -66,8 +66,9 @@
             <p>
             For methods that use pagination, a <tt>page</tt> parameters can be sent to
             display that particular page of jobs. Jobs are paginated with 20 jobs per
-            page.
+            page. For example, to get the 5th page of successfully completed jobs, use:
             </p>
+            <pre>http://host.com/api/jobs.json?page=5</pre>
           </div>
           <div id='section'>
           </div>

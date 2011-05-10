@@ -42,7 +42,7 @@
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1>API Controller dealing with jobs.</h1>
+            <h1>Jobs controller</h1>
             <h2>States</h2>
             <p>
             A job can be in one of the following states:
@@ -71,30 +71,31 @@
             <p>
             For methods that use pagination, a <tt>page</tt> parameters can be sent to
             display that particular page of jobs. Jobs are paginated with 20 jobs per
-            page.
+            page. For example, to get the 5th page of successfully completed jobs, use:
             </p>
+            <pre>http://host.com/api/jobs.json?page=5</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000009">accepted</a></li>
-              <li><a href="#M000013">completed</a></li>
-              <li><a href="#M000015">create</a></li>
-              <li><a href="#M000014">failed</a></li>
-              <li><a href="#M000007">index</a></li>
-              <li><a href="#M000011">on_hold</a></li>
-              <li><a href="#M000010">processing</a></li>
-              <li><a href="#M000008">scheduled</a></li>
-              <li><a href="#M000016">show</a></li>
-              <li><a href="#M000012">success</a></li>
+              <li><a href="#M000006">accepted</a></li>
+              <li><a href="#M000010">completed</a></li>
+              <li><a href="#M000012">create</a></li>
+              <li><a href="#M000011">failed</a></li>
+              <li><a href="#M000004">index</a></li>
+              <li><a href="#M000008">on_hold</a></li>
+              <li><a href="#M000007">processing</a></li>
+              <li><a href="#M000005">scheduled</a></li>
+              <li><a href="#M000013">show</a></li>
+              <li><a href="#M000009">success</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000009'>
-                <a name='M000009'></a>
+              <div class='method public-instance' id='method-M000006'>
+                <a name='M000006'></a>
                 <div class='synopsis'>
                   <span class='name'>accepted</span>
                   <span class='arguments'>()</span>
@@ -107,26 +108,26 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 27</span>&#x000A;27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accepted</span>;     <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">accepted</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000006-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 29</span>&#x000A;29:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accepted</span>;     <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">accepted</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000013'>
-                <a name='M000013'></a>
+              <div class='method public-instance' id='method-M000010'>
+                <a name='M000010'></a>
                 <div class='synopsis'>
                   <span class='name'>completed</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="JobsController.html#M000012">success</a>
+                  Alias for <a href="JobsController.html#M000009">success</a>
                   </p>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000015'>
-                <a name='M000015'></a>
+              <div class='method public-instance' id='method-M000012'>
+                <a name='M000012'></a>
                 <div class='synopsis'>
                   <span class='name'>create</span>
                   <span class='arguments'>()</span>
@@ -163,14 +164,14 @@
                   <pre>$ curl -d 'input=/tmp/foo.flv&amp;output=/tmp/bar.mp4&amp;preset=h264' http://localhost:3000/api/jobs&#x000A;&#x000A;{&#x000A;  &quot;job&quot;: {&#x000A;    &quot;callback_url&quot;:&quot;http://localhost:3000/api/jobs/26&quot;,&#x000A;    &quot;completed_at&quot;:null,&#x000A;    &quot;created_at&quot;:&quot;2011-05-10T08:25:00Z&quot;,&#x000A;    &quot;destination_file&quot;:&quot;/tmp/bar.mp4&quot;,&#x000A;    &quot;duration&quot;:null,&#x000A;    &quot;filesize&quot;:null,&#x000A;    &quot;host_id&quot;:1,&#x000A;    &quot;id&quot;:26,&#x000A;    &quot;message&quot;:null,&#x000A;    &quot;preset_id&quot;:1,&#x000A;    &quot;progress&quot;:null,&#x000A;    &quot;remote_job_id&quot;:&quot;fa832776a64b6844fb9f1a244757734a9d83c00f&quot;,&#x000A;    &quot;source_file&quot;:&quot;/tmp/foo.flv&quot;,&#x000A;    &quot;state&quot;:&quot;accepted&quot;,&#x000A;    &quot;transcoding_started_at&quot;:&quot;2011-05-10T08:25:03Z&quot;,&#x000A;    &quot;updated_at&quot;:&quot;2011-05-10T08:25:03Z&quot;&#x000A;  }&#x000A;}</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000015-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 83</span>&#x000A;83:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A;84:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">:callback_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) })&#x000A;85:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">valid?</span>&#x000A;86:       <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;X-State-Changes-Location&quot;</span>] = <span class="ruby-identifier">api_state_changes_url</span>(<span class="ruby-identifier">job</span>)&#x000A;87:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;88:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">jobs_path</span> }&#x000A;89:       <span class="ruby-keyword kw">end</span>&#x000A;90:     <span class="ruby-keyword kw">else</span>&#x000A;91:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;92:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@job</span> = <span class="ruby-identifier">job</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/jobs/new&quot;</span>}&#x000A;93:       <span class="ruby-keyword kw">end</span>&#x000A;94:     <span class="ruby-keyword kw">end</span>&#x000A;95:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000012-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 85</span>&#x000A;85:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A;86:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">:callback_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) })&#x000A;87:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">valid?</span>&#x000A;88:       <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;X-State-Changes-Location&quot;</span>] = <span class="ruby-identifier">api_state_changes_url</span>(<span class="ruby-identifier">job</span>)&#x000A;89:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;90:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">jobs_path</span> }&#x000A;91:       <span class="ruby-keyword kw">end</span>&#x000A;92:     <span class="ruby-keyword kw">else</span>&#x000A;93:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;94:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@job</span> = <span class="ruby-identifier">job</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/jobs/new&quot;</span>}&#x000A;95:       <span class="ruby-keyword kw">end</span>&#x000A;96:     <span class="ruby-keyword kw">end</span>&#x000A;97:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000014'>
-                <a name='M000014'></a>
+              <div class='method public-instance' id='method-M000011'>
+                <a name='M000011'></a>
                 <div class='synopsis'>
                   <span class='name'>failed</span>
                   <span class='arguments'>()</span>
@@ -183,14 +184,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000014-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 44</span>&#x000A;44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">failed</span>;       <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">failed</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000011-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 46</span>&#x000A;46:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">failed</span>;       <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">failed</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000007'>
-                <a name='M000007'></a>
+              <div class='method public-instance' id='method-M000004'>
+                <a name='M000004'></a>
                 <div class='synopsis'>
                   <span class='name'>index</span>
                   <span class='arguments'>()</span>
@@ -202,14 +203,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000007-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 19</span>&#x000A;19:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>;        <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">scoped</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000004-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 21</span>&#x000A;21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>;        <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">scoped</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000011'>
-                <a name='M000011'></a>
+              <div class='method public-instance' id='method-M000008'>
+                <a name='M000008'></a>
                 <div class='synopsis'>
                   <span class='name'>on_hold</span>
                   <span class='arguments'>()</span>
@@ -222,14 +223,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 35</span>&#x000A;35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on_hold</span>;      <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">on_hold</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000008-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 37</span>&#x000A;37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on_hold</span>;      <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">on_hold</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000010'>
-                <a name='M000010'></a>
+              <div class='method public-instance' id='method-M000007'>
+                <a name='M000007'></a>
                 <div class='synopsis'>
                   <span class='name'>processing</span>
                   <span class='arguments'>()</span>
@@ -242,14 +243,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 31</span>&#x000A;31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">processing</span>;   <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">processing</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000007-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 33</span>&#x000A;33:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">processing</span>;   <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">processing</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000008'>
-                <a name='M000008'></a>
+              <div class='method public-instance' id='method-M000005'>
+                <a name='M000005'></a>
                 <div class='synopsis'>
                   <span class='name'>scheduled</span>
                   <span class='arguments'>()</span>
@@ -262,14 +263,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000008-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 23</span>&#x000A;23:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scheduled</span>;    <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">scheduled</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000005-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 25</span>&#x000A;25:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scheduled</span>;    <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">scheduled</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000016'>
-                <a name='M000016'></a>
+              <div class='method public-instance' id='method-M000013'>
+                <a name='M000013'></a>
                 <div class='synopsis'>
                   <span class='name'>show</span>
                   <span class='arguments'>()</span>
@@ -290,14 +291,14 @@
                   <pre>{&#x000A;  &quot;job&quot;: {&#x000A;    &quot;callback_url&quot;:&quot;http://localhost:3000/api/jobs/26&quot;,&#x000A;    &quot;completed_at&quot;:null,&#x000A;    &quot;created_at&quot;:&quot;2011-05-10T08:25:00Z&quot;,&#x000A;    &quot;destination_file&quot;:&quot;/tmp/bar.mp4&quot;,&#x000A;    &quot;duration&quot;:null,&#x000A;    &quot;filesize&quot;:null,&#x000A;    &quot;host_id&quot;:1,&#x000A;    &quot;id&quot;:26,&#x000A;    &quot;message&quot;:null,&#x000A;    &quot;preset_id&quot;:1,&#x000A;    &quot;progress&quot;:null,&#x000A;    &quot;remote_job_id&quot;:&quot;fa832776a64b6844fb9f1a244757734a9d83c00f&quot;,&#x000A;    &quot;source_file&quot;:&quot;/tmp/foo.flv&quot;,&#x000A;    &quot;state&quot;:&quot;accepted&quot;,&#x000A;    &quot;transcoding_started_at&quot;:&quot;2011-05-10T08:25:03Z&quot;,&#x000A;    &quot;updated_at&quot;:&quot;2011-05-10T08:25:03Z&quot;&#x000A;  }&#x000A;}</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000016-source'>     <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 134</span>&#x000A;134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;135:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;136:     <span class="ruby-identifier">job</span>.<span class="ruby-identifier">update_status</span>&#x000A;137:     <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>&#x000A;138:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'>     <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 136</span>&#x000A;136:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;137:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;138:     <span class="ruby-identifier">job</span>.<span class="ruby-identifier">update_status</span>&#x000A;139:     <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>&#x000A;140:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000012'>
-                <a name='M000012'></a>
+              <div class='method public-instance' id='method-M000009'>
+                <a name='M000009'></a>
                 <div class='synopsis'>
                   <span class='name'>success</span>
                   <span class='arguments'>()</span>
@@ -309,10 +310,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000012-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 39</span>&#x000A;39:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success</span>;      <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">success</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000009-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 41</span>&#x000A;41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success</span>;      <span class="ruby-identifier">jobs_index</span>(<span class="ruby-constant">Job</span>.<span class="ruby-identifier">success</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

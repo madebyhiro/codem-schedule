@@ -1,4 +1,4 @@
-# = API Controller dealing with jobs.
+# = Jobs controller
 #
 # == States
 # A job can be in one of the following states:
@@ -13,6 +13,8 @@
 # == Pagination
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
 # Jobs are paginated with 20 jobs per page.
+# For example, to get the 5th page of successfully completed jobs, use:
+#   http://host.com/api/jobs.json?page=5
 class Api::JobsController < Api::ApiController
   # == Returns a list of recent jobs
   # This method uses pagination.
