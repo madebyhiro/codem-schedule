@@ -42,7 +42,7 @@ class Job < ActiveRecord::Base
   end
 
   def self.recents(page=nil)
-    recent.page(page).per(25)
+    recent.page(page)
   end
   
   def update_status

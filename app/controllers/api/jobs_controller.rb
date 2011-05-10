@@ -12,7 +12,7 @@
 #
 # == Pagination
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
-# Jobs are paginated with 20 jobs per page.
+# Jobs are paginated with 25 jobs per page.
 # For example, to get the 5th page of successfully completed jobs, use:
 #   http://host.com/api/jobs?page=5
 class Api::JobsController < Api::ApiController
@@ -151,7 +151,7 @@ class Api::JobsController < Api::ApiController
   
   private #:nodoc:
     def jobs_index(jobs)
-      jobs = jobs.order("created_at DESC").page(params[:page]).per(20)
+      jobs = jobs.order("created_at DESC").page(params[:page])
       jobs.select(&:unfinished?).map(&:update_status)
       respond_with jobs
     end

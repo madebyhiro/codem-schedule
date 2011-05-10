@@ -136,7 +136,7 @@ describe Job do
   describe "getting the recent jobs" do
     before(:each) do
       @job = double(Job)
-      Job.stub_chain(:recent, :page, :per).and_return [@job]
+      Job.stub_chain(:recent, :page).and_return [@job]
     end
     
     def recents
