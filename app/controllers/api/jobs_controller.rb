@@ -14,7 +14,7 @@
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
 # Jobs are paginated with 25 jobs per page.
 # For example, to get the 5th page of successfully completed jobs, use:
-#   http://host.com/api/jobs?page=5
+#   http://host.com/api/jobs/completed?page=5
 class Api::JobsController < Api::ApiController
   # == Returns a list of jobs regardless of state.
   # This method uses pagination.
