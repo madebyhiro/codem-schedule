@@ -53,14 +53,14 @@
             <h2>Methods</h2>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000018">index</a></li>
+              <li><a href="#M000019">index</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000018'>
-                <a name='M000018'></a>
+              <div class='method public-instance' id='method-M000019'>
+                <a name='M000019'></a>
                 <div class='synopsis'>
                   <span class='name'>index</span>
                   <span class='arguments'>()</span>
@@ -80,10 +80,10 @@
                   <pre>[&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 73&#x000A;      created_at: &quot;2011-05-09T13:53:31Z&quot;&#x000A;      message: &quot;The transcoder accepted your job.&quot;&#x000A;      updated_at: &quot;2011-05-09T13:53:31Z&quot;&#x000A;      state: &quot;accepted&quot;&#x000A;    }&#x000A;  },&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 74&#x000A;      created_at: &quot;2011-05-09T13:53:41Z&quot;&#x000A;      message: null&#x000A;      updated_at: &quot;2011-05-09T13:53:41Z&quot;&#x000A;      state: &quot;processing&quot;&#x000A;    }&#x000A;  },&#x000A;  {&#x000A;    state_change: {&#x000A;      job_id: 25&#x000A;      id: 75&#x000A;      created_at: &quot;2011-05-09T13:58:18Z&quot;&#x000A;      message: &quot;ffmpeg finished succesfully.&quot;&#x000A;      updated_at: &quot;2011-05-09T13:58:18Z&quot;&#x000A;      state: &quot;success&quot;&#x000A;    }&#x000A;  }&#x000A;]</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'>    <span class="ruby-comment cmt"># File app/controllers/api/state_changes_controller.rb, line 47</span>&#x000A;47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>&#x000A;48:     <span class="ruby-identifier">respond_with</span> <span class="ruby-ivar">@job</span>.<span class="ruby-identifier">state_changes</span>.<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>]).<span class="ruby-identifier">per</span>(<span class="ruby-value">20</span>)&#x000A;49:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000019-source'>    <span class="ruby-comment cmt"># File app/controllers/api/state_changes_controller.rb, line 47</span>&#x000A;47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>&#x000A;48:     <span class="ruby-identifier">respond_with</span> <span class="ruby-ivar">@job</span>.<span class="ruby-identifier">state_changes</span>.<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>]).<span class="ruby-identifier">per</span>(<span class="ruby-value">20</span>)&#x000A;49:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

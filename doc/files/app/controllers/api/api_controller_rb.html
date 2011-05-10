@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2011-05-10 16:53:15 +0200</span>
+          <span class='datetime'>2011-05-10 17:37:55 +0200</span>
         </div>
       </div>
       <div id='content'>
@@ -64,7 +64,7 @@
             </table>
             <h3>Jobs</h3>
             <p>
-            Creating and viewing of hosts.
+            Creating and viewing of jobs.
             </p>
             <h4>Endpoints</h4>
             <table>
@@ -112,15 +112,15 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/presets:</td><td>See <a
-            href="../../../../classes/Api/PresetsController.html#M000014">Api::PresetsController#index</a>
+            href="../../../../classes/Api/PresetsController.html#M000015">Api::PresetsController#index</a>
             
             </td></tr>
             <tr><td valign="top">POST /api/presets:</td><td>See <a
-            href="../../../../classes/Api/PresetsController.html#M000015">Api::PresetsController#create</a>
+            href="../../../../classes/Api/PresetsController.html#M000016">Api::PresetsController#create</a>
             
             </td></tr>
             <tr><td valign="top">GET /api/presets/id:</td><td>See <a
-            href="../../../../classes/Api/PresetsController.html#M000016">Api::PresetsController#show</a>
+            href="../../../../classes/Api/PresetsController.html#M000017">Api::PresetsController#show</a>
             
             </td></tr>
             </table>
@@ -131,7 +131,19 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/jobs/:id/state_changes:</td><td>See <a
-            href="../../../../classes/Api/StateChangesController.html#M000018">Api::StateChangesController#index</a>
+            href="../../../../classes/Api/StateChangesController.html#M000019">Api::StateChangesController#index</a>
+            
+            </td></tr>
+            </table>
+            <h3>Notifications</h3>
+            <p>
+            Notifications are sent to an email address or url if a job is either
+            completed or has failed
+            </p>
+            <h4>Endpoints</h4>
+            <table>
+            <tr><td valign="top">GET /api/jobs/:id/notifications:</td><td>See <a
+            href="../../../../classes/Api/NotificationsController.html#M000014">Api::NotificationsController#index</a>
             
             </td></tr>
             </table>
@@ -139,7 +151,7 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/scheduler:</td><td>See <a
-            href="../../../../classes/Api/SchedulerController.html#M000017">Api::SchedulerController#schedule</a>
+            href="../../../../classes/Api/SchedulerController.html#M000018">Api::SchedulerController#schedule</a>
             
             </td></tr>
             </table>

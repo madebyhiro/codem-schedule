@@ -73,7 +73,7 @@
             display that particular page of jobs. Jobs are paginated with 20 jobs per
             page. For example, to get the 5th page of successfully completed jobs, use:
             </p>
-            <pre>http://host.com/api/jobs.json?page=5</pre>
+            <pre>http://host.com/api/jobs?page=5</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
@@ -139,7 +139,17 @@
                   the request was valid, the created job is returned. If the request could
                   not be completed, a list of errors will be returned.
                   </p>
+                  <p>
+                  If the job is successfully created, two extra headers will be sent in the
+                  response. The header <tt>X-State-Changes-Location</tt> contains the
+                  location of the state changes endpoint for this job. The header
+                  <tt>X-Notifications-Location</tt> contains the location of the
+                  notifications endpoint for this job.
+                  </p>
                   <h3>Parameters</h3>
+                  <p>
+                  input, output and preset are required parameters
+                  </p>
                   <table>
                   <tr><td valign="top">input:</td><td>Input file to process
                   
@@ -150,7 +160,16 @@
                   <tr><td valign="top">preset:</td><td>Preset name to use
                   
                   </td></tr>
+                  <tr><td valign="top">notify:</td><td>A list of email addresses and urls separated by commas.
+                  
+                  </td></tr>
                   </table>
+                  <p>
+                  If a job enters the completed or failed state, a notification will be sent
+                  to the emails and urls specified in the <tt>notify</tt> parameter. Urls
+                  will receive a POST request with the JSON representation of the job as
+                  body.
+                  </p>
                   <h3>Response codes</h3>
                   <table>
                   <tr><td valign="top">success:</td><td><tt>201 created</tt>
@@ -167,7 +186,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000012-source'>    <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 85</span>&#x000A;85:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A;86:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">:callback_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) })&#x000A;87:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">valid?</span>&#x000A;88:       <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;X-State-Changes-Location&quot;</span>] = <span class="ruby-identifier">api_state_changes_url</span>(<span class="ruby-identifier">job</span>)&#x000A;89:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;90:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">jobs_path</span> }&#x000A;91:       <span class="ruby-keyword kw">end</span>&#x000A;92:     <span class="ruby-keyword kw">else</span>&#x000A;93:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;94:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@job</span> = <span class="ruby-identifier">job</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/jobs/new&quot;</span>}&#x000A;95:       <span class="ruby-keyword kw">end</span>&#x000A;96:     <span class="ruby-keyword kw">end</span>&#x000A;97:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000012-source'>     <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 94</span>&#x000A; 94:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>&#x000A; 95:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">from_api</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">:callback_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) })&#x000A; 96:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">valid?</span>&#x000A; 97:       <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;X-State-Changes-Location&quot;</span>] = <span class="ruby-identifier">api_state_changes_url</span>(<span class="ruby-identifier">job</span>)&#x000A; 98:       <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;X-Notifications-Location&quot;</span>] = <span class="ruby-identifier">api_notifications_url</span>(<span class="ruby-identifier">job</span>)&#x000A; 99:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_job_url</span>(<span class="ruby-identifier">job</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;100:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">jobs_path</span> }&#x000A;101:       <span class="ruby-keyword kw">end</span>&#x000A;102:     <span class="ruby-keyword kw">else</span>&#x000A;103:       <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>&#x000A;104:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-ivar">@job</span> = <span class="ruby-identifier">job</span>; <span class="ruby-identifier">render</span> <span class="ruby-value str">&quot;/jobs/new&quot;</span>}&#x000A;105:       <span class="ruby-keyword kw">end</span>&#x000A;106:     <span class="ruby-keyword kw">end</span>&#x000A;107:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000011'>
@@ -197,7 +216,7 @@
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
-                  <h2>Returns a list of recent jobs</h2>
+                  <h2>Returns a list of jobs regardless of state.</h2>
                   <p>
                   This method uses pagination.
                   </p>
@@ -294,7 +313,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000013-source'>     <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 136</span>&#x000A;136:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;137:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;138:     <span class="ruby-identifier">job</span>.<span class="ruby-identifier">update_status</span>&#x000A;139:     <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>&#x000A;140:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'>     <span class="ruby-comment cmt"># File app/controllers/api/jobs_controller.rb, line 146</span>&#x000A;146:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>&#x000A;147:     <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])&#x000A;148:     <span class="ruby-identifier">job</span>.<span class="ruby-identifier">update_status</span>&#x000A;149:     <span class="ruby-identifier">respond_with</span> <span class="ruby-identifier">job</span>&#x000A;150:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000009'>

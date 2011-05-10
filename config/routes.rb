@@ -13,6 +13,7 @@ Scheduler::Application.routes.draw do
 
       member do
         resources :state_changes
+        resources :notifications
       end
     end
 

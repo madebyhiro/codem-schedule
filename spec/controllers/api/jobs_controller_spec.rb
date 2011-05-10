@@ -30,6 +30,11 @@ describe Api::JobsController do
         response.headers['X-State-Changes-Location'].should == api_state_changes_url(Job.last)
       end
       
+      it "should set the notifications header" do
+        do_post
+        response.headers['X-Notifications-Location'].should == api_notifications_url(Job.last)
+      end
+      
       it "should redirect to /jobs if :html" do
         do_post(:html)
         response.should redirect_to(jobs_path)

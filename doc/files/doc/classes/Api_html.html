@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>File: Api.html [RDoc Documentation]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>Api.html</h1>
+        <div class='paths'>
+          doc/classes/Api.html
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>2011-05-10 17:38:29 +0200</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            <!DOCTYPE html PUBLIC &#8220;-//W3C//DTD HTML 4.01//EN&#8220; &#8220;<a
+            href="http://www.w3.org/TR/html4/strict.dtd">www.w3.org/TR/html4/strict.dtd</a>&#8220;>
+            <html lang=&#8217;en&#8217;>
+            </p>
+            <pre>&lt;head&gt;&#x000A;  &lt;title&gt;: Api [Codem Scheduler documentation]&lt;/title&gt;&#x000A;  &lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'&gt;&#x000A;  &lt;link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'&gt;&#x000A;  &lt;script type='text/javascript'&gt;&#x000A;    //&lt;![CDATA[&#x000A;      function popupCode(url) {&#x000A;        window.open(url, &quot;Code&quot;, &quot;resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400&quot;)&#x000A;      }&#x000A;&#x000A;      function toggleCode(id) {&#x000A;        var code = document.getElementById(id)&#x000A;&#x000A;        code.style.display = code.style.display != 'block' ? 'block' : 'none'&#x000A;        return true&#x000A;      }&#x000A;&#x000A;      // Make codeblocks hidden by default&#x000A;      document.writeln('&lt;' + 'style type=&quot;text/css&quot;&gt;.method .source pre { display: none }&lt;\/style&gt;')&#x000A;    //]]&gt;&#x000A;  &lt;/script&gt;&#x000A;&lt;/head&gt;&#x000A;&lt;body class='page'&gt;&#x000A;  &lt;div class='class' id='wrapper'&gt;&#x000A;    &lt;div class='header'&gt;&#x000A;      &lt;div class='name'&gt;&#x000A;        &lt;span class='type'&gt;Module&lt;/span&gt;&#x000A;        Api&#x000A;      &lt;/div&gt;&#x000A;      &lt;ol class='paths'&gt;&#x000A;        &lt;li&gt;&#x000A;          &lt;a href=&quot;../files/app/controllers/api/api_controller_rb.html&quot;&gt;app/controllers/api/api_controller.rb&lt;/a&gt;&#x000A;        &lt;/li&gt;&#x000A;      &lt;/ol&gt;&#x000A;    &lt;/div&gt;&#x000A;    &lt;div id='content'&gt;&#x000A;      &lt;div id='text'&gt;&#x000A;        &lt;div id='description'&gt;&#x000A;          &lt;h1&gt;The Codem scheduler API&lt;/h1&gt;&#x000A;          &lt;h2&gt;Resources&lt;/h2&gt;&#x000A;          &lt;p&gt;&#x000A;          The following resources can be viewed and manipulated through this API.&#x000A;          &lt;/p&gt;&#x000A;          &lt;h3&gt;Hosts&lt;/h3&gt;&#x000A;          &lt;p&gt;&#x000A;          Creating and viewing of hosts. A host is a representation of a Codem&#x000A;          Transcoder instance.&#x000A;          &lt;/p&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET  /api/hosts:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/HostsController.html#M000001&quot;&gt;Api::HostsController#index&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;POST /api/hosts:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/HostsController.html#M000002&quot;&gt;Api::HostsController#create&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET  /api/hosts/:id:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/HostsController.html#M000003&quot;&gt;Api::HostsController#show&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;          &lt;h3&gt;Jobs&lt;/h3&gt;&#x000A;          &lt;p&gt;&#x000A;          Creating and viewing of jobs.&#x000A;          &lt;/p&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs:&lt;/td&gt;&lt;td&gt;See &lt;a href=&quot;Api/JobsController.html#M000004&quot;&gt;Api::JobsController#index&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/scheduled:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000005&quot;&gt;Api::JobsController#scheduled&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/accepted:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000006&quot;&gt;Api::JobsController#accepted&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/processing:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000007&quot;&gt;Api::JobsController#processing&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/on_hold:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000008&quot;&gt;Api::JobsController#on_hold&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/success:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000009&quot;&gt;Api::JobsController#success&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/failed:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000011&quot;&gt;Api::JobsController#failed&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;POST /api/jobs:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/JobsController.html#M000012&quot;&gt;Api::JobsController#create&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/:id:&lt;/td&gt;&lt;td&gt;See &lt;a href=&quot;Api/JobsController.html#M000013&quot;&gt;Api::JobsController#show&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;          &lt;h3&gt;Presets&lt;/h3&gt;&#x000A;          &lt;p&gt;&#x000A;          Creating and viewing of presets.&#x000A;          &lt;/p&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/presets:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/PresetsController.html#M000015&quot;&gt;Api::PresetsController#index&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;POST /api/presets:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/PresetsController.html#M000016&quot;&gt;Api::PresetsController#create&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/presets/id:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/PresetsController.html#M000017&quot;&gt;Api::PresetsController#show&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;          &lt;h3&gt;State Changes&lt;/h3&gt;&#x000A;          &lt;p&gt;&#x000A;          Viewing of state changes of a job.&#x000A;          &lt;/p&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/:id/state_changes:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/StateChangesController.html#M000019&quot;&gt;Api::StateChangesController#index&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;          &lt;h3&gt;Notifications&lt;/h3&gt;&#x000A;          &lt;p&gt;&#x000A;          Notifications are sent to an email address or url if a job is either&#x000A;          completed or has failed&#x000A;          &lt;/p&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/jobs/:id/notifications:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/NotificationsController.html#M000014&quot;&gt;Api::NotificationsController#index&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;          &lt;h3&gt;Scheduling&lt;/h3&gt;&#x000A;          &lt;h4&gt;Endpoints&lt;/h4&gt;&#x000A;          &lt;table&gt;&#x000A;          &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;GET /api/scheduler:&lt;/td&gt;&lt;td&gt;See &lt;a&#x000A;          href=&quot;Api/SchedulerController.html#M000018&quot;&gt;Api::SchedulerController#schedule&lt;/a&gt;&#x000A;&#x000A;          &lt;/td&gt;&lt;/tr&gt;&#x000A;          &lt;/table&gt;&#x000A;        &lt;/div&gt;&#x000A;        &lt;div id='section'&gt;&#x000A;          &lt;div id='class-list'&gt;&#x000A;            &lt;h2&gt;Classes and Modules&lt;/h2&gt;&#x000A;            Class &lt;a href=&quot;Api/ApiController.html&quot; class=&quot;link&quot;&gt;Api::ApiController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/HostsController.html&quot; class=&quot;link&quot;&gt;Api::HostsController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/JobsController.html&quot; class=&quot;link&quot;&gt;Api::JobsController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/NotificationsController.html&quot; class=&quot;link&quot;&gt;Api::NotificationsController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/PresetsController.html&quot; class=&quot;link&quot;&gt;Api::PresetsController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/SchedulerController.html&quot; class=&quot;link&quot;&gt;Api::SchedulerController&lt;/a&gt;&lt;br /&gt;&#x000A;            Class &lt;a href=&quot;Api/StateChangesController.html&quot; class=&quot;link&quot;&gt;Api::StateChangesController&lt;/a&gt;&lt;br /&gt;&#x000A;          &lt;/div&gt;&#x000A;        &lt;/div&gt;&#x000A;      &lt;/div&gt;&#x000A;    &lt;/div&gt;&#x000A;    &lt;div id='footer-push'&gt;&lt;/div&gt;&#x000A;  &lt;/div&gt;&#x000A;  &lt;div id='footer'&gt;&#x000A;    &lt;a href=&quot;http://github.com/mislav/hanna/tree/master&quot;&gt;&lt;strong&gt;Hanna&lt;/strong&gt; RDoc template&lt;/a&gt;&#x000A;  &lt;/div&gt;&#x000A;&lt;/body&gt;</pre>
+            <p>
+            </html>
+            </p>
+          </div>
+          <div id='section'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

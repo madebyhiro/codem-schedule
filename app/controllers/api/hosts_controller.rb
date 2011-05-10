@@ -1,4 +1,6 @@
 # = Hosts controller
+#
+# A host represents an instance of a Transcoder, defined by name and url
 class Api::HostsController < Api::ApiController
   # == Displays a list of hosts
   #

@@ -65,7 +65,7 @@
             </table>
             <h3>Jobs</h3>
             <p>
-            Creating and viewing of hosts.
+            Creating and viewing of jobs.
             </p>
             <h4>Endpoints</h4>
             <table>
@@ -111,15 +111,15 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/presets:</td><td>See <a
-            href="Api/PresetsController.html#M000014">Api::PresetsController#index</a>
+            href="Api/PresetsController.html#M000015">Api::PresetsController#index</a>
             
             </td></tr>
             <tr><td valign="top">POST /api/presets:</td><td>See <a
-            href="Api/PresetsController.html#M000015">Api::PresetsController#create</a>
+            href="Api/PresetsController.html#M000016">Api::PresetsController#create</a>
             
             </td></tr>
             <tr><td valign="top">GET /api/presets/id:</td><td>See <a
-            href="Api/PresetsController.html#M000016">Api::PresetsController#show</a>
+            href="Api/PresetsController.html#M000017">Api::PresetsController#show</a>
             
             </td></tr>
             </table>
@@ -130,7 +130,19 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/jobs/:id/state_changes:</td><td>See <a
-            href="Api/StateChangesController.html#M000018">Api::StateChangesController#index</a>
+            href="Api/StateChangesController.html#M000019">Api::StateChangesController#index</a>
+            
+            </td></tr>
+            </table>
+            <h3>Notifications</h3>
+            <p>
+            Notifications are sent to an email address or url if a job is either
+            completed or has failed
+            </p>
+            <h4>Endpoints</h4>
+            <table>
+            <tr><td valign="top">GET /api/jobs/:id/notifications:</td><td>See <a
+            href="Api/NotificationsController.html#M000014">Api::NotificationsController#index</a>
             
             </td></tr>
             </table>
@@ -138,7 +150,7 @@
             <h4>Endpoints</h4>
             <table>
             <tr><td valign="top">GET /api/scheduler:</td><td>See <a
-            href="Api/SchedulerController.html#M000017">Api::SchedulerController#schedule</a>
+            href="Api/SchedulerController.html#M000018">Api::SchedulerController#schedule</a>
             
             </td></tr>
             </table>
@@ -149,6 +161,7 @@
               Class <a href="Api/ApiController.html" class="link">Api::ApiController</a><br />
               Class <a href="Api/HostsController.html" class="link">Api::HostsController</a><br />
               Class <a href="Api/JobsController.html" class="link">Api::JobsController</a><br />
+              Class <a href="Api/NotificationsController.html" class="link">Api::NotificationsController</a><br />
               Class <a href="Api/PresetsController.html" class="link">Api::PresetsController</a><br />
               Class <a href="Api/SchedulerController.html" class="link">Api::SchedulerController</a><br />
               Class <a href="Api/StateChangesController.html" class="link">Api::StateChangesController</a><br />

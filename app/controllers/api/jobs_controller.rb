@@ -14,9 +14,9 @@
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
 # Jobs are paginated with 20 jobs per page.
 # For example, to get the 5th page of successfully completed jobs, use:
-#   http://host.com/api/jobs.json?page=5
+#   http://host.com/api/jobs?page=5
 class Api::JobsController < Api::ApiController
-  # == Returns a list of recent jobs
+  # == Returns a list of jobs regardless of state.
   # This method uses pagination.
   def index;        jobs_index(Job.scoped); end
   # == Returns a list of scheduled jobs
@@ -50,10 +50,19 @@ class Api::JobsController < Api::ApiController
   # Creates a job using the specified parameters, which are all required. If the request was valid,
   # the created job is returned. If the request could not be completed, a list of errors will be returned.
   #
+  # If the job is successfully created, two extra headers will be sent in the response.
+  # The header <tt>X-State-Changes-Location</tt> contains the location of the state changes endpoint for this job.
+  # The header <tt>X-Notifications-Location</tt> contains the location of the notifications endpoint for this job.
+  #
   # === Parameters
+  # input, output and preset are required parameters
   # input:: Input file to process
   # output:: Output file to write to
   # preset:: Preset name to use
+  # notify:: A list of email addresses and urls separated by commas.
+  #
+  # If a job enters the completed or failed state, a notification will be sent to the emails and urls specified in the 
+  # <tt>notify</tt> parameter. Urls will receive a POST request with the JSON representation of the job as body.
   #
   # === Response codes
   # success:: <tt>201 created</tt>
@@ -86,6 +95,7 @@ class Api::JobsController < Api::ApiController
     job = Job.from_api(params, :callback_url => lambda { |job| api_job_url(job) })
     if job.valid?
       response.headers["X-State-Changes-Location"] = api_state_changes_url(job)
+      response.headers["X-Notifications-Location"] = api_notifications_url(job)
       respond_with job, :location => api_job_url(job) do |format|
         format.html { redirect_to jobs_path }
       end

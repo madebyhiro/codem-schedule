@@ -13,7 +13,7 @@
 # GET  /api/hosts/:id:: See Api::HostsController#show
 #
 # === Jobs
-# Creating and viewing of hosts.
+# Creating and viewing of jobs.
 #
 # ==== Endpoints
 # GET /api/jobs::             See Api::JobsController#index
@@ -39,6 +39,12 @@
 #
 # ==== Endpoints
 # GET /api/jobs/:id/state_changes:: See Api::StateChangesController#index
+#
+# === Notifications
+# Notifications are sent to an email address or url if a job is either completed or has failed
+#
+# ==== Endpoints
+# GET /api/jobs/:id/notifications:: See Api::NotificationsController#index
 #
 # === Scheduling
 #
