@@ -9,8 +9,11 @@ gem 'kaminari'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'ZenTest'
-  gem 'simplecov', :require => false
+end
+
+group :test do
+	gem 'simplecov', :require => false
 	gem 'factory_girl_rails'
 	gem 'webmock'
+	gem 'ZenTest'
 end
