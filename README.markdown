@@ -16,15 +16,19 @@ See <http://rubyonrails.org/download> for installation instructions.
     or
     visit https://github.com/NPO/codem-schedule/archives/master
   
-2 Install the required gems
+2 Install the required gems.
   
     $ bundle install
     
 3 Run the installer rake task, which will setup the application.
 
     $ rake codem:install
-    
-4 Start the server, and you're ready to go!
+ 
+4 Use cron or a similar tool to trigger the status update task. For example, to run the task every 2 minutes, use:
+
+    */2 * * * * curl -s http://localhost:3000/api/schedule
+   
+5 Start the server, and you're ready to go!
 
     $ rails server
 
@@ -36,7 +40,7 @@ Tests
 -----
 Tests are written in rspec and can be run with
 
-    $ rspec -f documentation spec
+    $ rspec documentation spec
 
 ## License
 
