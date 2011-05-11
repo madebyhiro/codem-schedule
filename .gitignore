@@ -4,3 +4,4 @@ log/*.log
 tmp/
 public/stylesheets/*.css
 coverage/
+doc/app
