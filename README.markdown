@@ -30,7 +30,7 @@ See <http://rubyonrails.org/download> for installation instructions.
 
 API documentation
 -----------------
-View the API documentation at <http://rubydoc.info/github/NPO/codem-schedule/>
+View the API documentation at <http://rubydoc.info/github/NPO/codem-schedule/master/frames>
 
 Tests
 -----
