@@ -3,3 +3,5 @@ db/*.sqlite3
 log/*.log
 tmp/
 public/stylesheets/*.css
+config/database.yml
+coverage/
