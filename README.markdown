@@ -11,13 +11,12 @@ See <http://rubyonrails.org/download> for installation instructions.
 1 Either clone the git repository or download a packaged archive.
 
     $ git clone git://github.com/NPO/codem-schedule.git
-    $ cd codem-schedule
+    or
+    visit https://github.com/NPO/codem-schedule/archives/master
   
 2 Install the required gems
   
     $ bundle install
-    or
-    visit https://github.com/NPO/codem-schedule/archives/master
     
 3 Run the installer rake task, which will setup the application.
 
