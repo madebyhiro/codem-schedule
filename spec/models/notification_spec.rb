@@ -21,6 +21,11 @@ describe Notification do
       UrlNotification.should_receive(:new).with(:value => 'foo.com').and_return 'url'
       Notification.from_api('foo@bar.com,foo.com').should == ['email', 'url']
     end
+    
+    it "should handle spaces" do
+      EmailNotification.should_receive(:new).with(:value => 'foo@bar.com').and_return 'email'
+      Notification.from_api(' foo@bar.com ').should == ['email']
+    end
   end
   
   it "should return the correct name" do
