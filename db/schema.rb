@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20110508124047) do
     t.integer  "preset_id",              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",                  :null => false
+    t.string   "state"
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20110508124047) do
     t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "parameters", :null => false
+    t.text     "parameters"
   end
 
   add_index "presets", ["name"], :name => "index_presets_on_name"

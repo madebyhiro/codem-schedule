@@ -1,6 +1,6 @@
 class AddParametersToPresets < ActiveRecord::Migration
   def self.up
-    add_column :presets, :parameters, :text, :null => false
+    add_column :presets, :parameters, :text
   end
 
   def self.down

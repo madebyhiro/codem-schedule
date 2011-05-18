@@ -16,6 +16,9 @@
       
       <li><%= label_tag :preset %></li>
       <li><%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)) %></li>
+
+			<li><%= label_tag :notify %></li>
+			<li><%= text_field_tag :notify %></li>
     </ol>
     
   </fieldset>

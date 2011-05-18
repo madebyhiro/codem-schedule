@@ -1,6 +1,4 @@
-%w(hosts jobs presets state_changes notifications).each do |name|
-  ActiveRecord::Base.connection.execute("TRUNCATE #{name}")
-end
+[Host, Job, Preset, StateChange, Notification].map(&:destroy_all)
 
 Host.create!(:url => 'http://127.0.0.1:8080', :name => "Localhost")
 
