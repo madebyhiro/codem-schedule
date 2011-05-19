@@ -50,6 +50,9 @@
 #
 # ==== Endpoints
 # GET /api/scheduler::    See Api::SchedulerController#schedule
+#
+# === Statistics
+# GET /api/statistics::   See Api::StatisticsController#show
 module Api
   # = Base API controller
   # This controller provides JSON and XML responders.

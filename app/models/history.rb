@@ -1,4 +1,5 @@
 class History
+  include ActiveRecord::Serialization
   include ActionView::Helpers::NumberHelper
   
   attr_accessor :period
@@ -7,7 +8,7 @@ class History
     period = 'today' if period.nil?
     @period = period
   end
-  
+
   def jobs
     @jobs ||= Job.where(:created_at => between)
   end
@@ -31,12 +32,24 @@ class History
     @success ||= jobs.where(:state => Job::Success)
   end
   
+  def number_of_completed_jobs
+    completed_jobs.size
+  end
+  
   def failed_jobs
     @failed ||= Job.where(:created_at => between).where(:state => Job::Failed)
   end
   
+  def number_of_failed_jobs
+    failed_jobs.size
+  end
+  
   def processing_jobs
     @transcoding ||= jobs.where(:state => Job::Processing)
+  end
+  
+  def number_of_processing_jobs
+    processing_jobs.size
   end
   
   def seconds_encoded
@@ -63,4 +76,24 @@ class History
     num = total_time / completed_jobs.size
     num < 1 ? 1 : num
   end
+  
+  def serializable_hash(opts={})
+    super({ 
+      :methods => [:seconds_encoded, :average_processing_time, :average_queue_time, 
+                   :number_of_completed_jobs, :number_of_failed_jobs, :number_of_processing_jobs]
+    })
+  end
+  
+  def to_json(opts={})
+    serializable_hash.to_json(opts)
+  end
+  
+  def to_xml(opts={})
+    serializable_hash(opts).to_xml(:root => 'statistics')
+  end
+  
+  private
+    def self.inheritance_column; nil; end
+    def attributes; {}; end
+    
 end

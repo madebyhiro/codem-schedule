@@ -52,14 +52,29 @@ describe History do
       @history.completed_jobs.should == 'c'
     end
     
+    it "should return the number of completed jobs" do
+      @history.stub!(:completed_jobs).and_return [1,2,3]
+      @history.number_of_completed_jobs.should == 3
+    end
+    
     it "should return the failed jobs" do
       Job.stub_chain(:where, :where).and_return @jobs
       @history.failed_jobs.should == @jobs
+    end
+    
+    it "should return the number of failed jobs" do
+      @history.stub!(:failed_jobs).and_return [1,2]
+      @history.number_of_failed_jobs.should == 2
     end
 
     it "should return the processing jobs" do
       @jobs.should_receive(:where).with(:state => Job::Processing).and_return 'p'
       @history.processing_jobs.should == 'p'
+    end
+    
+    it "should return the number of processing jobs" do
+      @history.stub!(:processing_jobs).and_return [1]
+      @history.number_of_processing_jobs.should == 1
     end
   end
   
@@ -87,5 +102,27 @@ describe History do
     
     @history.stub!(:completed_jobs).and_return []
     @history.average_queue_time.should == 0
+  end
+  
+  describe "serialization" do
+    before(:each) do
+      @history = History.new
+      @history.stub!(
+        :number_of_processing_jobs => 'p',
+        :number_of_failed_jobs => 'f',
+        :number_of_completed_jobs => 'c',
+        :seconds_encoded => 'se',
+        :average_processing_time => 'ap',
+        :average_queue_time => 'aq'
+      )
+    end
+    
+    it "should serialize to json correctly" do
+      @history.to_json.should == "{\"seconds_encoded\":\"se\",\"average_processing_time\":\"ap\",\"average_queue_time\":\"aq\",\"number_of_completed_jobs\":\"c\",\"number_of_failed_jobs\":\"f\",\"number_of_processing_jobs\":\"p\"}"
+    end
+    
+    it "should serialize to xml correctly" do
+      @history.to_xml.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<statistics>\n  <seconds-encoded>se</seconds-encoded>\n  <average-processing-time>ap</average-processing-time>\n  <average-queue-time>aq</average-queue-time>\n  <number-of-completed-jobs>c</number-of-completed-jobs>\n  <number-of-failed-jobs>f</number-of-failed-jobs>\n  <number-of-processing-jobs>p</number-of-processing-jobs>\n</statistics>\n"
+    end
   end
 end
