@@ -1,4 +1,6 @@
 <%= content_tag_for :li, preset, :class => cycle('left', 'right') do %>
   <%= preset.name %>
   <pre><%= preset.parameters %></pre>
+  <%= link_to 'Edit', edit_preset_path(preset) %> - 
+  <%= link_to 'Delete', preset_path(preset), :method => :destroy %>
 <% end %>

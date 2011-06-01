@@ -67,4 +67,37 @@ describe Api::PresetsController do
       response.body.should == Preset.all.to_xml
     end
   end
+  
+  describe "PUT 'update'" do
+    before(:each) do
+      create_preset
+    end
+    
+    def do_put(format)
+      put 'update', :id => @preset.id, :name => 'name', :parameters => 'params', :format => format
+      @preset.reload
+    end
+    
+    it "should update a preset as JSON" do
+      do_put(:json)
+      @preset.name.should == 'name'
+      @preset.parameters.should == 'params'
+    end
+
+    it "should update a preset as XML" do
+      do_put(:xml)
+      @preset.name.should == 'name'
+      @preset.parameters.should == 'params'
+    end
+    
+    it "should redirect to the presets path as HTML" do
+      do_put(:html)
+      response.should redirect_to(presets_path)
+    end
+    
+    it "should re-render /presets/edit if the update fails as HTML" do
+      put 'update', :id => @preset.id, :name => nil, :format => :html
+      response.should render_template('/presets/edit')
+    end
+  end
 end

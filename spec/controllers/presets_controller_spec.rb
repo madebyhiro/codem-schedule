@@ -22,9 +22,49 @@ describe PresetsController do
   end
   
   describe "GET 'new'" do
-    it "should render the template" do
+    before(:each) do
+      @preset = mock_model(Preset)
+      Preset.stub!(:new).and_return @preset
+    end
+    
+    def do_get
       get 'new'
+    end
+    
+    it "should generate a new preset" do
+      Preset.should_receive(:new)
+      do_get
+    end
+    
+    it "should assign the new preset for the view" do
+      do_get
+      assigns[:preset].should == @preset
+    end
+    
+    it "should render the template" do
+      do_get
       response.should render_template('new')
+    end
+  end
+  
+  describe "GET 'edit'" do
+    before(:each) do
+      @preset = mock_model(Preset)
+      Preset.stub!(:find).and_return @preset
+    end
+    
+    def do_get
+      get 'edit', :id => 1
+    end
+    
+    it "should find the preset" do
+      Preset.should_receive(:find).with(1)
+      do_get
+    end
+    
+    it "should assign the preset for the view" do
+      do_get
+      assigns[:preset].should == @preset
     end
   end
 end

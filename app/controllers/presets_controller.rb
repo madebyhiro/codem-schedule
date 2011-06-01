@@ -4,5 +4,10 @@ class PresetsController < ApplicationController
   end
   
   def new
+    @preset = Preset.new
+  end
+  
+  def edit
+    @preset = Preset.find(params[:id])
   end
 end

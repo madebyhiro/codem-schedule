@@ -65,7 +65,7 @@ class Api::PresetsController < Api::ApiController
   # <tt>id</tt>:: Id of the preset to display
   #
   # === Example
-  #   $ curl curl http://localhost:3000/api/presets/1
+  #   $ curl http://localhost:3000/api/presets/1
   #
   #   {"preset":{
   #     "created_at":"2011-05-10T14:44:07Z",
@@ -77,5 +77,29 @@ class Api::PresetsController < Api::ApiController
   #   }
   def show
     respond_with Preset.find(params[:id])
+  end
+  
+  # == Updates a preset
+  #
+  # === Paramdeters
+  # <tt>id</tt>:: Id of the preset to update
+  # <tt>name</tt>:: Name of the preset
+  # <tt>parameters</tt>:: Parameters of the preset
+  #
+  # === Example
+  #
+  #   $ curl -XPUT -d 'name=h264&parameters=params' http://localhost:3000/api/presets/1
+  #   {} # HTTP Status: 200 OK
+  def update
+    preset = Preset.find(params[:id])
+    if preset.update_attributes(:name => params[:name], :parameters => params[:parameters])
+      respond_with preset, :location => api_preset_url(preset) do |format|
+        format.html { redirect_to presets_path }
+      end
+    else
+      respond_with preset do |format|
+        format.html { @preset = preset; render "/presets/edit" }
+      end
+    end
   end
 end
