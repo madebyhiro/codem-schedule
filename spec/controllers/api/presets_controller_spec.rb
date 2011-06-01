@@ -100,4 +100,24 @@ describe Api::PresetsController do
       response.should render_template('/presets/edit')
     end
   end
+  
+  describe "DELETE 'destroy'" do
+    before(:each) do
+      create_preset
+    end
+    
+    def do_delete(format=:json)
+      delete :destroy, :id => 1, :format => format
+    end
+    
+    it "should delete the preset" do
+      do_delete
+      Preset.count.should == 0
+    end
+    
+    it "should redirect to /presets as HTML" do
+      do_delete(:html)
+      response.should redirect_to(presets_path)
+    end
+  end
 end

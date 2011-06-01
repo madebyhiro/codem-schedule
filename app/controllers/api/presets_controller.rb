@@ -102,4 +102,21 @@ class Api::PresetsController < Api::ApiController
       end
     end
   end
+  
+  # == Deletes a preset
+  #
+  # === Parameters
+  # <tt>id</tt>:: Id of the preset to delete
+  #
+  # === Example
+  #
+  #   $ curl -XDELETE http://localhost:3000/api/presets/1
+  #   {} # HTTP Status: 200 OK
+  def destroy
+    preset = Preset.find(params[:id])
+    preset.destroy
+    respond_with preset, :location => api_preset_url(preset) do |format|
+      format.html { redirect_to presets_path }
+    end
+  end
 end
