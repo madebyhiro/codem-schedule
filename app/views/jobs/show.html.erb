@@ -48,8 +48,6 @@
 
 <% if @job.state == Job::Success %>
   <h2>Output</h2>
-  <video src="file://<%= @job.destination_file %>" controls></video>
-
   <p>
     Encoding <strong title="<%= number_with_delimiter @job.duration %> seconds"><%= number_to_time @job.duration %></strong> seconds 
 		took <strong title="<%= number_with_delimiter encoding_time(@job) %> seconds"><%= number_to_time encoding_time(@job) %></strong> seconds 
