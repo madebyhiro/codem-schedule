@@ -1,6 +1,7 @@
 class HostsController < ApplicationController
   def index
     @hosts = Host.all
+    @hosts.map(&:update_status)
   end
   
   def new

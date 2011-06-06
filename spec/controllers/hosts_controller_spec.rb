@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe HostsController do
   describe "GET 'index'" do
     before(:each) do
-      Host.stub!(:all).and_return 'hosts'
+      @host = double(Host, :update_status => true)
+      Host.stub!(:all).and_return [@host]
     end
     
     def do_get
@@ -15,9 +16,14 @@ describe HostsController do
       do_get
     end
     
+    it "should update their status" do
+      @host.should_receive(:update_status)
+      do_get
+    end
+    
     it "should assign the hosts for the view" do
       do_get
-      assigns[:hosts].should == 'hosts'
+      assigns[:hosts].should == [@host]
     end
   end
   
