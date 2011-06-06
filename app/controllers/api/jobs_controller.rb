@@ -8,7 +8,7 @@
 # <tt>processing</tt>::  Being processed by a Transcoder Instance
 # <tt>\on_hold</tt>::    Waiting for a Transcoder to become responsive again
 # <tt>success</tt>::     Successfully completed
-# <tt>failed</tt>::      An error occured
+# <tt>failed</tt>::      An error occurred
 #
 # == Pagination
 # For methods that use pagination, a <tt>page</tt> parameters can be sent to display that particular page of jobs.
