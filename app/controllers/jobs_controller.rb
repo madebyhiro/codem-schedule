@@ -12,4 +12,10 @@ class JobsController < ApplicationController
   
   def new
   end
+  
+  def retry
+    job = Job.find(params[:id])
+    job.enter(Job::Scheduled)
+    redirect_to jobs_path
+  end
 end

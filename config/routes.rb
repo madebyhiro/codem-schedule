@@ -26,7 +26,13 @@ Scheduler::Application.routes.draw do
     match '/statistics' => 'statistics#show'
   end
 
-  resources :jobs, :presets, :hosts
+  resources :jobs do 
+    member do
+      post :retry
+    end
+  end
+  
+  resources :presets, :hosts
   
   match '/' => redirect('/jobs')
 end

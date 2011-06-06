@@ -202,3 +202,9 @@ div.host.left {
   float: left;
 }
 div.host.right { float: right; }
+form.button_to {
+	margin:0;
+	padding:0;
+	border:0;
+	float:right;
+}
