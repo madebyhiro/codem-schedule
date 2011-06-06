@@ -75,6 +75,7 @@ describe Api::HostsController do
   describe "PUT 'update'" do
     before(:each) do
       create_host
+      Host.last.update_attribute :available, true
     end
     
     def do_put(format)
@@ -88,6 +89,10 @@ describe Api::HostsController do
       @host.url.should == 'url'
     end
 
+    it "should have updated the status" do
+      @host.should_not be_available
+    end
+    
     it "should update a host as XML" do
       do_put(:xml)
       @host.name.should == 'name'

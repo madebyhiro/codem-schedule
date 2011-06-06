@@ -109,6 +109,7 @@ class Api::HostsController < Api::ApiController
   def update
     host = Host.find(params[:id])
     if host.update_attributes(:name => params[:name], :url => params[:url])
+      host.update_status
       respond_with host, :location => api_host_url(host) do |format|
         format.html { redirect_to hosts_path }
       end
