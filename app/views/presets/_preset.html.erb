@@ -2,5 +2,5 @@
   <%= preset.name %>
   <pre><%= preset.parameters %></pre>
   <%= link_to 'Edit', edit_preset_path(preset) %> - 
-  <%= link_to 'Delete', preset_path(preset), :method => :destroy %>
+  <%= link_to 'Delete', api_preset_path(preset), :method => :delete %>
 <% end %>
