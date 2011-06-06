@@ -114,7 +114,7 @@ describe Transcoder do
       do_get
     end
 
-    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
         RestClient.stub!(:get).and_raise ex
         do_get.should == false
