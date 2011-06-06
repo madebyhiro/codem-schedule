@@ -94,4 +94,45 @@ class Api::HostsController < Api::ApiController
     host.update_status
     respond_with host
   end
+  
+  # == Updates a host
+  #
+  # === Paramdeters
+  # <tt>id</tt>:: Id of the host to update
+  # <tt>name</tt>:: Name of the host
+  # <tt>url</tt>:: Url of the host
+  #
+  # === Example
+  #
+  #   $ curl -XPUT -d 'name=h&url=foo.com' http://localhost:3000/api/hosts/1
+  #   {} # HTTP Status: 200 OK
+  def update
+    host = Host.find(params[:id])
+    if host.update_attributes(:name => params[:name], :url => params[:url])
+      respond_with host, :location => api_host_url(host) do |format|
+        format.html { redirect_to hosts_path }
+      end
+    else
+      respond_with host do |format|
+        format.html { @host = host; render "/hosts/edit" }
+      end
+    end
+  end
+  
+  # == Deletes a host
+  #
+  # === Parameters
+  # <tt>id</tt>:: Id of the host to delete
+  #
+  # === Example
+  #
+  #   $ curl -XDELETE http://localhost:3000/api/hosts/1
+  #   {} # HTTP Status: 200 OK
+  def destroy
+    host = Host.find(params[:id])
+    host.destroy
+    respond_with host, :location => api_host_url(host) do |format|
+      format.html { redirect_to hosts_path }
+    end
+  end
 end

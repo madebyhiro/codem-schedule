@@ -1,24 +1,3 @@
 <% title 'New host' %>
 
-<%= form_tag api_hosts_path do %>
-	
-	<%= error_messages_for @host %>
-	
-	<fieldset>
-    <legend>Host</legend>
-    
-    <ol>
-      <li><%= label_tag :name %></li>
-      <li><%= text_field_tag :name, @host.try(:name) %></li>
-
-      <li><%= label_tag :url %></li>
-      <li><%= text_field_tag :url, @host.try(:url) %></li>
-    </ol>
-    
-  </fieldset>
-  
-  <ol class="buttons">
-    <li><%= submit_tag 'Create Host' %></li>
-  </ol>
-
-<% end %>
+<%= render "form" %>

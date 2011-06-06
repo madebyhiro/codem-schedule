@@ -19,4 +19,7 @@
     <% end %>
   </div>
   
+  <%= link_to 'Edit', edit_host_path(host) %> - 
+  <%= link_to 'Delete', api_host_path(host), :method => :delete %>
+    
 <% end %>

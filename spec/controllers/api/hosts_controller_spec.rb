@@ -71,4 +71,58 @@ describe Api::HostsController do
       response.body.should == @host.to_xml
     end
   end
+  
+  describe "PUT 'update'" do
+    before(:each) do
+      create_host
+    end
+    
+    def do_put(format)
+      put 'update', :id => @host.id, :name => 'name', :url => 'url', :format => format
+      @host.reload
+    end
+    
+    it "should update a host as JSON" do
+      do_put(:json)
+      @host.name.should == 'name'
+      @host.url.should == 'url'
+    end
+
+    it "should update a host as XML" do
+      do_put(:xml)
+      @host.name.should == 'name'
+      @host.url.should == 'url'
+    end
+    
+    it "should redirect to the hosts path as HTML" do
+      do_put(:html)
+      response.should redirect_to(hosts_path)
+    end
+    
+    it "should re-render /hosts/edit if the update fails as HTML" do
+      put 'update', :id => @host.id, :name => nil, :format => :html
+      response.should render_template('/hosts/edit')
+    end
+  end
+  
+  describe "DELETE 'destroy'" do
+    before(:each) do
+      create_host
+    end
+    
+    def do_delete(format=:json)
+      delete :destroy, :id => 1, :format => format
+    end
+    
+    it "should delete the host" do
+      do_delete
+      Host.count.should == 0
+    end
+    
+    it "should redirect to /hosts as HTML" do
+      do_delete(:html)
+      response.should redirect_to(hosts_path)
+    end
+  end
+
 end
