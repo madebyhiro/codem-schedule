@@ -1,0 +1,29 @@
+<% title 'Dashboard' %>
+
+<%= link_to 'View all jobs', jobs_path %>
+
+<h2>Recently scheduled jobs</h2>
+<%- if @scheduled_jobs.any? -%>
+	<% @jobs = @scheduled_jobs %>
+	<%= render "/jobs/jobs" %>
+<%- else -%>
+	<p>No recently scheduled jobs.</p>
+<%- end -%>
+
+
+<h2>Recently processing jobs</h2>
+<%- if @processing_jobs.any? -%>
+	<% @jobs = @processing_jobs %>
+	<%= render "/jobs/jobs" %>
+<%- else -%>
+	<p>No recently processing jobs</p>
+<%- end -%>
+
+
+<h2>Recently failed jobs</h2>
+<%- if @failed_jobs.any? -%>
+	<% @jobs = @failed_jobs %>
+	<%= render "/jobs/jobs" %>
+<%- else -%>
+	<p>No recently failed jobs</p>
+<%- end -%>
