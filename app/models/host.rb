@@ -17,6 +17,8 @@ class Host < ActiveRecord::Base
   end
   
   def update_status
+    return self if updated_at > 10.seconds.ago
+    
     self.available = false
       
     if attrs = Transcoder.host_status(self)

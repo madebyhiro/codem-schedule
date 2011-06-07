@@ -14,4 +14,5 @@ end
 Factory.define :host do |h|
   h.name 'name'
   h.url  'url'
+  h.updated_at 1.hour.ago
 end
