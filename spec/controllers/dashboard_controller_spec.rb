@@ -10,10 +10,12 @@ describe DashboardController do
       @jobs.stub!(:scheduled).and_return 'scheduled'
       @jobs.stub!(:processing).and_return 'processing'
       @jobs.stub!(:failed).and_return 'failed'
+      
+      History.stub!(:new).and_return 'history'
     end
     
     def do_get
-      get 'show'
+      get 'show', :period => 'period'
     end
     
     it "should assign the recently scheduled jobs" do
@@ -29,6 +31,16 @@ describe DashboardController do
     it "should assign the recently failed jobs" do
       do_get
       assigns[:failed_jobs].should == 'failed'
+    end
+    
+    it "should generate a new history" do
+      History.should_receive(:new).with('period')
+      do_get
+    end
+    
+    it "should assign the history for the view" do
+      do_get
+      assigns[:history].should == 'history'
     end
   end
 end
