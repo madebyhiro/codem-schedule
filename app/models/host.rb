@@ -17,9 +17,10 @@ class Host < ActiveRecord::Base
   end
   
   def update_status
-    return self if updated_at > 10.seconds.ago
+    return self if status_updated_at && status_updated_at > 10.seconds.ago
     
     self.available = false
+    self.status_updated_at = Time.current
       
     if attrs = Transcoder.host_status(self)
       self.total_slots          = attrs['max_slots']

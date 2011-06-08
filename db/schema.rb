@@ -10,16 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110508124047) do
+ActiveRecord::Schema.define(:version => 20110608073125) do
 
   create_table "hosts", :force => true do |t|
-    t.string   "name",                               :null => false
-    t.string   "url",                                :null => false
+    t.string   "name",                                 :null => false
+    t.string   "url",                                  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "available",       :default => false
-    t.integer  "total_slots",     :default => 0
-    t.integer  "available_slots", :default => 0
+    t.boolean  "available",         :default => false
+    t.integer  "total_slots",       :default => 0
+    t.integer  "available_slots",   :default => 0
+    t.datetime "status_updated_at"
   end
 
   create_table "jobs", :force => true do |t|

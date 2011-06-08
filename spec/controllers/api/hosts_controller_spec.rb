@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Api::HostsController do
   before(:each) do
+    Time.stub!(:now).and_return Time.utc(2011,1,2,3,4,5)
     Transcoder.stub!(:host_status).and_return {}
   end
   

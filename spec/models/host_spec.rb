@@ -101,7 +101,7 @@ describe Host do
     end
     
     it "should not update its status if the last update was < 10 seconds ago" do
-      host = Factory(:host, :updated_at => 5.seconds.ago)
+      host = Factory(:host, :status_updated_at => 5.seconds.ago)
       host.should_not_receive(:save)
       host.update_status
     end
