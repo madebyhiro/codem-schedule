@@ -152,6 +152,9 @@ class Api::JobsController < Api::ApiController
   # == Purges failed jobs
   #
   # This method will permanently delete all failed jobs from the database.
+  #
+  #   $ curl -XDELETE http://localhost:3000/api/jobs/purge
+  #   {} # HTTP Status: 200 OK
   def purge
     Job.failed.destroy_all
     render :nothing => true
