@@ -12,8 +12,7 @@ class Host < ActiveRecord::Base
   end
   
   def self.with_available_slots
-    all.map(&:update_status)
-    all.select { |h| h.available_slots > 0 }.shuffle
+    @@with_available_slots ||= all.map(&:update_status).select { |h| h.available_slots > 0 }.shuffle
   end
   
   def update_status
