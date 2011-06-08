@@ -9,6 +9,7 @@ Scheduler::Application.routes.draw do
         get :success
         get :completed
         get :failed
+        get :purge
       end
 
       member do

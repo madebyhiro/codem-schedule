@@ -148,6 +148,14 @@ class Api::JobsController < Api::ApiController
     job.update_status
     respond_with job
   end
+
+  # == Purges failed jobs
+  #
+  # This method will permanently delete all failed jobs from the database.
+  def purge
+    Job.failed.destroy_all
+    render :nothing => true
+  end
   
   private #:nodoc:
     def jobs_index(jobs)

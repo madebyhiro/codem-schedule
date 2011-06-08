@@ -11,6 +11,8 @@
 # GET  /api/hosts::     See Api::HostsController#index
 # POST /api/hosts::     See Api::HostsController#create
 # GET  /api/hosts/:id:: See Api::HostsController#show
+# PUT /api/hosts/:id::   See Api::HostsController#update
+# DELETE /api/hosts/:id:: See Api::HostsController#destroy
 #
 # === Jobs
 # Creating and viewing of jobs.
@@ -25,6 +27,7 @@
 # GET /api/jobs/failed::      See Api::JobsController#failed
 # POST /api/jobs::            See Api::JobsController#create
 # GET /api/jobs/:id::         See Api::JobsController#show
+# GET /api/jobs/purge::       See Api::JobsController#purge
 #
 # === Presets
 # Creating and viewing of presets.
@@ -32,7 +35,9 @@
 # ==== Endpoints
 # GET /api/presets::    See Api::PresetsController#index
 # POST /api/presets::   See Api::PresetsController#create
-# GET /api/presets/id:: See Api::PresetsController#show
+# GET /api/presets/:id:: See Api::PresetsController#show
+# PUT /api/presets/:id:: See Api::PresetsController#update
+# DELETE /api/presets/:id:: See Api::PresetsController#destroy
 #
 # === State Changes
 # Viewing of state changes of a job.
