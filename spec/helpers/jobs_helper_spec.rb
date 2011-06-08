@@ -74,7 +74,11 @@ describe JobsHelper do
     end
     
     it "should return the correct string" do
-      number_to_time(234976).should == '17:16:16'
+      number_to_time(13_762).should == '03:49:22'
+    end
+    
+    it "should be correct for times > 1 day" do
+      number_to_time(95_099).should == '01:02:24:59'
     end
   end
 end

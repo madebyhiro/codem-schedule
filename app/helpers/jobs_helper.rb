@@ -34,7 +34,12 @@ module JobsHelper
 	
   def number_to_time(seconds)
     return nil if seconds.to_i < 1
-    time = Time.gm(2000,1,1) + seconds.to_i
-    Time.at(time).utc.strftime("%H:%M:%S")
+    time = Time.at(seconds).utc
+    if seconds > 86400
+      days = seconds / 3600 / 24
+      "#{'%02d' % days}:#{time.strftime("%H:%M:%S")}"
+    else
+      time.strftime("%H:%M:%S")
+    end
   end
 end
