@@ -273,4 +273,25 @@ describe Api::JobsController do
       response.body.should == [@job].to_xml
     end
   end
+  
+  describe "DELETE 'purge'" do
+    before(:each) do
+      create_job
+      @job.update_attributes(:state => Job::Failed)
+    end
+    
+    def do_delete
+      delete 'purge'
+    end
+    
+    it "should delete all failed jobs" do
+      do_delete
+      Job.count.should == 0
+    end
+    
+    it "should render nothing" do
+      do_delete
+      response.body.should == ' '
+    end
+  end
 end
