@@ -24,6 +24,7 @@ class Job < ActiveRecord::Base
   scope :recent, :include => [:host, :preset], :order => ["created_at DESC"]
   
   scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]) }
+  scope :need_update, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -61,6 +62,10 @@ class Job < ActiveRecord::Base
     self
   end
   
+  def needs_update?
+    state == Accepted || state == Processing || state == OnHold
+  end
+
   def finished?
     state == Success || state == Failed
   end

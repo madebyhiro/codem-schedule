@@ -133,6 +133,20 @@ describe Job do
     end
   end
   
+  describe "needs update" do
+    it "should need an update if Accepted" do
+      Job.new(:state => Job::Accepted).should be_needs_update
+    end
+
+    it "should need an update if Processing" do
+      Job.new(:state => Job::Processing).should be_needs_update
+    end
+    
+    it "should need an update if OnHold" do
+      Job.new(:state => Job::OnHold).should be_needs_update
+    end
+  end
+  
   describe "getting the recent jobs" do
     before(:each) do
       @job = double(Job)

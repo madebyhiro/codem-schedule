@@ -6,7 +6,7 @@ describe JobsController do
       @job = double(Job, :update_status => true)
       @processing_job = double(Job, :update_status => true)
       Job.stub!(:recents).and_return [@job, @processing_job]
-      Job.stub_chain(:recents, :processing).and_return [@processing_job]
+      Job.stub_chain(:recents, :need_update).and_return [@processing_job]
       History.stub!(:new).and_return 'history'
     end
     
@@ -34,7 +34,7 @@ describe JobsController do
       assigns[:jobs].should == [@job, @processing_job]
     end
     
-    it "should update the statuses for processing jobs" do
+    it "should update the statuses for jobs that need an update" do
       @job.should_not_receive(:update_status)
       @processing_job.should_receive(:update_status)
       do_get
@@ -43,7 +43,7 @@ describe JobsController do
   
   describe "GET 'show'" do
     before(:each) do
-      @job = double(Job, :update_status => true, :state => Job::Processing)
+      @job = double(Job, :update_status => true, :needs_update? => true)
       Job.stub!(:find).and_return @job
     end
     
@@ -61,13 +61,13 @@ describe JobsController do
       assigns[:job].should == @job
     end
     
-    it "should not update the status if it's not Processing" do
-      @job.stub!(:state).and_return 'anything'
+    it "should not update the status if it does not need an update" do
+      @job.stub!(:needs_update?).and_return false
       @job.should_not_receive(:update_status)
       do_get
     end
     
-    it "should update the status if it's state is Processing" do
+    it "should update the status if it needs an update" do
       @job.should_receive(:update_status)
       do_get
     end
