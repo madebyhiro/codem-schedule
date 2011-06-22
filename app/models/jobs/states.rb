@@ -36,6 +36,7 @@ module Jobs
         for host in Host.with_available_slots
           if attrs = Transcoder.schedule(:host => host, :job => self)
             enter(Job::Accepted, attrs)
+            return
           end
         end
       end
