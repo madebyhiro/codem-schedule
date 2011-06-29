@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Runner do
+describe Schedule do
   before(:each) do
     Job.destroy_all
     @job = Factory(:job)
   end
 
   def update
-    Runner.schedule!
+    Schedule.run!
   end
   
   describe "entering scheduled state" do
@@ -48,7 +48,7 @@ describe Runner do
     end
   
     it "should try to schedule the job" do
-      Runner.should_receive(:schedule_job).with(@job)
+      Schedule.should_receive(:schedule_job).with(@job)
       update
     end
   end
@@ -68,7 +68,7 @@ describe Runner do
       end
       
       it "should try to schedule the job" do
-        Runner.should_receive(:schedule_job).with(@job)
+        Schedule.should_receive(:schedule_job).with(@job)
         update
       end
     end
@@ -120,7 +120,7 @@ describe Runner do
     end
     
     def update
-      Runner.update_progress(@job)
+      Schedule.update_progress(@job)
     end
     
     it "should do nothing if the job's state is not Processing" do

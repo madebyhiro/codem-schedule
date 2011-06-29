@@ -9,6 +9,6 @@ class Api::SchedulerController < Api::ApiController
   # All unfinished jobs will have their statuses updated, and are returned in the response.
   # A job is unfinished if it's state is either <tt>scheduled</tt>, <tt>accepted</tt>, <tt>processing</tt> or <tt>on hold</tt>.
   def schedule
-    respond_with Runner.schedule!
+    respond_with Schedule.run!
   end
 end

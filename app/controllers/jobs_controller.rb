@@ -2,7 +2,7 @@ class JobsController < ApplicationController
   def index
     @history = History.new(params[:period])
     @jobs    = Job.recents(params[:page])
-    @jobs.collect { |j| Runner.update_progress(j) }
+    @jobs.collect { |j| Schedule.update_progress(j) }
   end
   
   def show

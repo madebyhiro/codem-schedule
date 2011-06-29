@@ -8,7 +8,7 @@ describe JobsController do
       Job.stub!(:recents).and_return [@job, @processing_job]
       Job.stub_chain(:recents, :need_update).and_return [@processing_job]
       History.stub!(:new).and_return 'history'
-      Runner.stub!(:update_progress)
+      Schedule.stub!(:update_progress)
     end
     
     def do_get

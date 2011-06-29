@@ -1,15 +1,15 @@
-class Runner
+class Schedule
   class << self
-    def schedule!
+    def run!
       jobs.collect do |job| 
         update_job(job)
       end
     end
-
+  
     def jobs
       Job.unfinished.order("created_at")
     end
-
+  
     def update_progress(job)
       if job.state == Job::Processing
         attrs = Transcoder.job_status(job)
@@ -31,7 +31,7 @@ class Runner
           else
             job.enter(Job::OnHold)
           end
-
+  
         end
     
         job
