@@ -33,12 +33,6 @@ module Jobs
       end
 
       def enter_scheduled(params)
-        for host in Host.with_available_slots
-          if attrs = Transcoder.schedule(:host => host, :job => self)
-            enter(Job::Accepted, attrs)
-            return
-          end
-        end
       end
 
       def enter_accepted(params)
@@ -54,8 +48,6 @@ module Jobs
       end
       
       def enter_on_hold(params)
-        host.update_status
-        enter(Job::Scheduled) if host.available?
       end
       
       def enter_failed(params)

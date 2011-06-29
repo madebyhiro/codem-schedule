@@ -60,17 +60,11 @@ describe Api::JobsController do
   describe "GET 'show'" do
     before(:each) do
       create_job
-      @job.stub!(:update_status)
       Job.stub!(:find).and_return @job
     end
     
     def do_get(format=:json)
       get 'show', :id => @job.id, :format => format
-    end
-    
-    it "should update the job's status" do
-      @job.should_receive(:update_status)
-      do_get
     end
     
     it "shows a job as JSON" do
@@ -153,16 +147,10 @@ describe Api::JobsController do
       create_job
       @job.update_attributes(:state => Job::Accepted)
       Job.stub_chain(:accepted, :order, :page).and_return [@job]
-      @job.stub!(:update_status)
     end
     
     def do_get(format)
       get 'accepted', :format => format
-    end
-    
-    it "should update the job's status" do
-      @job.should_receive(:update_status)
-      do_get(:json)
     end
     
     it "shows accepted jobs as JSON" do
@@ -181,16 +169,10 @@ describe Api::JobsController do
       create_job
       @job.update_attributes(:state => Job::Processing)
       Job.stub_chain(:processing, :order, :page).and_return [@job]
-      @job.stub!(:update_status)
     end
     
     def do_get(format)
       get 'processing', :format => format
-    end
-    
-    it "should update the job's status" do
-      @job.should_receive(:update_status)
-      do_get(:json)
     end
     
     it "shows processing jobs as JSON" do
@@ -209,16 +191,10 @@ describe Api::JobsController do
       create_job
       @job.update_attributes(:state => Job::OnHold)
       Job.stub_chain(:on_hold, :order, :page).and_return [@job]
-      @job.stub!(:update_status)
     end
     
     def do_get(format)
       get 'on_hold', :format => format
-    end
-    
-    it "should update the job's status" do
-      @job.should_receive(:update_status)
-      do_get(:json)
     end
     
     it "shows on hold jobs as JSON" do

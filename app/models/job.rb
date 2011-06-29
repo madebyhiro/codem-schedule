@@ -46,22 +46,6 @@ class Job < ActiveRecord::Base
     recent.page(page)
   end
   
-  def update_status
-    return self if finished?
-    
-    if state == Scheduled
-      enter(Job::Scheduled)
-    else
-      if attrs = Transcoder.job_status(self)
-        enter(attrs['status'], attrs)
-      else
-        enter(Job::OnHold)
-      end
-    end
-    
-    self
-  end
-  
   def needs_update?
     state == Accepted || state == Processing || state == OnHold
   end

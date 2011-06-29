@@ -4,7 +4,7 @@ describe Api::SchedulerController do
   describe "GET 'schedule'" do
     before(:each) do
       @job = Factory(:job)
-      Runner.stub!(:schedule!).and_return [@job]
+      Schedule.stub!(:run!).and_return [@job]
     end
     
     def do_get
@@ -12,7 +12,7 @@ describe Api::SchedulerController do
     end
     
     it "should let the runner schedule" do
-      Runner.should_receive(:schedule!)
+      Schedule.should_receive(:run!)
       do_get
     end
     
