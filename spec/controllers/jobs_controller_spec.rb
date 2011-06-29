@@ -3,11 +3,12 @@ require 'spec_helper'
 describe JobsController do
   describe "GET 'index'" do
     before(:each) do
-      @job = double(Job, :update_status => true)
-      @processing_job = double(Job, :update_status => true)
+      @job = double(Job)
+      @processing_job = double(Job)
       Job.stub!(:recents).and_return [@job, @processing_job]
       Job.stub_chain(:recents, :need_update).and_return [@processing_job]
       History.stub!(:new).and_return 'history'
+      Runner.stub!(:update_progress)
     end
     
     def do_get
@@ -33,17 +34,11 @@ describe JobsController do
       do_get
       assigns[:jobs].should == [@job, @processing_job]
     end
-    
-    it "should update the statuses for jobs that need an update" do
-      @job.should_not_receive(:update_status)
-      @processing_job.should_receive(:update_status)
-      do_get
-    end
   end
   
   describe "GET 'show'" do
     before(:each) do
-      @job = double(Job, :update_status => true, :needs_update? => true)
+      @job = double(Job)
       Job.stub!(:find).and_return @job
     end
     
@@ -59,17 +54,6 @@ describe JobsController do
     it "should assign the job for the view" do
       do_get
       assigns[:job].should == @job
-    end
-    
-    it "should not update the status if it does not need an update" do
-      @job.stub!(:needs_update?).and_return false
-      @job.should_not_receive(:update_status)
-      do_get
-    end
-    
-    it "should update the status if it needs an update" do
-      @job.should_receive(:update_status)
-      do_get
     end
   end
   

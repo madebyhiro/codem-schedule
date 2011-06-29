@@ -2,12 +2,11 @@ class JobsController < ApplicationController
   def index
     @history = History.new(params[:period])
     @jobs    = Job.recents(params[:page])
-    @jobs.need_update.map(&:update_status)
+    @jobs.collect { |j| Runner.update_progress(j) }
   end
   
   def show
     @job = Job.find(params[:id], :include => [:host, :preset, :state_changes, :notifications])
-    @job.update_status if @job.needs_update?
   end
   
   def new

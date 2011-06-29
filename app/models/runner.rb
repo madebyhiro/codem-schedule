@@ -1,11 +1,49 @@
 class Runner
-  def self.schedule!
-    jobs.collect do |job| 
-      job.update_status
+  class << self
+    def schedule!
+      jobs.collect do |job| 
+        update_job(job)
+      end
     end
-  end
+
+    def jobs
+      Job.unfinished.order("created_at")
+    end
+
+    def update_progress(job)
+      if job.state == Job::Processing
+        attrs = Transcoder.job_status(job)
+        job.enter(attrs['status'], attrs)
+      end
+      job
+    end
   
-  def self.jobs
-    Job.unfinished.order("created_at")
+    private
+      def update_job(job)
+        return job if job.finished?
+    
+        if job.state == Job::Scheduled || job.state == Job::OnHold
+          schedule_job(job)
+        else
+    
+          if attrs = Transcoder.job_status(job)
+            job.enter(attrs['status'], attrs)
+          else
+            job.enter(Job::OnHold)
+          end
+
+        end
+    
+        job
+      end
+    
+      def schedule_job(job)
+        for host in Host.with_available_slots
+          if attrs = Transcoder.schedule(:host => host, :job => job)
+            job.enter(Job::Accepted, attrs)
+            break
+          end
+        end
+      end
   end
 end

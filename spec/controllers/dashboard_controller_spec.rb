@@ -3,11 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe DashboardController do
   describe "GET 'show'" do
     before(:each) do
-      @job = double(Job)
-      @job.stub!(:update_status).and_return @job
-
       @jobs = mock("Array of jobs")
-      @jobs.stub_chain(:need_update).and_return [@job]
       
       Job.stub_chain(:recents, :limit).and_return @jobs
       @jobs.stub!(:scheduled).and_return 'scheduled'
@@ -29,11 +25,6 @@ describe DashboardController do
     it "should assign the recently processing jobs" do
       do_get
       assigns[:processing_jobs].should == [@job]
-    end
-    
-    it "should update the status of jobs in need of an update" do
-      @job.should_receive(:update_status)
-      do_get
     end
     
     it "should assign the recently failed jobs" do

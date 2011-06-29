@@ -145,7 +145,6 @@ class Api::JobsController < Api::ApiController
   #   }
   def show
     job = Job.find(params[:id])
-    job.update_status
     respond_with job
   end
 
@@ -163,7 +162,6 @@ class Api::JobsController < Api::ApiController
   private #:nodoc:
     def jobs_index(jobs)
       jobs = jobs.order("created_at DESC").page(params[:page])
-      jobs.select(&:unfinished?).map(&:update_status)
       respond_with jobs
     end
 end
