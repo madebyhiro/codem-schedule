@@ -158,7 +158,21 @@ class Api::JobsController < Api::ApiController
     Job.failed.destroy_all
     render :nothing => true
   end
-  
+
+  # == Retries a job
+  #
+  # This method will force a job into the Scheduled state, regardless of which state it's currently in.
+  #
+  # === Parameters
+  # <tt>id</tt>:: The id of the job to retry
+  def retry
+    job = Job.find(params[:id])
+    job.enter(Job::Scheduled)
+    respond_with job do |format|
+      format.html { redirect_to jobs_path }
+    end
+  end
+    
   private #:nodoc:
     def jobs_index(jobs)
       jobs = jobs.order("created_at DESC").page(params[:page])

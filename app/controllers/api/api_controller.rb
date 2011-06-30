@@ -27,6 +27,7 @@
 # GET /api/jobs/failed::      See Api::JobsController#failed
 # POST /api/jobs::            See Api::JobsController#create
 # GET /api/jobs/:id::         See Api::JobsController#show
+# POST /api/jobs/:id/retry::  See Api::JobsController#retry
 # DELETE /api/jobs/purge::       See Api::JobsController#purge
 #
 # === Presets

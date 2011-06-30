@@ -270,4 +270,30 @@ describe Api::JobsController do
       response.body.should == ' '
     end
   end
+
+  describe "POST 'retry'" do
+    before(:each) do
+      @job = double(Job, :enter => true)
+      Job.stub!(:find).and_return @job
+    end
+    
+    def do_post
+      post "retry", :id => 1
+    end
+    
+    it "should find the job" do
+      Job.should_receive(:find).with(1)
+      do_post
+    end
+    
+    it "should set the state to scheduled" do
+      @job.should_receive(:enter).with(Job::Scheduled)
+      do_post
+    end
+    
+    it "should redirect to the index" do
+      do_post
+      response.should redirect_to(jobs_path)
+    end
+  end
 end

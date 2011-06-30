@@ -30,7 +30,7 @@
         <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
       </div>
     <%- elsif job.state == Job::Failed -%>
-      <%= button_to 'Retry', retry_job_path(job) %>
+      <%= button_to 'Retry', retry_api_job_path(job) %>
     <%- end -%>
   </td>
 	<td class="completed_after" title="<%= I18n.l job.completed_at if job.completed_at %> seconds">

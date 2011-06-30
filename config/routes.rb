@@ -11,6 +11,10 @@ Scheduler::Application.routes.draw do
         get :failed
         delete :purge
       end
+      
+      member do
+        post :retry
+      end
 
       member do
         resources :state_changes
@@ -27,11 +31,7 @@ Scheduler::Application.routes.draw do
     match '/statistics' => 'statistics#show'
   end
 
-  resources :jobs do 
-    member do
-      post :retry
-    end
-  end
+  resources :jobs
   
   resources :presets, :hosts
   
