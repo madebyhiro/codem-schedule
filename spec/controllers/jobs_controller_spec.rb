@@ -4,9 +4,7 @@ describe JobsController do
   describe "GET 'index'" do
     before(:each) do
       @job = double(Job)
-      @processing_job = double(Job)
-      Job.stub!(:recents).and_return [@job, @processing_job]
-      Job.stub_chain(:recents, :need_update).and_return [@processing_job]
+      Job.stub_chain(:recents, :order).and_return [@job]
       History.stub!(:new).and_return 'history'
       Schedule.stub!(:update_progress)
     end
@@ -30,9 +28,14 @@ describe JobsController do
       do_get
     end
     
+    it "should update the jobs status" do
+      Schedule.should_receive(:update_progress).with(@job)
+      do_get
+    end
+    
     it "should assign the recent jobs for the view" do
       do_get
-      assigns[:jobs].should == [@job, @processing_job]
+      assigns[:jobs].should == [@job]
     end
   end
   

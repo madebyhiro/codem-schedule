@@ -1,15 +1,15 @@
 <table class="items jobs" id="jobs">
   <thead>
     <tr class="odd">
-      <th>Job ID</th>
-      <th>Input File</th>
-      <th>Input duration</th>
-      <th>Input size</th>
-      <th>Submitted</th>
-      <th>Preset</th>
-      <th>Host</th>
-      <th>Status</th>
-			<th>After</th>
+      <th><%= sortable 'id', 'Job ID' %></th>
+      <th><%= sortable 'source_file', 'Input File' %></th>
+      <th><%= sortable 'duration', 'Input duration' %></th>
+      <th><%= sortable 'filesize', 'Input size' %></th>
+      <th><%= sortable 'created_at', 'Submitted' %></th>
+      <th><%= sortable 'preset_id', 'Preset' %></th>
+      <th><%= sortable 'host_id', 'Host' %></th>
+      <th><%= sortable 'state', 'Status' %></th>
+			<th><%= sortable 'completed_at', 'After' %></th>
     </tr>
   </thead>
   
