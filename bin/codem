@@ -63,6 +63,7 @@ class CodemCommand
     @verbose = options[:verbose]
     @silent  = options[:silent]
     @host    = options[:host]
+    @notify  = options[:notify]
     
     unless @input && @output && @preset
       puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
