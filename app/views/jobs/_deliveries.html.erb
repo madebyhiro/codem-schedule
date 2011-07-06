@@ -1,0 +1,19 @@
+<tr id="deliveries_<%= state_change.id %>" style="display:none;">
+  <td colspan="5">
+    <table width="100%">
+      <tr class="odd">
+    		<th>Type</th>
+    		<th>Value</th>
+    		<th>State</th>
+    	</tr>
+    	
+      <% for delivery in state_change.deliveries %>
+        <tr>
+      		<td><%= delivery.notification.name %></td>
+      		<td><%= auto_link(delivery.notification.value).html_safe %></td>
+      		<td><%= delivery.state.titleize %> after <%= notified_at delivery, @job %></td>
+      	</tr>	
+      <% end %>
+    </table>
+  </td>
+</tr>

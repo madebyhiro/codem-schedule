@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction  
   
   protected
     def sort_column

@@ -42,7 +42,8 @@ describe Notification do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
       Time.stub!(:now).and_return @t
-      @not = Notification.new
+      @job = Factory(:job, :state_changes => [StateChange.new(:state => Job::Scheduled)])
+      @not = Notification.create!(:job => @job)
       @not.stub!(:do_notify!)
     end
     
@@ -55,9 +56,9 @@ describe Notification do
       do_notify
     end
     
-    it "should set the notified at" do
+    it "should set the notified at for the last delivery" do
       do_notify
-      @not.notified_at.should == @t
+      @not.deliveries.last.notified_at.should == @t
     end
     
     it "should return self" do
@@ -69,9 +70,9 @@ describe Notification do
         @not.stub!(:do_notify!).and_return true
       end
       
-      it "should update the status to success" do
+      it "should update the status of the delivery to success" do
         do_notify
-        @not.state.should == Job::Success
+        @not.deliveries.last.state.should == Job::Success
       end
     end
     
@@ -80,9 +81,9 @@ describe Notification do
         @not.stub!(:do_notify!).and_raise "Foo"
       end
 
-      it "should update the status to failed" do
+      it "should update the status of the delivery to failed" do
         do_notify
-        @not.state.should == Job::Failed
+        @not.deliveries.last.state.should == Job::Failed
       end
     end
   end

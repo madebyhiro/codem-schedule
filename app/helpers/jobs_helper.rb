@@ -24,7 +24,7 @@ module JobsHelper
     return nil if notification.notified_at.blank?
     
     num = notification.notified_at.to_i - job.completed_at.to_i
-    num == 0 ? '00:00:00' : number_to_time(num)
+    num <= 0 ? '00:00:00' : number_to_time(num)
 	end
 	
 	def compression_rate(job)
