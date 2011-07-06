@@ -1,8 +1,9 @@
 class Notification < ActiveRecord::Base
   belongs_to :job
+  has_many :deliveries, :dependent => :destroy, :order => "notified_at DESC"
 
   after_initialize :set_initial_state
-  
+
   def self.from_api(options=nil)
     return [] if options.blank?
 
@@ -19,7 +20,7 @@ class Notification < ActiveRecord::Base
     rescue => e
       state = Job::Failed
     end
-    update_attributes :state => state, :notified_at => Time.current
+    deliveries.create!(:state => state, :state_change => job.state_changes.last, :notified_at => Time.current)
     self
   end
   

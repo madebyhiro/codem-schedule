@@ -10,7 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110608073125) do
+ActiveRecord::Schema.define(:version => 20110706095434) do
+
+  create_table "deliveries", :force => true do |t|
+    t.integer  "notification_id", :null => false
+    t.string   "state",           :null => false
+    t.datetime "notified_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state_change_id"
+  end
+
+  add_index "deliveries", ["notification_id"], :name => "index_deliveries_on_notification_id"
+  add_index "deliveries", ["state_change_id"], :name => "index_deliveries_on_state_change_id"
 
   create_table "hosts", :force => true do |t|
     t.string   "name",                                 :null => false

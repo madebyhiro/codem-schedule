@@ -12,45 +12,47 @@
 		<th>Occurred</th>
 		<th>Message</th>
 	</tr>
-	<% for state in @job.state_changes %>
+	<% for state_change in @job.state_changes %>
 		<tr>
-			<td><%= state.state.capitalize %></td>
-			<td title="<%= I18n.l state.created_at %>"><%= time_ago_in_words state.created_at, :include_seconds => true %> ago</td>
-			<td><%= state.message %></td>
-		</tr>
-	<% end %>
-</table>
+			<td>
+			  <%= state_change.state.capitalize %>
+			</td>
+			<td title="<%= I18n.l state_change.created_at %>">
+			  <%= time_ago_in_words state_change.created_at, :include_seconds => true %> ago
+			</td>
+			<td>
+			  <%= state_change.message %>
 
+			  <%- if state_change.deliveries.any? -%>
+  			  <span class="notifications">
+  			   <%= link_to_function pluralize(state_change.deliveries.size, 'notification'),
+  			                        "$(deliveries_#{state_change.id}).toggle()" %>
+  			  </span>
+			  <%- end -%>
 
-<h2>Notifications</h2>
-
-<table class="items">
-	<tr class="odd">
-		<th>Type</th>
-		<th>Value</th>
-		<th>State</th>
-		<th>After</th>
-	</tr>
-	<% for notification in @job.notifications %>
-		<tr>
-			<td><%= notification.name %></td>
-			<td><%= auto_link(notification.value).html_safe %></td>
-			<td><%= notification.state.titleize %></td>
-			<td title="<%= I18n.l notification.notified_at if notification.notified_at %>">
-				<%= notified_at notification, @job %>
 			</td>
 		</tr>
+
+	  <%- if state_change.deliveries.any? -%>
+	    <%= render :partial => "deliveries", :locals => {:state_change => state_change} %>
+		<%- end -%>
 	<% end %>
+
 </table>
 
-<h2>Preset parameters</h2>
-<pre><%= @job.preset.parameters %></pre>
+<% if false %>
+  <h2>Notifications</h2>
+  <%= render "notifications" %>
 
-<% if @job.state == Job::Success %>
-  <h2>Output</h2>
-  <p>
-    Encoding <strong title="<%= number_with_delimiter @job.duration %> seconds"><%= number_to_time @job.duration %></strong> seconds 
-		took <strong title="<%= number_with_delimiter encoding_time(@job) %> seconds"><%= number_to_time encoding_time(@job) %></strong> seconds 
-		and resulted in a file of <strong title="<%= number_with_delimiter destination_filesize(@job) %> bytes"><%= number_to_human_size destination_filesize(@job), :precision => 5 %></strong> which is <strong><%= compression_rate @job %>%</strong> of the original.
-  </p>
+  <h2>Preset parameters</h2>
+  <pre><%= @job.preset.parameters %></pre>
+
+  <% if @job.state == Job::Success %>
+    <h2>Output</h2>
+    <p>
+      Encoding <strong title="<%= number_with_delimiter @job.duration %> seconds"><%= number_to_time @job.duration %></strong> seconds 
+  		took <strong title="<%= number_with_delimiter encoding_time(@job) %> seconds"><%= number_to_time encoding_time(@job) %></strong> seconds 
+  		and resulted in a file of <strong title="<%= number_with_delimiter destination_filesize(@job) %> bytes"><%= number_to_human_size destination_filesize(@job), :precision => 5 %></strong> which is <strong><%= compression_rate @job %>%</strong> of the original.
+    </p>
+  <% end %>
 <% end %>

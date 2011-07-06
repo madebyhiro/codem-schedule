@@ -50,7 +50,7 @@ describe JobsController do
     end
     
     it "should find the jobs" do
-      Job.should_receive(:find).with(1, :include => [:host, :preset, :state_changes, :notifications])
+      Job.should_receive(:find).with(1, :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
       do_get
     end
     
