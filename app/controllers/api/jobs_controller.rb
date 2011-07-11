@@ -16,6 +16,7 @@
 # For example, to get the 5th page of successfully completed jobs, use:
 #   http://host.com/api/jobs/completed?page=5
 class Api::JobsController < Api::ApiController
+  respond_to :rss, :only => [:index, :scheduled, :accepted, :processing, :on_hold, :success, :failed]
   # == Returns a list of jobs regardless of state.
   # This method uses pagination.
   def index;        jobs_index(Job.scoped); end
@@ -175,7 +176,7 @@ class Api::JobsController < Api::ApiController
     
   private #:nodoc:
     def jobs_index(jobs)
-      jobs = jobs.order("created_at DESC").page(params[:page])
-      respond_with jobs
+      @jobs = jobs.order("created_at DESC").page(params[:page])
+      respond_with @jobs
     end
 end
