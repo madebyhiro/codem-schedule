@@ -7,6 +7,7 @@ class JobsController < ApplicationController
   
   def show
     @job = Job.find(params[:id], :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
+    Schedule.update_progress(@job)
   end
   
   def new
