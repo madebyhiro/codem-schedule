@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110706095434) do
+ActiveRecord::Schema.define(:version => 20110823133108) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20110706095434) do
     t.string   "message"
     t.float    "progress"
     t.integer  "duration"
-    t.integer  "filesize"
+    t.string   "filesize"
     t.datetime "completed_at"
   end
 
