@@ -20,8 +20,6 @@ class Schedule
   
     private
       def update_job(job)
-        return job if job.finished?
-    
         if job.state == Job::Scheduled || job.state == Job::OnHold
           schedule_job(job)
         else
