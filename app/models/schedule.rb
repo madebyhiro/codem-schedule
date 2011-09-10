@@ -1,13 +1,24 @@
 class Schedule
   class << self
     def run!
-      jobs.collect do |job| 
-        update_job(job)
+      count = 0
+      to_be_scheduled_jobs.each do |job|
+        schedule_job(job)
+        count += 1
       end
+      to_be_updated_jobs.each do |job|
+        update_job(job)
+        count += 1
+      end
+      count
     end
-  
-    def jobs
-      Job.unfinished.order("created_at")
+
+    def to_be_scheduled_jobs
+      Job.scheduled.order("created_at").limit(get_available_slots)
+    end
+    
+    def to_be_updated_jobs
+      Job.unfinished.order('created_at')
     end
   
     def update_progress(job)
@@ -42,6 +53,12 @@ class Schedule
             break
           end
         end
+      end
+      
+      def get_available_slots
+        sum = 0
+        Host.all.each { |h| h.update_status; sum += h.available_slots }
+        sum
       end
   end
 end

@@ -23,7 +23,7 @@ class Job < ActiveRecord::Base
 
   scope :recent, :include => [:host, :preset]
   
-  scope :unfinished, lambda { where("state in (?)", [Scheduled, Accepted, Processing, OnHold]) }
+  scope :unfinished, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
   scope :need_update, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
