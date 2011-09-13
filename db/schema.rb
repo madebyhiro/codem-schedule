@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110823133108) do
+ActiveRecord::Schema.define(:version => 20110913122106) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20110823133108) do
     t.integer  "duration"
     t.string   "filesize"
     t.datetime "completed_at"
+    t.text     "arguments"
   end
 
   add_index "jobs", ["state"], :name => "index_jobs_on_state"
