@@ -35,7 +35,7 @@ class Job < ActiveRecord::Base
     options[:arguments].split(',').each do |arg|
       k,v = arg.split('=')
       args.merge!(k.to_sym => v)
-    end
+    end if options[:arguments]
     
     job = new(:source_file => options['input'],
               :destination_file => options['output'],
