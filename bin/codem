@@ -9,7 +9,7 @@ def command?(command)
 end
 
 class CodemCommand
-  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent
+  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent, :status
   def initialize
     options = {}
 
@@ -47,6 +47,11 @@ class CodemCommand
       opts.on('-s', '--silent', 'Be silent; no output') do |s|
         options[:silent] = true
       end
+      
+      options[:status] = false
+      opts.on('-S', '--status', 'Only report status code from Scheduler') do |s|
+        options[:status] = true
+      end
 
       opts.on('-a', '--arguments [LIST]', "Comma-separated list of arbitrary key=values to store with the job") do |a|
         options[:arguments] = a
@@ -68,6 +73,7 @@ class CodemCommand
     @silent  = options[:silent]
     @host    = options[:host]
     @notify  = options[:notify]
+    @status  = options[:status]
     @args    = options[:arguments]
     
     unless @input && @output && @preset
@@ -81,7 +87,12 @@ class CodemCommand
   end
   
   def run
-    puts Kernel.exec("#{command} #{url} #{'>/dev/null 2>&1' if silent}")
+    if status
+      status = %x[#{command}]
+      puts status.split("\n").last
+    else
+      puts Kernel.exec("#{command} #{'>/dev/null 2>&1' if silent}")
+    end
   end
   
   def url
@@ -91,21 +102,29 @@ end
 
 class CurlCodem < CodemCommand
   def command
-    "curl #{'-v' if verbose} #{'-s' if silent} -d #{args}"
+    if status
+      "curl -w '\n%\{http_code\}' -s -d #{args} -o /dev/null #{url}"
+    else
+      "curl #{'-v' if verbose} #{'-s' if silent} -d #{args} #{url}"
+    end
   end
 end
 
 class WgetCodem < CodemCommand
   def command
-    "wget #{verbose ? '-v' : '-nv -q'} -O- --post-data #{args}"
+    if status
+      "wget --post-data #{args} #{url} 2>&1 | egrep '^HTTP' | awk {'print $6'}"
+    else
+      "wget #{verbose ? '-v' : '-nv -q'} -O- --post-data #{args} #{url}"
+    end
   end
 end
 
 if command?('curl')
-  CurlCodem.new.run
+ CurlCodem.new.run
 elsif command?('wget')
   WgetCodem.new.run
 else
-  puts "Sorry, we could not locate `curl' or `wget' in the current $PATH:"
-  puts "#{ `echo $PATH` }"
+ puts "Sorry, we could not locate `curl' or `wget' in the current $PATH:"
+ puts "#{ `echo $PATH` }"
 end
