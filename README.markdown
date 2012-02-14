@@ -12,9 +12,9 @@ See <http://rubyonrails.org/download> for installation instructions.
 
 1 Either clone the git repository or download a packaged archive.
 
-    $ git clone git://github.com/NPO/codem-schedule.git
+    $ git clone git://github.com/madebyhiro/codem-schedule.git
     or
-    visit https://github.com/NPO/codem-schedule/archives/master
+    visit https://github.com/madebyhiro/codem-schedule/archives/master
   
 2 Install the required gems.
   
@@ -34,7 +34,7 @@ See <http://rubyonrails.org/download> for installation instructions.
 
 API documentation
 -----------------
-View the API documentation at <http://rubydoc.info/github/NPO/codem-schedule/master/frames>
+View the API documentation at <http://rubydoc.info/github/madebyhiro/codem-schedule/master/frames>
 
 Tests
 -----
