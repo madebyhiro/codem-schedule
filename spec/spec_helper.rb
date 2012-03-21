@@ -2,13 +2,13 @@ require 'webmock/rspec'
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  add_group "Controllers", do |src_file| 
+  add_group "Controllers" do |src_file| 
     src_file.filename =~ /app\/controllers/ && not(src_file.filename =~ /app\/controllers\/api/)
   end
-  add_group "API Controllers", do |src_file|
+  add_group "API Controllers" do |src_file|
     src_file.filename =~ /app\/controllers\/api/
   end
-  add_group 'Mailers', do |src_file|
+  add_group 'Mailers' do |src_file|
     src_file.filename =~ /app\/mailers/
   end
   add_filter do |src_file| 

@@ -1,9 +1,14 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+
 describe Schedule do
   before(:each) do
     Job.destroy_all
     @job = Factory(:job)
+
+    Schedule.stub!(:get_available_slots).and_return 10
+
+    Transcoder.stub!(:job_status).and_return {}
   end
 
   def update
@@ -12,9 +17,10 @@ describe Schedule do
   
   describe "entering scheduled state" do
     before(:each) do
+      Schedule.stub!(:to_be_updated_jobs).and_return []
+
       @host = Factory(:host)
       Host.stub!(:with_available_slots).and_return [@host]
-      
       Transcoder.stub!(:schedule).and_return 'attrs'
     end
     
@@ -58,8 +64,8 @@ describe Schedule do
       Transcoder.stub!(:job_status).and_return({ 'status' => 'accepted', 'bar' => 'baz' })
     end
 
-    it "should return the jobs" do
-      update.should == [@job]
+    it "should return the number of updated jobs" do
+      update.should == 1
     end
     
     describe "as Scheduled" do
