@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Jobs::States do
   before(:each) do
-    @job = Factory(:job)
+    @job = FactoryGirl.create(:job)
     @job.stub!(:notify_responders)
   end
 

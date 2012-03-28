@@ -59,7 +59,7 @@ describe HostsController do
     end
     
     it "should find the host" do
-      Host.should_receive(:find).with(1)
+      Host.should_receive(:find).with('1')
       do_get
     end
     

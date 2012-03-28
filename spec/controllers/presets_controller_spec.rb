@@ -58,7 +58,7 @@ describe PresetsController do
     end
     
     it "should find the preset" do
-      Preset.should_receive(:find).with(1)
+      Preset.should_receive(:find).with('1')
       do_get
     end
     

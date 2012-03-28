@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Api::PresetsController do
   def create_preset
-    @preset = Factory(:preset)
+    @preset = FactoryGirl.create(:preset)
   end
   
   describe "POST 'create'" do
@@ -106,18 +106,13 @@ describe Api::PresetsController do
       create_preset
     end
     
-    def do_delete(format=:json)
-      delete :destroy, :id => 1, :format => format
+    def do_delete
+      delete :destroy, :id => 1
     end
     
     it "should delete the preset" do
       do_delete
       Preset.count.should == 0
-    end
-    
-    it "should redirect to /presets as HTML" do
-      do_delete(:html)
-      response.should redirect_to(presets_path)
     end
   end
 end

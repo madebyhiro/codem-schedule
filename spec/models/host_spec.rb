@@ -56,7 +56,7 @@ describe Host do
   
   describe "updating a host's status" do
     before(:each) do
-      @host = Factory(:host)
+      @host = FactoryGirl.create(:host)
     end
     
     def update
@@ -104,7 +104,7 @@ describe Host do
     end
     
     it "should not update its status if the last update was < 10 seconds ago" do
-      host = Factory(:host, :status_updated_at => 5.seconds.ago)
+      host = FactoryGirl.create(:host, :status_updated_at => 5.seconds.ago)
       host.should_not_receive(:save)
       host.update_status
     end

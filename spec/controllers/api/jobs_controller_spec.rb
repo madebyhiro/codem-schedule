@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Api::JobsController do
   before(:each) do
-    @preset = Factory(:preset)
+    @preset = FactoryGirl.create(:preset)
   end
 
   def create_job
-    @job = Factory(:job)
+    @job = FactoryGirl.create(:job)
   end
   
   describe "POST 'create'" do
@@ -69,7 +69,7 @@ describe Api::JobsController do
     
     it "shows a job as JSON" do
       do_get(:json)
-      response.body.should == {:job => @job.attributes}.to_json
+      response.body.should == @job.to_json
     end
 
     # bug in to_xml
@@ -91,12 +91,12 @@ describe Api::JobsController do
     end
     
     it "should find the job" do
-      Job.should_receive(:find).with(@job.id)
+      Job.should_receive(:find).with(@job.id.to_s)
       do_put
     end
     
     it "should enter the correct state" do
-      @job.should_receive(:enter).with('status', {"status"=>"status", "id"=>@job.id, "controller"=>"api/jobs", "action"=>"update"})
+      @job.should_receive(:enter).with('status', {"status"=>"status", "id"=>@job.id.to_s, "controller"=>"api/jobs", "action"=>"update"})
       do_put
     end
   end
@@ -282,7 +282,7 @@ describe Api::JobsController do
     end
     
     it "should find the job" do
-      Job.should_receive(:find).with(1)
+      Job.should_receive(:find).with('1')
       do_post
     end
     

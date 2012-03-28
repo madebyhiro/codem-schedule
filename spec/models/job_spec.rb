@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Job do
   describe "generating a job via the API" do
     before(:each) do
-      @preset = Factory(:preset)
+      @preset = FactoryGirl.create(:preset)
     end
 
     describe "successfull save" do

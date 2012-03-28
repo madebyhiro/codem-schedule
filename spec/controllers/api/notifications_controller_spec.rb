@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Api::NotificationsController do
   describe "GET 'index'" do
     before(:each) do
-      @job = Factory(:job)
+      @job = FactoryGirl.create(:job)
       @job.notifications << EmailNotification.new(:value => 'email')
       @job.notifications << UrlNotification.new(:value => 'url')
     end

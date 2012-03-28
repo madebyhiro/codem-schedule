@@ -42,7 +42,7 @@ describe Notification do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
       Time.stub!(:now).and_return @t
-      @job = Factory(:job, :state_changes => [StateChange.new(:state => Job::Scheduled)])
+      @job = FactoryGirl.create(:job, :state_changes => [StateChange.new(:state => Job::Scheduled)])
       @not = Notification.create!(:job => @job)
       @not.stub!(:do_notify!)
     end

@@ -7,7 +7,7 @@ describe Api::HostsController do
   end
   
   def create_host
-    @host = Factory(:host)
+    @host = FactoryGirl.create(:host)
   end
   
   describe "GET 'index'" do
@@ -116,18 +116,13 @@ describe Api::HostsController do
       create_host
     end
     
-    def do_delete(format=:json)
-      delete :destroy, :id => 1, :format => format
+    def do_delete
+      delete :destroy, :id => 1
     end
     
     it "should delete the host" do
       do_delete
       Host.count.should == 0
-    end
-    
-    it "should redirect to /hosts as HTML" do
-      do_delete(:html)
-      response.should redirect_to(hosts_path)
     end
   end
 

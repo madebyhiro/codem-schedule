@@ -115,8 +115,6 @@ class Api::PresetsController < Api::ApiController
   def destroy
     preset = Preset.find(params[:id])
     preset.destroy
-    respond_with preset, :location => api_preset_url(preset) do |format|
-      format.html { redirect_to presets_path }
-    end
+    respond_with preset
   end
 end

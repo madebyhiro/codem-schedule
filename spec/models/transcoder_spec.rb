@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Transcoder do
   describe "scheduling a job" do
     before(:each) do
-      @preset = Factory(:preset)
-      @job    = Factory(:job, :preset_id => @preset.id)
-      @host   = Factory(:host)
+      @preset = FactoryGirl.create(:preset)
+      @job    = FactoryGirl.create(:job, :preset_id => @preset.id)
+      @host   = FactoryGirl.create(:host)
 
       Transcoder.stub!(:post)
     end
@@ -47,7 +47,7 @@ describe Transcoder do
 
   describe "getting a host's status" do
     before(:each) do
-      @host = Factory(:host)
+      @host = FactoryGirl.create(:host)
       Transcoder.stub!(:call_transcoder).and_return true
     end
     
@@ -63,8 +63,8 @@ describe Transcoder do
   
   describe "getting a job's status" do
     before(:each) do
-      @host = Factory(:host)
-      @job  = Factory(:job, :host_id => @host.id)
+      @host = FactoryGirl.create(:host)
+      @job  = FactoryGirl.create(:job, :host_id => @host.id)
       Transcoder.stub!(:call_transcoder).and_return true
     end
     

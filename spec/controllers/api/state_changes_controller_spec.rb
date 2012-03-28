@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Api::StateChangesController do
   describe "GET 'index'" do
     before(:each) do
-      @job = Factory(:job)
+      @job = FactoryGirl.create(:job)
       @job.state_changes << StateChange.new(:state => 'state')
     end
     

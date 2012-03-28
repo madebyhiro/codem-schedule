@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
     t.integer  "notification_id", :null => false
     t.string   "state",           :null => false
     t.datetime "notified_at",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "state_change_id"
   end
 
@@ -27,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
   create_table "hosts", :force => true do |t|
     t.string   "name",                                 :null => false
     t.string   "url",                                  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.boolean  "available",         :default => false
     t.integer  "total_slots",       :default => 0
     t.integer  "available_slots",   :default => 0
@@ -39,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
     t.string   "source_file",            :null => false
     t.string   "destination_file",       :null => false
     t.integer  "preset_id",              :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.string   "state"
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
@@ -60,8 +61,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
     t.integer  "job_id"
     t.string   "type"
     t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "state"
     t.datetime "notified_at"
   end
@@ -70,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
 
   create_table "presets", :force => true do |t|
     t.string   "name",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.text     "parameters"
   end
 
@@ -81,8 +82,8 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
     t.integer  "job_id"
     t.string   "state"
     t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "state_changes", ["job_id"], :name => "index_state_changes_on_job_id"

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Schedule do
   before(:each) do
     Job.destroy_all
-    @job = Factory(:job)
+    @job = FactoryGirl.create(:job)
 
     Schedule.stub!(:get_available_slots).and_return 10
 
@@ -19,7 +19,7 @@ describe Schedule do
     before(:each) do
       Schedule.stub!(:to_be_updated_jobs).and_return []
 
-      @host = Factory(:host)
+      @host = FactoryGirl.create(:host)
       Host.stub!(:with_available_slots).and_return [@host]
       Transcoder.stub!(:schedule).and_return 'attrs'
     end
@@ -122,7 +122,7 @@ describe Schedule do
   
   describe "updating a single job status" do
     before(:each) do
-      @job = Factory(:job)
+      @job = FactoryGirl.create(:job)
     end
     
     def update

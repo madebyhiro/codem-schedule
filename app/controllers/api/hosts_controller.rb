@@ -132,8 +132,6 @@ class Api::HostsController < Api::ApiController
   def destroy
     host = Host.find(params[:id])
     host.destroy
-    respond_with host, :location => api_host_url(host) do |format|
-      format.html { redirect_to hosts_path }
-    end
+    respond_with host
   end
 end
