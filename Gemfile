@@ -12,6 +12,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rake'
 	gem 'simplecov', :require => false
 	gem 'factory_girl_rails'
 	gem 'webmock'
