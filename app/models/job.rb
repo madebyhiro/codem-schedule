@@ -32,11 +32,11 @@ class Job < ActiveRecord::Base
   
   def self.from_api(options, opts)
     args = {}
-    options[:arguments].split(',').each do |arg|
+    options['arguments'].split(',').each do |arg|
       k,v = arg.split('=')
       args.merge!(k.to_sym => v)
-    end if options[:arguments]
-    
+    end if options['arguments']
+   
     job = new(:source_file => options['input'],
               :destination_file => options['output'],
               :preset => Preset.find_by_name(options['preset']),

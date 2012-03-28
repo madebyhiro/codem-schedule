@@ -28,23 +28,26 @@ class Schedule
       end
       job
     end
-  
-    private
-      def update_job(job)
-        if job.state == Job::Scheduled || job.state == Job::OnHold
-          schedule_job(job)
-        else
-    
-          if attrs = Transcoder.job_status(job)
-            job.enter(attrs['status'], attrs)
-          else
-            job.enter(Job::OnHold)
-          end
-  
-        end
-    
-        job
+
+    def get_available_slots
+      sum = 0
+      Host.all.each do |h| 
+        h.update_status
+        sum += h.available_slots
       end
+      sum
+    end
+
+    private
+    def update_job(job)
+      if attrs = Transcoder.job_status(job)
+        job.enter(attrs['status'], attrs)
+      else
+        job.enter(Job::OnHold)
+      end
+
+      job
+    end
     
       def schedule_job(job)
         for host in Host.with_available_slots
@@ -53,12 +56,6 @@ class Schedule
             break
           end
         end
-      end
-      
-      def get_available_slots
-        sum = 0
-        Host.all.each { |h| h.update_status; sum += h.available_slots }
-        sum
       end
   end
 end

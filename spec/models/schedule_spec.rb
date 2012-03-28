@@ -6,7 +6,7 @@ describe Schedule do
     Job.destroy_all
     @job = FactoryGirl.create(:job)
 
-    Schedule.stub!(:get_available_slots).and_return 10
+    Host.stub!(:all).and_return []
 
     Transcoder.stub!(:job_status).and_return {}
   end
@@ -17,6 +17,8 @@ describe Schedule do
   
   describe "entering scheduled state" do
     before(:each) do
+      Schedule.stub!(:get_available_slots).and_return 10
+
       Schedule.stub!(:to_be_updated_jobs).and_return []
 
       @host = FactoryGirl.create(:host)
@@ -48,6 +50,8 @@ describe Schedule do
 
   describe "entering on hold state" do
     before(:each) do
+      Schedule.stub!(:get_available_slots).and_return 10
+
       @host = double(Host, :available? => true, :update_status => true)
       @job.stub!(:host).and_return @host
       @job.stub!(:state).and_return Job::OnHold
@@ -61,6 +65,7 @@ describe Schedule do
 
   describe "updating a jobs status" do
     before(:each) do
+      Schedule.stub!(:get_available_slots).and_return 10
       Transcoder.stub!(:job_status).and_return({ 'status' => 'accepted', 'bar' => 'baz' })
     end
 
@@ -134,7 +139,7 @@ describe Schedule do
       update
       @job.updated_at.should == updated_at
     end
-    
+
     describe "when the job is processing" do
       before(:each) do
         @job.update_attributes(:state => Job::Processing)
@@ -155,6 +160,23 @@ describe Schedule do
       it "should return the job" do
         update.should == @job
       end
+    end
+  end
+
+  describe "returning the number of available slots" do
+    def slots
+      Schedule.get_available_slots
+    end
+
+    it "should return 0 when no hosts are added" do
+      Host.stub!(:all).and_return []
+      slots.should == 0
+    end
+
+    it "should sum the available slots of all hosts" do
+      host = double(Host, :update_status => true, :available_slots => 10)
+      Host.stub!(:all).and_return [host]
+      slots.should == 10
     end
   end
 end

@@ -8,7 +8,15 @@ describe Job do
 
     describe "successfull save" do
       before(:each) do
-        @job = Job.from_api({"input" => "input", "output" => "output", "preset" => @preset.name}, :callback_url => lambda { |job| "callback_#{job.id}" })
+        @job = Job.from_api(
+          { 
+            "input" => "input", 
+            "output" => "output", 
+            "preset" => @preset.name, 
+            "arguments" => "a=b,c=d"
+          }, 
+          :callback_url => lambda { |job| "callback_#{job.id}" }
+        )
       end
       
       it "should map the attributes correctly" do
@@ -16,6 +24,7 @@ describe Job do
         @job.destination_file.should == 'output'
         @job.preset.should == @preset
         @job.callback_url.should == "callback_#{@job.id}"
+        @job.arguments.should == { :a => 'b', :c => 'd' }
       end
       
       it "should be saved" do
