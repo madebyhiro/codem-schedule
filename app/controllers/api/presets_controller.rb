@@ -91,7 +91,13 @@ class Api::PresetsController < Api::ApiController
   #   $ curl -XPUT -d 'name=h264&parameters=params' http://localhost:3000/api/presets/1
   #   {} # HTTP Status: 200 OK
   def update
+    if params[:preset]
+      params[:name] = params[:preset][:name]
+      params[:parameters] = params[:preset][:parameters]
+    end
+
     preset = Preset.find(params[:id])
+
     if preset.update_attributes(:name => params[:name], :parameters => params[:parameters])
       respond_with preset, :location => api_preset_url(preset) do |format|
         format.html { redirect_to presets_path }
@@ -115,6 +121,8 @@ class Api::PresetsController < Api::ApiController
   def destroy
     preset = Preset.find(params[:id])
     preset.destroy
-    respond_with preset
+    respond_with preset do |format|
+      format.html { redirect_to presets_path, :notice => t('notice.deleted', :model_name => 'Preset') }
+    end
   end
 end

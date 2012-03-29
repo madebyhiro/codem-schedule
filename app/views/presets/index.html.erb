@@ -1,9 +1,9 @@
 <% title 'Presets' %>
 
-<ol class="presets">
+<div class="row">
   <%= render @presets %>
-</ol>
+</div>
 
-<br style="clear:both" />
-
-<%= link_to 'New preset', new_preset_path %>
+<div class="form-actions">
+  <%= link_to 'New preset', new_preset_path, class: 'btn btn-primary' %>
+</div>

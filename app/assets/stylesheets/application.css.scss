@@ -1,3 +1,41 @@
 //= require_self
 //= require_tree .
 
+form { 
+  div.controls {
+    span.help-inline {
+      transition: opacity .5s ease-in-out;
+      -moz-transition: opacity .5s ease-in-out;
+      -webkit-transition: opacity .5s ease-in-out;
+      opacity:0;
+      font-size:75%;
+    }
+  }
+
+  div.controls:hover {
+    span.help-inline {
+      opacity:1;
+    }
+  }
+}
+
+table#history {
+  margin-top:-19px;
+  margin-bottom:20px;
+
+  .success, .failed {
+    text-align:center;
+    width:1px;
+  }
+}
+
+table#history {
+  tr:hover > *, th:hover, td:hover {
+    background-color:white !important;
+  }
+}
+
+.center {
+  text-align:center !important;
+}
+

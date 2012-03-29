@@ -16,12 +16,12 @@ class Job < ActiveRecord::Base
 
   serialize :arguments
 
-  scope :scheduled,   :conditions => { :state => Scheduled }, :order => ["created_at DESC"]
-  scope :accepted,    :conditions => { :state => Accepted }, :order => ["created_at DESC"]
-  scope :processing,  :conditions => { :state => Processing }, :order => ["created_at DESC"]
-  scope :success,     :conditions => { :state => Success }, :order => ["created_at DESC"]
-  scope :on_hold,     :conditions => { :state => OnHold }, :order => ["created_at DESC"]
-  scope :failed,      :conditions => { :state => Failed }, :order => ["created_at DESC"]
+  scope :scheduled,   :conditions => { :state => Scheduled }
+  scope :accepted,    :conditions => { :state => Accepted }
+  scope :processing,  :conditions => { :state => Processing }
+  scope :success,     :conditions => { :state => Success }
+  scope :on_hold,     :conditions => { :state => OnHold }
+  scope :failed,      :conditions => { :state => Failed }
 
   scope :recent, :include => [:host, :preset]
   
@@ -31,6 +31,8 @@ class Job < ActiveRecord::Base
   validates :source_file, :destination_file, :preset_id, :presence => true
   
   def self.from_api(options, opts)
+    options = options[:job] if options[:job]
+
     args = {}
     options['arguments'].split(',').each do |arg|
       k,v = arg.split('=')

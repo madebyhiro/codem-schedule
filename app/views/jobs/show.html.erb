@@ -6,7 +6,7 @@
 
 <h2>History</h2>
 
-<table class="items">
+<table class="table">
 	<tr class="odd">
 		<th>State</th>
 		<th>Occurred</th>
@@ -15,7 +15,7 @@
 	<% for state_change in @job.state_changes %>
 		<tr>
 			<td>
-			  <%= state_change.state.capitalize %>
+			  <%= state_label state_change.state %>
 			</td>
 			<td title="<%= I18n.l state_change.created_at %>">
 			  <%= time_ago_in_words state_change.created_at, :include_seconds => true %> ago

@@ -1,9 +1,9 @@
-<table class="items jobs" id="jobs">
+<table class="table table-striped" id="jobs">
   <thead>
-    <tr class="odd">
-      <th><%= sortable 'id', 'Job ID' %></th>
+    <tr>
+      <th class="center"><%= sortable 'id', 'Job ID' %></th>
       <th><%= sortable 'source_file', 'Input File' %></th>
-      <th><%= sortable 'duration', 'Input duration' %></th>
+      <th class="center"><%= sortable 'duration', 'Input duration' %></th>
       <th><%= sortable 'filesize', 'Input size' %></th>
       <th><%= sortable 'created_at', 'Submitted' %></th>
       <th><%= sortable 'preset_id', 'Preset' %></th>

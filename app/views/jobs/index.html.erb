@@ -2,10 +2,10 @@
 
 <%= render "shared/history" %>
 
-<%= new_job_link %>
-
 <%= render "jobs" %>
 
-<%= paginate @jobs %>
+<%= will_paginate @jobs %>
 
-<%= new_job_link %>
+<div class="form-actions">
+  <%= link_to 'New job', new_job_path, :class => 'btn btn-primary' %>
+</div>

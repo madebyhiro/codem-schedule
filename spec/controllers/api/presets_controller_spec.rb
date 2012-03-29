@@ -99,6 +99,13 @@ describe Api::PresetsController do
       put 'update', :id => @preset.id, :name => nil, :format => :html
       response.should render_template('/presets/edit')
     end
+    
+    it "should work with a Rails-style hash" do
+      put 'update', :id => @preset.id, :preset => {:name => 'rails-name', :parameters => 'rails-params'}
+      @preset.reload
+      @preset.name.should == 'rails-name'
+      @preset.parameters.should == 'rails-params'
+    end
   end
   
   describe "DELETE 'destroy'" do

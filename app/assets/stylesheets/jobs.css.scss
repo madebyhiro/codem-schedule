@@ -1,0 +1,24 @@
+div.progress.active {
+  margin:3px 0;
+
+  div.bar {
+    text-align:right;
+    font-size:75%;
+    overflow:hidden;
+  }
+}
+
+td.state {
+  width:250px;
+}
+
+td.state.failed {
+  form {
+    display:inline;
+    width:45px;
+
+    div {
+      display:inline;
+    }
+  }
+}

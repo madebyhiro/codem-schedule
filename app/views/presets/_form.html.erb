@@ -1,23 +1,7 @@
-<%= form_for @preset, :url => (@preset.new_record? ? api_presets_path : api_preset_path), 
-                      :method => @preset.new_record? ? :post : :put do %>
-	
-	<%= error_messages_for @preset %>
-	
-	<fieldset>
-    <legend>Preset</legend>
-    
-    <ol>
-      <li><%= label_tag :name %></li>
-      <li><%= text_field_tag :name, @preset.try(:name) %></li>
-
-      <li><%= label_tag :parameters %></li>
-      <li><%= text_area_tag :parameters, @preset.try(:parameters) %></li>
-    </ol>
-    
-  </fieldset>
-  
-  <ol class="buttons">
-    <li><%= submit_tag @preset.new_record? ? 'Create Preset' : 'Edit Preset' %></li>
-  </ol>
-
+<%= simple_form_for [:api, @preset], html: {class: 'form-horizontal'} do |f| %>
+  <%= render "/shared/error_messages", f: f %>
+  <%= f.input :name %>
+  <%= f.input :parameters %>
+  <%= f.button :wrapped, :cancel => presets_path %>
 <% end %>
+

@@ -7,10 +7,6 @@ describe JobsHelper do
     end
   end
   
-  it "should return the correct new job link" do
-    new_job_link.should == link_to('New job', new_job_path)
-  end
-  
   it "should return the correct encoding time" do
     job = double(Job, :completed_at => 10, :transcoding_started_at => '5')
     encoding_time(job).should == 5

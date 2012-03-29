@@ -2,9 +2,8 @@
 
 <%= render "/shared/history" %>
 
-<%= link_to 'View all jobs', jobs_path %>
 
-<h2>Recently scheduled jobs</h2>
+<h3>Recently scheduled jobs</h3>
 <%- if @scheduled_jobs.any? -%>
 	<% @jobs = @scheduled_jobs %>
 	<%= render "/jobs/jobs" %>
@@ -13,7 +12,7 @@
 <%- end -%>
 
 
-<h2>Recently processing jobs</h2>
+<h3>Recently processing jobs</h3>
 <%- if @processing_jobs.any? -%>
 	<% @jobs = @processing_jobs %>
 	<%= render "/jobs/jobs" %>
@@ -22,10 +21,15 @@
 <%- end -%>
 
 
-<h2>Recently failed jobs</h2>
+<h3>Recently failed jobs</h3>
 <%- if @failed_jobs.any? -%>
 	<% @jobs = @failed_jobs %>
 	<%= render "/jobs/jobs" %>
 <%- else -%>
 	<p>No recently failed jobs</p>
 <%- end -%>
+
+<div class="form-actions">
+  <%= link_to 'View all jobs', jobs_path, class: 'btn btn-small btn-primary' %>
+</div>
+

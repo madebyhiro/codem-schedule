@@ -5,6 +5,15 @@ describe ApplicationHelper do
     should_receive(:content_for).with(:title)
     title('foo')
   end
+
+  it "should return a nice label" do
+    state_label('accepted').should == '<span class="label label-info">Accepted</span>'
+    state_label('processing').should == '<span class="label label-warning">Processing</span>'
+    state_label('onhold').should == '<span class="label label-inverse">Onhold</span>'
+    state_label('success').should == '<span class="label label-success">Success</span>'
+    state_label('failed').should == '<span class="label label-important">Failed</span>'
+    state_label('moo').should == '<span class="label label-default">Moo</span>'
+  end
   
   describe "sortable" do
     before(:each) do

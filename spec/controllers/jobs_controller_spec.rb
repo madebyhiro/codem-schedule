@@ -65,4 +65,25 @@ describe JobsController do
       assigns[:job].should == @job
     end
   end
+
+  describe "GET 'new'" do
+    before(:each) do
+      @job = double(Job)
+      Job.stub!(:new).and_return @job
+    end
+
+    def do_get
+      get 'new'
+    end
+
+    it "should generate a new job" do
+      Job.should_receive(:new)
+      do_get
+    end
+
+    it "should assign the job for the view" do
+      do_get
+      assigns[:job].should == @job
+    end
+  end
 end
