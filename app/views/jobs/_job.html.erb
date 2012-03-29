@@ -1,12 +1,12 @@
 
-<%= content_tag_for :tr, job, :class => "#{cycle('even', 'odd')} #{job.state}" do %>
-  <td class="id">
+<%= content_tag_for :tr, job, :class => job.state do %>
+  <td class="id center">
     <%= link_to job.id, job %>
   </td>
   <td class="input_file" title="<%= job.source_file %>">
     <%= File.basename job.source_file %>
   </td>
-  <td class="duration" title="<%= number_with_delimiter job.duration %> seconds">
+  <td class="duration center" title="<%= number_with_delimiter job.duration %> seconds">
     <%= number_to_time job.duration %>
   </td>
   <td class="size" title="<%= number_with_delimiter job.filesize %> bytes">
@@ -21,16 +21,17 @@
   <td class="host" title="<%= strip_tags host_name(job.host) if job.host %>">
     <%= job.host.try(:name) %>
   </td>
-  <td class="progress <%= job.state %>" title="<%= job.message %>">
-    <%= job.state.capitalize %>
+  <td class="state <%= job.state %>" title="<%= job.message %>">
+    <%= state_label job.state %>
     
 		<%- if job.state == Job::Processing -%>
-      : <span class="percentage"><%= progress_as_percentage job.progress %>%</span>
-      <div class="bar">
-        <div class="progress" style="width:<%= progress_as_percentage job.progress %>%"></div>
+      <div class="progress progress-striped active">
+        <div class="bar" style="width:<%= progress_as_percentage job.progress %>%">
+          <%= progress_as_percentage job.progress %>%&nbsp;
+        </div>
       </div>
     <%- elsif job.state == Job::Failed -%>
-      <%= button_to 'Retry', retry_api_job_path(job) %>
+      <%= button_to 'Retry', retry_api_job_path(job), :class => 'btn btn-mini' %>
     <%- end -%>
   </td>
 	<td class="completed_after" title="<%= I18n.l job.completed_at if job.completed_at %> seconds">

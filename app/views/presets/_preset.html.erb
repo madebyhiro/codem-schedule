@@ -1,6 +1,6 @@
-<%= content_tag_for :li, preset, :class => cycle('left', 'right') do %>
-  <%= preset.name %>
+<%= content_tag_for :div, preset, class: 'span6' do %>
+  <h3><%= preset.name %></h3>
   <pre><%= preset.parameters %></pre>
-  <%= link_to 'Edit', edit_preset_path(preset) %> - 
-  <%= link_to 'Delete', api_preset_path(preset), :method => :delete %>
+  <%= link_to 'Edit', edit_preset_path(preset), class: 'btn btn-mini' %> 
+  <%= link_to 'Delete', api_preset_path(preset), class: 'btn btn-mini confirm', method: :delete %>
 <% end %>

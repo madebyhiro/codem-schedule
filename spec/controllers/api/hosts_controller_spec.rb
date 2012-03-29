@@ -83,7 +83,7 @@ describe Api::HostsController do
       put 'update', :id => @host.id, :name => 'name', :url => 'url', :format => format
       @host.reload
     end
-    
+
     it "should update a host as JSON" do
       do_put(:json)
       @host.name.should == 'name'
@@ -109,6 +109,14 @@ describe Api::HostsController do
       put 'update', :id => @host.id, :name => nil, :format => :html
       response.should render_template('/hosts/edit')
     end
+    
+    it "should also work with a Rails-style form" do
+      put 'update', :host => {:name => 'rails-name', :url => 'rails-url'}, :id => @host.id
+      @host.reload
+      @host.name.should == 'rails-name'
+      @host.url.should == 'rails-url'
+    end
+
   end
   
   describe "DELETE 'destroy'" do

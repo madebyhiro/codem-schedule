@@ -23,7 +23,7 @@ class Notification < ActiveRecord::Base
     deliveries.create!(:state => state, :state_change => job.state_changes.last, :notified_at => Time.current)
     self
   end
-  
+
   def name
     self.class.to_s.gsub('Notification', '')
   end

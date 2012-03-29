@@ -1,31 +1,46 @@
 <% title 'New job' %>
 
-<%= form_tag api_jobs_path do %>
+<%= form_tag api_jobs_path, class: 'form-horizontal' do %>
 	
-	<%= error_messages_for @job %>
+	<%#= error_messages_for @job %>
 	
 	<fieldset>
-    <legend>Job</legend>
-    
-    <ol>
-      <li><%= label_tag :input %></li>
-      <li><%= text_field_tag :input, @job.try(:source_file) %></li>
+    <legend>Create a new job</legend>
 
-      <li><%= label_tag :output %></li>
-      <li><%= text_field_tag :output, @job.try(:destination_file) %></li>
-      
-      <li><%= label_tag :preset %></li>
-      <li><%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)) %></li>
+    <div class="control-group">
+      <%= label_tag :input, nil, class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :input, @job.try(:source_file), class: 'input-xlarge' %>
+      </div>
+    </div>
 
-			<li><%= label_tag :notify %></li>
-			<li><%= text_field_tag :notify %></li>
-    </ol>
-    
+    <div class="control-group">
+      <%= label_tag :output, nil, class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :output, @job.try(:destination_file), class: 'input-xlarge' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :preset, nil, class: 'control-label' %>
+      <div class="controls">
+        <%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)), class: 'input-xlarge' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :notify, nil, class: 'control-label' %>
+      <div class="controls">
+        <%= text_area_tag :notify, nil, rows: 3, class: 'input-xlarge' %>
+      </div>
+    </div>
+
   </fieldset>
   
-  <ol class="buttons">
-    <li><%= submit_tag 'Create Job' %></li>
-  </ol>
+  <div class="form-actions"> 
+    <%= submit_tag 'Create Job', class: 'btn btn-primary' %>
+    <%= link_to 'Back to Jobs', jobs_path, class: 'btn' %>
+  </div>
   
 
 <% end %>

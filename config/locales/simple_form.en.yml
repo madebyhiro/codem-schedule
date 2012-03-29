@@ -1,0 +1,40 @@
+en:
+  simple_form:
+    creating: "Creating..."
+    updating: "Updating..."
+    buttons:
+      or: 'or'
+      cancel: 'Cancel'
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Some errors were found, please take a look:"
+    labels:
+      job:
+        source_file: 'Input file'
+        destination_file: 'Output file'
+        notify: 'Notifications'
+    hints:
+      job:
+        source_file: 'The full path to the source file.'
+        destination_file: 'The full path to the destination file.'
+        preset: 'The preset to use.'
+        notify: 'Notifications to send out, enter either an email address or an url.'
+    # Labels and hints examples
+    # labels:
+    #   password: 'Password'
+    #   user:
+    #     new:
+    #       email: 'E-mail para efetuar o sign in.'
+    #     edit:
+    #       email: 'E-mail.'
+    # hints:
+    #   username: 'User name to sign in.'
+    #   password: 'No special characters, please.'
+

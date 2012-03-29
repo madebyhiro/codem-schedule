@@ -1,7 +1,9 @@
 <% title 'Hosts' %>
 
-<%= render @hosts %>
+<div class="row">
+  <%= render @hosts %>
+</div>
 
-<br style="clear:both" />
-
-<%= link_to 'Add a host', new_host_path %>
+<div class="form-actions">
+  <%= link_to 'Add a host', new_host_path, class: 'btn btn-primary' %>
+</div>

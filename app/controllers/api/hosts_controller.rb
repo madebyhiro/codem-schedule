@@ -59,7 +59,7 @@ class Api::HostsController < Api::ApiController
 
     if host.valid?
       respond_with host, :location => api_host_url(host) do |format|
-        format.html { redirect_to hosts_path }
+        format.html { redirect_to hosts_path, :notice => t('flash.hosts.created') }
       end
     else
       respond_with host do |format|
@@ -107,7 +107,13 @@ class Api::HostsController < Api::ApiController
   #   $ curl -XPUT -d 'name=h&url=foo.com' http://localhost:3000/api/hosts/1
   #   {} # HTTP Status: 200 OK
   def update
+    if params[:host]
+      params[:name] = params[:host][:name]
+      params[:url]  = params[:host][:url]
+    end
+
     host = Host.find(params[:id])
+
     if host.update_attributes(:name => params[:name], :url => params[:url])
       host.update_status
       respond_with host, :location => api_host_url(host) do |format|

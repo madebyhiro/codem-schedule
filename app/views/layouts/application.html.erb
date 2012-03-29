@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= yield :title %> - Scheduler</title>
+  <title><%= yield :title %> - Codem Scheduler</title>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode/svn/trunk/html5.js" type="text/javascript"></script>
+  <![endif]-->
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<header>
-  <%= render "/layouts/menu" %>
-</header>
 
-<section id="content">
-  <% flash.each do |name, message| %>
-    <div id="<%= name %>"><%= h message %></div>
-  <% end %>
-  
-  <h1><%= yield :title %></h1>
+  <div class="container">
+    <div class="row">
+      <%= render "/layouts/menu" %>
 
-  <%= yield %>
-</section>
+      <% flash.each do |name, message| %>
+        <div id="<%= name %>"><%= h message %></div>
+      <% end %>
+
+      <div class="page-header">
+        <h1><%= yield :title %></h1>
+      </div>
+
+      <%= yield %>
+    </div>
+  </div>
 
 </body>
 </html>

@@ -2,19 +2,22 @@ class Schedule
   class << self
     def run!
       count = 0
+
       to_be_scheduled_jobs.each do |job|
         schedule_job(job)
         count += 1
       end
+      
       to_be_updated_jobs.each do |job|
         update_job(job)
         count += 1
       end
+     
       count
     end
 
     def to_be_scheduled_jobs
-      Job.scheduled.order("created_at").limit(get_available_slots)
+      Job.scheduled.order("created_at ASC").limit(get_available_slots)
     end
     
     def to_be_updated_jobs

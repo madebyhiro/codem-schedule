@@ -1,25 +1,26 @@
-<%= content_tag_for :div, host, :class => "#{host.available ? 'up' : 'down'} #{cycle 'left', 'right'}" do %>
-  <h2>
-    <%= host_name host %>: <%= host.available ? 'Available' : 'Not available' %>
-  </h2>
-  
-  <div class="host_status">
-    <% if host.available %>
-      <ol>
-        <li>
-          Available slots: <%= host.available_slots %>
-        </li>
-        <li>
-          Total slots: <%= host.total_slots %>
-        </li>
-        <li>
-          Used slots: <%= host.total_slots - host.available_slots %>
-        </li>
-      </ol>
-    <% end %>
+<%= content_tag_for :div, host, :class => "span4 #{host.available ? 'success' : 'error'}" do %>
+  <div class="alert alert-<%= host.available ? 'success' : 'error' %>">
+    <h3><%= host.name %> (<%= host.available ? 'Available' : 'Not available' %>)</h3>
+    <h4><%= host.url %></h4>
   </div>
+
+  <%= link_to 'Edit', edit_host_path(host), class: 'btn btn-mini' %> 
+  <%= link_to 'Delete', api_host_path(host), class: 'btn btn-mini', method: :delete %>
   
-  <%= link_to 'Edit', edit_host_path(host) %> - 
-  <%= link_to 'Delete', api_host_path(host), :method => :delete %>
+  <% if host.available %>
+    <br/><br/>
+    <table class="table table-condensed">
+      <tr>
+        <td><span class="badge badge-success"><%= host.available_slots %></span> available slots</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-info"><%= host.total_slots %></span> total slots</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-default"><%= host.total_slots - host.available_slots %></span> used slots</td>
+      </tr>
+    </table>
+  <% end %>
+
     
 <% end %>

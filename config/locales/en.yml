@@ -1,0 +1,7 @@
+en:
+  errors:
+    word: 'error'
+    body: 'prohibited this record from being saved:'
+  flash:
+    hosts:
+      created: 'Host has been successfully created.'

@@ -12,7 +12,7 @@ SimpleCov.start 'rails' do
     src_file.filename =~ /app\/mailers/
   end
   add_filter do |src_file| 
-    src_file.filename =~ /vendor/
+    src_file.filename =~ /vendor|lib/
   end
 end
 
