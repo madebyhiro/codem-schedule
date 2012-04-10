@@ -52,7 +52,9 @@ namespace :codem do
       Rake::Task["codem:install:setup_transcoder"].invoke
       
       Rake::Task["codem:install:configure_mailer"].invoke
-      
+
+      Rake::Task["assets:precompile"].invoke
+
       puts "The Codem scheduler setup is complete!"
       puts ""
       puts "Start the server by running 'rails server' and visit http://localhost:3000 in your browser."

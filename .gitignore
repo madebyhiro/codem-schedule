@@ -5,4 +5,5 @@ tmp/
 coverage/
 doc
 .yardoc/
+public/assets
 Gemfile.lock
