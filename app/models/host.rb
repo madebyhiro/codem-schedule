@@ -3,6 +3,8 @@ class Host < ActiveRecord::Base
 
   validates :name, :url, :presence => true
 
+  before_save :normalize_url
+
   def self.from_api(opts)
     opts = opts[:host] if opts[:host] # Rails' forms wraps hashes in a root tag
     host = new(:name => opts['name'], :url => opts['url'])
@@ -32,4 +34,10 @@ class Host < ActiveRecord::Base
     
     self
   end
+
+  private
+    def normalize_url
+      self.url = self.url.to_s.gsub(/\/$/, '')
+    end
 end
+

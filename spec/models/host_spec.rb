@@ -4,7 +4,7 @@ describe Host do
   before(:each) do
     Transcoder.stub!(:host_status).and_return {}
   end
-  
+
   describe "creating via the api" do
     def create_host
       Host.from_api('name' => 'name', 'url' => 'url')
@@ -28,7 +28,12 @@ describe Host do
       create_host.should == Host.last
     end
   end
-  
+ 
+  it "should normalize an url correctly" do
+    Host.create(:name => 'Normalize', :url => 'http://127.0.0.1:8080/')
+    Host.last.url.should == 'http://127.0.0.1:8080'
+  end
+
   describe "returning hosts with available slots" do
     before(:each) do
       @up   = Host.create!(:available_slots => 1, :name => 'up', :url => 'up')
