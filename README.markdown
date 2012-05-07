@@ -7,7 +7,7 @@ For documentation and general info, see <http://transcodem.com/>
 
 Install instructions
 --------------------
-You'll need a Ruby on Rails installation, served by the webserver of your choice.
+You'll need a Ruby on Rails installation, served by the webserver of your choice. Please note: Ruby 1.9.2 or greater is required.
 See <http://rubyonrails.org/download> for installation instructions.
 
 1 Either clone the git repository or download a packaged archive.
