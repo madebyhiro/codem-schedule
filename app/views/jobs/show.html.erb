@@ -40,19 +40,9 @@
 
 </table>
 
-<% if false %>
-  <h2>Notifications</h2>
-  <%= render "notifications" %>
+<h2>Notifications</h2>
+<%= render "notifications" %>
 
-  <h2>Preset parameters</h2>
-  <pre><%= @job.preset.parameters %></pre>
+<h2>Preset parameters</h2>
+<pre><%= @job.preset.parameters %></pre>
 
-  <% if @job.state == Job::Success %>
-    <h2>Output</h2>
-    <p>
-      Encoding <strong title="<%= number_with_delimiter @job.duration %> seconds"><%= number_to_time @job.duration %></strong> seconds 
-  		took <strong title="<%= number_with_delimiter encoding_time(@job) %> seconds"><%= number_to_time encoding_time(@job) %></strong> seconds 
-  		and resulted in a file of <strong title="<%= number_with_delimiter destination_filesize(@job) %> bytes"><%= number_to_human_size destination_filesize(@job), :precision => 5 %></strong> which is <strong><%= compression_rate @job %>%</strong> of the original.
-    </p>
-  <% end %>
-<% end %>

@@ -1,18 +1,16 @@
-<table class="items">
+<table class="table">
 	<tr class="odd">
 		<th>Type</th>
 		<th>Value</th>
-		<th>Deliveries</th>
+		<th>State</th>
 	</tr>
 
 	<% for notification in @job.notifications %>
 
 		<tr>
 			<td><%= notification.name %></td>
-			<td><%= auto_link(notification.value).html_safe %></td>
-			<td>
-			  <%= render "deliveries", :notification => notification if notification.deliveries %>
-			</td>
+			<td><%= notification.value %></td>
+			<td><%= notification.state %></td>
 		</tr>
 
 	<% end %>
