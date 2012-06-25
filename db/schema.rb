@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110913122106) do
+ActiveRecord::Schema.define(:version => 20120625073642) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -37,17 +37,17 @@ ActiveRecord::Schema.define(:version => 20110913122106) do
   end
 
   create_table "jobs", :force => true do |t|
-    t.string   "source_file",            :null => false
-    t.string   "destination_file",       :null => false
-    t.integer  "preset_id",              :null => false
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.string   "source_file",                             :null => false
+    t.string   "destination_file",                        :null => false
+    t.integer  "preset_id",                               :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "state"
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
     t.string   "callback_url"
-    t.string   "message"
+    t.text     "message",                :limit => 65536
     t.float    "progress"
     t.integer  "duration"
     t.string   "filesize"
