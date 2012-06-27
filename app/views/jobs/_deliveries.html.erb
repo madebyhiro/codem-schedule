@@ -6,11 +6,11 @@
     		<th>Value</th>
     		<th>State</th>
     	</tr>
-    	
+
       <% for delivery in state_change.deliveries %>
         <tr>
-      		<td><%= delivery.notification.name %></td>
-      		<td><%= delivery.notification.value %></td>
+      		<td><%= delivery.try(:notification).try(:name) || 'no data' %></td>
+      		<td><%= delivery.try(:notification).try(:value) || 'no data' %></td>
       		<td><%= delivery.state.titleize %> after <%= notified_at delivery, @job %></td>
       	</tr>	
       <% end %>
