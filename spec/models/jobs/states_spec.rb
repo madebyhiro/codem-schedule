@@ -28,7 +28,15 @@ describe Jobs::States do
   end
   
   describe "entering scheduled state" do
-    # nothing
+    def do_enter
+      @job.enter(Job::Scheduled, {})
+    end
+
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_scheduled)
+      do_enter
+    end
   end
   
   describe "entering accepted state" do
@@ -52,6 +60,12 @@ describe Jobs::States do
       do_enter
       @job.state_changes.last.state.should == Job::Accepted
     end
+
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_accepted)
+      do_enter
+    end
   end
   
   describe "entering processing state" do
@@ -69,6 +83,12 @@ describe Jobs::States do
     it "should generate a state change" do
       do_enter
       @job.state_changes.last.state.should == Job::Processing
+    end
+    
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_processing)
+      do_enter
     end
   end
   
@@ -93,10 +113,24 @@ describe Jobs::States do
       @job.should_receive(:notify)
       do_enter
     end
+
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_failed)
+      do_enter
+    end
   end
   
   describe "entering on hold state" do
-    # nothing
+    def do_enter
+      @job.enter(Job::OnHold, {'message' => 'msg'})
+    end
+
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_on_hold)
+      do_enter
+    end
   end
   
   describe "entering success state" do
@@ -125,6 +159,12 @@ describe Jobs::States do
     
     it "should send notifications" do
       @job.should_receive(:notify)
+      do_enter
+    end
+
+    it "should enter the state only once" do
+      do_enter
+      @job.should_not_receive(:enter_success)
       do_enter
     end
   end

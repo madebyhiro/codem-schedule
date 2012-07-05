@@ -16,10 +16,10 @@ module Jobs
 
       if state_changed?
         add_state_change(:state => state, :message => params['message'])
+        self.send("enter_#{state}", params)
+        save
       end
-      save
       
-      self.send("enter_#{state}", params)
       self
     end
     
