@@ -11,7 +11,7 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   belongs_to :host
   
-  has_many :state_changes, :dependent => :destroy
+  has_many :state_changes, :order => 'created_at ASC', :dependent => :destroy
   has_many :notifications, :dependent => :destroy
 
   serialize :arguments
