@@ -32,10 +32,8 @@ describe Jobs::States do
       @job.enter(Job::Scheduled, {})
     end
 
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_scheduled)
-      do_enter
+    it "should generate 0 state changes" do # job is already in Scheduled state
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(0)
     end
   end
   
@@ -61,10 +59,8 @@ describe Jobs::States do
       @job.state_changes.last.state.should == Job::Accepted
     end
 
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_accepted)
-      do_enter
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
   
@@ -85,10 +81,8 @@ describe Jobs::States do
       @job.state_changes.last.state.should == Job::Processing
     end
     
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_processing)
-      do_enter
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
   
@@ -114,10 +108,8 @@ describe Jobs::States do
       do_enter
     end
 
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_failed)
-      do_enter
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
   
@@ -126,10 +118,8 @@ describe Jobs::States do
       @job.enter(Job::OnHold, {'message' => 'msg'})
     end
 
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_on_hold)
-      do_enter
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
   
@@ -162,10 +152,8 @@ describe Jobs::States do
       do_enter
     end
 
-    it "should enter the state only once" do
-      do_enter
-      @job.should_not_receive(:enter_success)
-      do_enter
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
 end
