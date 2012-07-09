@@ -1,18 +1,22 @@
-<table class="table">
-	<tr class="odd">
-		<th>Type</th>
-		<th>Value</th>
-		<th>State</th>
-	</tr>
+<% if @job.notifications.any? %>
+  <table class="table">
+	  <tr class="odd">
+		  <th>Type</th>
+		  <th>Value</th>
+		  <th>State</th>
+	  </tr>
 
-	<% for notification in @job.notifications %>
+	  <% for notification in @job.notifications %>
 
-		<tr>
-			<td><%= notification.name %></td>
-			<td><%= notification.value %></td>
-			<td><%= notification.state %></td>
-		</tr>
+		  <tr>
+			  <td><%= notification.name %></td>
+			  <td><%= notification.value %></td>
+			  <td><%= notification.state %></td>
+		  </tr>
 
-	<% end %>
+	  <% end %>
 
-</table>
+  </table>
+<% else %>
+  <p>No notifications</p>
+<% end %>
