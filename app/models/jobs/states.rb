@@ -25,7 +25,9 @@ module Jobs
     end
     
     def add_state_change(attrs)
-      self.state_changes.build(attrs)
+      transaction do
+        self.state_changes.create(attrs)
+      end
     end
     
     protected
