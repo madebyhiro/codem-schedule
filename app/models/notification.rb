@@ -9,7 +9,9 @@ class Notification < ActiveRecord::Base
 
     options.split(',').collect do |value|
       value.strip!
-      value.include?('@') ? EmailNotification.new(:value => value) : UrlNotification.new(:value => value)
+      value.include?('@') ? 
+        EmailNotification.new(:value => value) : 
+        UrlNotification.new(:value => value)
     end
   end
   
