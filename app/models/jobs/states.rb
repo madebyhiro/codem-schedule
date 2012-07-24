@@ -26,7 +26,9 @@ module Jobs
     
     def add_state_change(attrs)
       transaction do
-        self.state_changes.create(attrs)
+        unless self.state_changes.find_by_state_and_created_at(attrs[:state], Time.now)
+          self.state_changes.create(attrs)
+        end
       end
     end
     
