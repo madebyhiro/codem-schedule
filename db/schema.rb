@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821085513) do
+ActiveRecord::Schema.define(:version => 20120625073642) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -36,20 +36,18 @@ ActiveRecord::Schema.define(:version => 20120821085513) do
     t.datetime "status_updated_at"
   end
 
-  add_index "hosts", ["name"], :name => "index_hosts_on_name"
-
   create_table "jobs", :force => true do |t|
-    t.string   "source_file",                                :null => false
-    t.string   "destination_file",                           :null => false
-    t.integer  "preset_id",                                  :null => false
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.string   "source_file",                             :null => false
+    t.string   "destination_file",                        :null => false
+    t.integer  "preset_id",                               :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "state"
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
     t.string   "callback_url"
-    t.text     "message",                :limit => 16777215
+    t.text     "message",                :limit => 65536
     t.float    "progress"
     t.integer  "duration"
     t.string   "filesize"
@@ -57,10 +55,7 @@ ActiveRecord::Schema.define(:version => 20120821085513) do
     t.text     "arguments"
   end
 
-  add_index "jobs", ["completed_at"], :name => "index_jobs_on_completed_at"
-  add_index "jobs", ["created_at"], :name => "index_jobs_on_created_at"
-  add_index "jobs", ["source_file"], :name => "index_jobs_on_source_file"
-  add_index "jobs", ["transcoding_started_at"], :name => "index_jobs_on_transcoding_started_at"
+  add_index "jobs", ["state"], :name => "index_jobs_on_state"
 
   create_table "notifications", :force => true do |t|
     t.integer  "job_id"

@@ -151,9 +151,14 @@ describe Schedule do
         Transcoder.should_receive(:job_status).with(@job)
         update
       end
-      
-      it "should enter the correct status" do
-        @job.should_receive(:enter).with('status', {'status' => 'status', 'foo' => 'bar'})
+     
+      it "should not re-enter processing" do
+        @job.should_not_receive(:enter)
+        update
+      end
+
+      it "should update the status" do
+        Schedule.should_receive(:update_progress).with(@job).and_return true
         update
       end
       

@@ -25,7 +25,7 @@ class Transcoder
     end
 
     def job_status(job)
-      if job.host.url && job.remote_job_id
+      if job.host.try(:url) && job.remote_job_id
         get "#{job.host.url}/jobs/#{job.remote_job_id}"
       end
     end

@@ -28,7 +28,13 @@ describe Jobs::States do
   end
   
   describe "entering scheduled state" do
-    # nothing
+    def do_enter
+      @job.enter(Job::Scheduled, {})
+    end
+
+    it "should generate 0 state changes" do # job is already in Scheduled state
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(0)
+    end
   end
   
   describe "entering accepted state" do
@@ -52,6 +58,10 @@ describe Jobs::States do
       do_enter
       @job.state_changes.last.state.should == Job::Accepted
     end
+
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
+    end
   end
   
   describe "entering processing state" do
@@ -69,6 +79,10 @@ describe Jobs::States do
     it "should generate a state change" do
       do_enter
       @job.state_changes.last.state.should == Job::Processing
+    end
+    
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
   
@@ -93,10 +107,20 @@ describe Jobs::States do
       @job.should_receive(:notify)
       do_enter
     end
+
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
+    end
   end
   
   describe "entering on hold state" do
-    # nothing
+    def do_enter
+      @job.enter(Job::OnHold, {'message' => 'msg'})
+    end
+
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
+    end
   end
   
   describe "entering success state" do
@@ -126,6 +150,10 @@ describe Jobs::States do
     it "should send notifications" do
       @job.should_receive(:notify)
       do_enter
+    end
+
+    it "should generate 1 state change" do
+      lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
   end
 end

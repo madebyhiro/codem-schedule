@@ -2,25 +2,26 @@
   <div class="alert alert-<%= host.available ? 'success' : 'error' %>">
     <h3><%= host.name %> (<%= host.available ? 'Available' : 'Not available' %>)</h3>
     <h4><%= host.url %></h4>
+
+    <br/>
+
+    <%= link_to 'Edit', edit_host_path(host), class: 'btn btn-mini' %> 
+    <%= link_to 'Delete', api_host_path(host), class: 'btn btn-mini', method: :delete, confirm: t('confirm.delete', :model_name => 'host')  %>
+
+    <% if host.available %>
+      <table class="table table-condensed">
+        <tr>
+          <td><span class="badge badge-success"><%= host.available_slots %></span> available slots</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-info"><%= host.total_slots %></span> total slots</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-default"><%= host.total_slots - host.available_slots %></span> used slots</td>
+        </tr>
+      </table>
+    <% end %>
+
   </div>
 
-  <%= link_to 'Edit', edit_host_path(host), class: 'btn btn-mini' %> 
-  <%= link_to 'Delete', api_host_path(host), class: 'btn btn-mini', method: :delete, confirm: t('confirm.delete', :model_name => 'host')  %>
-
-  <% if host.available %>
-    <br/><br/>
-    <table class="table table-condensed">
-      <tr>
-        <td><span class="badge badge-success"><%= host.available_slots %></span> available slots</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-info"><%= host.total_slots %></span> total slots</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-default"><%= host.total_slots - host.available_slots %></span> used slots</td>
-      </tr>
-    </table>
-  <% end %>
-
-    
 <% end %>

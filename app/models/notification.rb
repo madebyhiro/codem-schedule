@@ -9,16 +9,18 @@ class Notification < ActiveRecord::Base
 
     options.split(',').collect do |value|
       value.strip!
-      value.include?('@') ? EmailNotification.new(:value => value) : UrlNotification.new(:value => value)
+      value.include?('@') ? 
+        EmailNotification.new(:value => value) : 
+        UrlNotification.new(:value => value)
     end
   end
   
   def notify!(*args)
     begin
       do_notify!(*args)
-      state = Job::Success
+      update_attributes :state => Job::Success
     rescue => e
-      state = Job::Failed
+      update_attributes :state => Job::Failed
     end
     deliveries.create!(:state => state, :state_change => job.state_changes.last, :notified_at => Time.current)
     self

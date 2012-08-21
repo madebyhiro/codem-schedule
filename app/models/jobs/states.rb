@@ -17,14 +17,19 @@ module Jobs
       if state_changed?
         add_state_change(:state => state, :message => params['message'])
       end
-      save
       
       self.send("enter_#{state}", params)
+      save
+
       self
     end
     
     def add_state_change(attrs)
-      self.state_changes.build(attrs)
+      transaction do
+        unless self.state_changes.find_by_state_and_created_at(attrs[:state], Time.now)
+          self.state_changes.create(attrs)
+        end
+      end
     end
     
     protected

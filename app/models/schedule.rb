@@ -24,11 +24,13 @@ class Schedule
       Job.unfinished.order('created_at')
     end
   
-    def update_progress(job)
-      if job.state == Job::Processing
-        if attrs = Transcoder.job_status(job)
-          job.enter(attrs['status'], attrs)
-        end
+    def update_progress(job, attrs=false)
+      attrs ||= Transcoder.job_status(job)
+
+      if attrs
+        job.update_attributes :progress => attrs['progress'],
+          :duration => attrs['duration'],
+          :filesize => attrs['filesize']
       end
       job
     end
@@ -45,21 +47,25 @@ class Schedule
     private
     def update_job(job)
       if attrs = Transcoder.job_status(job)
-        job.enter(attrs['status'], attrs)
+        if attrs['status'] == Job::Processing && job.state == Job::Processing
+          update_progress(job, attrs)
+        else
+          job.enter(attrs['status'], attrs)
+        end
       else
         job.enter(Job::OnHold)
       end
 
       job
     end
-    
-      def schedule_job(job)
-        for host in Host.with_available_slots
-          if attrs = Transcoder.schedule(:host => host, :job => job)
-            job.enter(Job::Accepted, attrs)
-            break
-          end
+
+    def schedule_job(job)
+      for host in Host.with_available_slots
+        if attrs = Transcoder.schedule(:host => host, :job => job)
+          job.enter(Job::Accepted, attrs)
+          break
         end
       end
+    end
   end
 end

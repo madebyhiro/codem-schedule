@@ -11,7 +11,7 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   belongs_to :host
   
-  has_many :state_changes, :dependent => :destroy
+  has_many :state_changes, :order => 'created_at ASC', :dependent => :destroy
   has_many :notifications, :dependent => :destroy
 
   serialize :arguments
@@ -23,7 +23,7 @@ class Job < ActiveRecord::Base
   scope :on_hold,     :conditions => { :state => OnHold }
   scope :failed,      :conditions => { :state => Failed }
 
-  scope :recent, :include => [:host, :preset]
+  scope :recent,      :include => [:host, :preset]
   
   scope :unfinished,  lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
   scope :need_update, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
