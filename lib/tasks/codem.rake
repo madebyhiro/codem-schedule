@@ -80,7 +80,7 @@ namespace :codem do
       Rake::Task["db:migrate"].invoke
     end
 
-    desc "Update the Codem transcoder"
+    desc "Update the Codem scheduler"
     task :update => :environment do
       puts "Updating the repository from github..."
       Rake::Task['codem:update:code'].invoke
@@ -92,7 +92,7 @@ namespace :codem do
 
   end
 
-  desc "Install the Codem Transcoder"
+  desc "Install the Codem Scheduler"
   task :install => ['install:install']
 
   desc "Update Codem to the latest version"
