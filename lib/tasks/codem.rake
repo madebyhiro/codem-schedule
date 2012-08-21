@@ -63,7 +63,39 @@ namespace :codem do
     
   end
   
+  namespace :update do
+
+    desc "Update the repository from github"
+    task :code => :environment do
+      `git pull`
+    end
+
+    desc "Update bundled gems"
+    task :gems => :environment do
+      `bundle install`
+    end
+
+    desc "Run database migrations"
+    task :db => :environment do
+      Rake::Task["db:migrate"].invoke
+    end
+
+    desc "Update the Codem transcoder"
+    task :update => :environment do
+      puts "Updating the repository from github..."
+      Rake::Task['codem:update:code'].invoke
+      puts "Updating bundled gems..."
+      Rake::Task['codem:update:gems'].invoke
+      puts "Running database migrations..."
+      Rake::Task['codem:update:db'].invoke
+    end
+
+  end
+
   desc "Install the Codem Transcoder"
   task :install => ['install:install']
+
+  desc "Update Codem to the latest version"
+  task :update => ['update:update']
   
 end
