@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/madebyhiro/codem-schedule.png)](http://travis-ci.org/madebyhiro/codem-schedule)
+
 Codem Scheduler
 ===============
 
