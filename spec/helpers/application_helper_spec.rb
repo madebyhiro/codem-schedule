@@ -17,6 +17,7 @@ describe ApplicationHelper do
   
   describe "sortable" do
     before(:each) do
+      params[:q] = 'q'
       stub!(:sort_column).and_return nil
       stub!(:sort_direction).and_return nil
       stub!(:link_to)
@@ -24,7 +25,7 @@ describe ApplicationHelper do
 
     describe "without a sorting" do
       it "should return the correct link" do
-        should_receive(:link_to).with('The ID', {:sort => 'id', :direction => 'asc'}, {:class => nil})
+        should_receive(:link_to).with('The ID', {:sort => 'id', :direction => 'asc', :q => 'q'}, {:class => nil})
         sortable('id', 'The ID')
       end
     end
@@ -36,7 +37,7 @@ describe ApplicationHelper do
       end
       
       it "should return the correct link" do
-        should_receive(:link_to).with('Mooh', {:sort => 'mooh', :direction => 'desc'}, {:class => 'current asc'})
+        should_receive(:link_to).with('Mooh', {:sort => 'mooh', :direction => 'desc', :q => 'q'}, {:class => 'current asc'})
         sortable('mooh', 'Mooh')
       end
     end
