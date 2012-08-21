@@ -27,7 +27,6 @@ class Job < ActiveRecord::Base
   
   scope :unfinished,  lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
   scope :need_update, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
-  scope :search,      lambda { |q| includes(:host, :preset).where("jobs.id LIKE ? OR source_file LIKE ? OR presets.name LIKE ? OR hosts.name LIKE ? OR state LIKE ?", q, q, q, q, q) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -59,7 +58,7 @@ class Job < ActiveRecord::Base
       jobs = recent.page(opts[:page])
 
       if opts[:sort] && opts[:dir]
-        jobs = jobs.order(opts[:sort] + ' ' + opts[:dir])
+        jobs = jobs.order('jobs.' + opts[:sort] + ' ' + opts[:dir])
       end
 
       if opts[:query]
