@@ -4,7 +4,7 @@ describe JobsController do
   describe "GET 'index'" do
     before(:each) do
       @job = double(Job)
-      Job.stub_chain(:recents, :order).and_return [@job]
+      Job.stub(:recents).and_return [@job]
       History.stub!(:new).and_return 'history'
       Schedule.stub!(:update_progress)
     end

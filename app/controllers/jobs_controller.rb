@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   def index
     @history = History.new(params[:period])
-    @jobs    = Job.recents(params[:page]).order(sort_column + " " + sort_direction)
+    @jobs    = Job.recents(page: params[:page], sort: sort_column, dir: sort_direction, query: params[:q])
     @jobs.collect { |j| Schedule.update_progress(j) }
   end
   
