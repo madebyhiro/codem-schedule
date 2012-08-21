@@ -7,6 +7,7 @@ gem 'jquery-rails'
 gem 'rest-client'
 gem 'will_paginate'
 gem 'simple_form'
+gem 'chronic'
 
 group :development, :test do
   gem 'rspec-rails'
