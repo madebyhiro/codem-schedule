@@ -32,6 +32,13 @@ See <http://rubyonrails.org/download> for installation instructions.
 
     $ rails server
 
+Update instructions
+-------------------
+To update the Scheduler to the latest version, just run:
+
+    $ rake codem:update
+
+
 API documentation
 -----------------
 View the API documentation at <http://rubydoc.info/github/madebyhiro/codem-schedule/master/frames>
