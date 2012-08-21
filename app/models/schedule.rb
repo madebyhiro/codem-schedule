@@ -26,8 +26,9 @@ class Schedule
   
     def update_progress(job)
       if job.state == Job::Processing
-        attrs = Transcoder.job_status(job)
-        job.enter(attrs['status'], attrs)
+        if attrs = Transcoder.job_status(job)
+          job.enter(attrs['status'], attrs)
+        end
       end
       job
     end

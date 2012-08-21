@@ -25,7 +25,9 @@ class Transcoder
     end
 
     def job_status(job)
-      get "#{job.host.url}/jobs/#{job.remote_job_id}"
+      if job.host.url && job.remote_job_id
+        get "#{job.host.url}/jobs/#{job.remote_job_id}"
+      end
     end
     
     def post(url, *attrs)
