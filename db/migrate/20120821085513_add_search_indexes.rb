@@ -6,6 +6,5 @@ class AddSearchIndexes < ActiveRecord::Migration
     add_index :jobs,    :transcoding_started_at
 
     add_index :hosts,   :name
-    add_index :presets, :name
   end
 end
