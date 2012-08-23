@@ -26,10 +26,10 @@
 	</tr>
 	<tr>
 		<td class="success" title="<%= @history.completed_jobs.size %> out of <%= @history.jobs.size %> completed">
-			<span class="badge badge-success"><%= @history.completed_jobs.size %></span>
+			<span class="badge badge-success"><%= number_with_delimiter @history.completed_jobs.size %></span>
 		</td>
 		<td class="failed" title="<%= @history.failed_jobs.size %> out of <%= @history.jobs.size %> failed">
-			<span class="badge badge-error"><%= @history.failed_jobs.size %></span>
+			<span class="badge badge-error"><%= number_with_delimiter @history.failed_jobs.size %></span>
 		</td>
 		<td title="<%= number_with_delimiter @history.seconds_encoded %> seconds">
 			<%= number_to_time @history.seconds_encoded %>
