@@ -44,5 +44,5 @@
 <%= render "notifications" %>
 
 <h2>Preset parameters</h2>
-<pre><%= @job.preset.parameters %></pre>
+<pre><%= @job.preset.parameters rescue 'Preset not found' %></pre>
 
