@@ -4,24 +4,28 @@ class Schedule
       count = 0
 
       to_be_scheduled_jobs.each do |job|
-        schedule_job(job)
-        count += 1
+        job.lock! do
+          schedule_job(job)
+          count += 1
+        end
       end
       
       to_be_updated_jobs.each do |job|
-        update_job(job)
-        count += 1
+        job.lock! do
+          update_job(job)
+          count += 1
+        end
       end
      
       count
     end
 
     def to_be_scheduled_jobs
-      Job.scheduled.order("created_at ASC").limit(get_available_slots)
+      Job.scheduled.unlocked.order("created_at ASC").limit(get_available_slots)
     end
     
     def to_be_updated_jobs
-      Job.unfinished.order('created_at')
+      Job.unfinished.unlocked.order('created_at')
     end
   
     def update_progress(job, attrs=false)

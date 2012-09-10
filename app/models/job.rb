@@ -23,6 +23,8 @@ class Job < ActiveRecord::Base
   scope :on_hold,     :conditions => { :state => OnHold }
   scope :failed,      :conditions => { :state => Failed }
 
+  scope :unlocked,    :conditions => { :locked => false }
+
   scope :recent,      :include => [:host, :preset]
   
   scope :unfinished,  lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
@@ -136,5 +138,26 @@ class Job < ActiveRecord::Base
   
   def unfinished?
     state == Scheduled || state == Accepted || state == Processing || state == OnHold
+  end
+
+  def lock!(&block)
+    raise "This job is already locked" if locked?
+
+    if block_given?
+      Job.transaction do
+        begin
+          update_attributes :locked => true
+          yield
+        ensure
+          unlock!
+        end
+      end
+    else
+      update_attributes :locked => true
+    end
+  end
+
+  def unlock!
+    update_attributes :locked => false
   end
 end

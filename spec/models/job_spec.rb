@@ -204,4 +204,50 @@ describe Job do
       search('id:1 state:failed source:foo dest:foo file:foo preset:foo host:foo created:2_days_ago completed:2_days_ago started:2_days_ago')
     end
   end
+
+  describe "locking/unlocking" do
+    before(:each) do
+      @preset = Preset.create!(:name => 'n', :parameters => 'p')
+
+      @job = Job.from_api(
+        { 
+          "input" => "input", 
+          "output" => "output", 
+          "preset" => @preset.name, 
+          "arguments" => "a=b,c=d"
+        }, 
+        :callback_url => lambda { |job| "callback_#{job.id}" }
+      )
+    end
+
+    it "should lock a job" do
+      @job.lock!
+      @job.should be_locked
+    end
+
+    it "should unlock a job" do
+      @job.lock!
+      @job.unlock!
+      @job.should_not be_locked
+    end
+
+    it "should allow a block" do
+      @job.lock! do
+        @job.update_attributes :arguments => 'block_test'
+      end
+      @job.arguments.should == 'block_test'
+      @job.should_not be_locked
+    end
+
+    it "should unlock a job if an error occurs in the block" do
+      begin
+        @job.lock! do
+          raise 'foo'
+        end
+      rescue => e
+      end
+
+      @job.should_not be_locked
+    end
+  end
 end
