@@ -6,36 +6,36 @@ class JobSearch
         value = value.to_s
 
         case field
-        when /^id|^job/
-          jobs = jobs.where("jobs.id = ?", value)
-        when /^state/
-          jobs = jobs.where("state = ?", value)
-        when /^source|^input/
-          jobs = jobs.where("source_file LIKE ?", '%'+value+'%')
-        when /^dest|^output/
-          jobs = jobs.where("destination_file LIKE ?", '%'+value+'%')
-        when /^file/
-          value = '%'+value+'%'
-          jobs = jobs.where("source_file LIKE ? OR destination_file LIKE ?", value, value)
-        when /^preset/
-          value = '%'+value+'%'
-          jobs = jobs.includes(:preset).where("presets.name LIKE ?", value)
-        when /^host/
-          value = '%'+value+'%'
-          jobs = jobs.includes(:host).where("hosts.name LIKE ?", value)
-        when /^submitted|^created/
-          if dates = val_to_date(value)
-            jobs = jobs.where("jobs.created_at BETWEEN ? AND ?", dates[0], dates[1])
+          when /^id|^job/
+            jobs = jobs.where("jobs.id = ?", value)
+          when /^state/
+            jobs = jobs.where("state = ?", value)
+          when /^source|^input/
+            jobs = jobs.where("source_file LIKE ?", '%'+value+'%')
+          when /^dest|^output/
+            jobs = jobs.where("destination_file LIKE ?", '%'+value+'%')
+          when /^file/
+            value = '%'+value+'%'
+            jobs = jobs.where("source_file LIKE ? OR destination_file LIKE ?", value, value)
+          when /^preset/
+            value = '%'+value+'%'
+            jobs = jobs.includes(:preset).where("presets.name LIKE ?", value)
+          when /^host/
+            value = '%'+value+'%'
+            jobs = jobs.includes(:host).where("hosts.name LIKE ?", value)
+          when /^submitted|^created/
+            if dates = val_to_date(value)
+              jobs = jobs.where("jobs.created_at BETWEEN ? AND ?", dates[0], dates[1])
+            end
+          when /^completed/
+            if dates = val_to_date(value)
+              jobs = jobs.where("jobs.completed_at BETWEEN ? AND ?", dates[0], dates[1])
+            end
+          when /^started/
+            if dates = val_to_date(value)
+              jobs = jobs.where("jobs.transcoding_started_at BETWEEN ? AND ?", dates[0], dates[1])
+            end
           end
-        when /^completed/
-          if dates = val_to_date(value)
-            jobs = jobs.where("jobs.completed_at BETWEEN ? AND ?", dates[0], dates[1])
-          end
-        when /^started/
-          if dates = val_to_date(value)
-            jobs = jobs.where("jobs.transcoding_started_at BETWEEN ? AND ?", dates[0], dates[1])
-          end
-        end
       end
 
       jobs
