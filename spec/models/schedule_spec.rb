@@ -84,6 +84,18 @@ describe Schedule do
       end
     end
     
+    describe "processing" do
+      before(:each) do
+        Transcoder.stub!(:job_status).and_return({ 'status' => Job::Processing })
+        @job.update_attributes(:state => Job::Processing)
+      end
+
+      it "should update the job's progress" do
+        Schedule.should_receive(:update_progress).with(@job, { 'status' => Job::Processing })
+        update
+      end
+    end
+
     describe "unfinished" do
       before(:each) do
         @job.update_attributes(:state => Job::Processing)
