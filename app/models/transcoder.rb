@@ -4,7 +4,7 @@ class Transcoder
       job  = opts[:job]
       host = opts[:host]
 
-      if attrs = post("#{host.url}/jobs", job_to_json(job))
+      if attrs = post("#{host.url}/jobs", :payload => job_to_json(job))
         attrs.merge('host_id' => host.id)
       else
         false
@@ -40,11 +40,14 @@ class Transcoder
     
     private
       def call_transcoder(method, url, *attrs)
+        Rails.logger.debug attrs.first.inspect
         begin
-          attrs << { :content_type => :json, :accept => :json, :timeout => 2 }
-          response = RestClient.send(method, url, *attrs)
+          opts = attrs.extract_options!
+          opts.merge!({ :method => method, :url => url })
+          opts.merge!({ :content_type => :json, :accept => :json, :timeout => 1 })
+          response = RestClient::Request.execute(opts)
           JSON::parse response
-        rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, RestClient::Exception, JSON::ParserError
+        rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, Errno::ETIMEDOUT, RestClient::Exception, JSON::ParserError
           false
         end
       end

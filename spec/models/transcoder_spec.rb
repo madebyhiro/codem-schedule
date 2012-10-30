@@ -80,7 +80,7 @@ describe Transcoder do
 
   describe "POSTing to the transcoders" do
     before(:each) do
-      RestClient.stub!(:post).and_return '{"foo":"bar"}'
+      RestClient::Request.stub!(:execute).and_return '{"foo":"bar"}'
     end
     
     def do_post
@@ -88,13 +88,13 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
+      RestClient::Request.should_receive(:execute).with(:url => 'url', 'foo' => 'bar', :method => :post, :content_type => :json, :accept => :json, :timeout => 1)
       do_post.should == {'foo' => 'bar'}
     end
     
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub!(:post).and_raise ex
+        RestClient::Request.stub!(:execute).and_raise ex
         do_post.should == false
       end
     end
@@ -102,7 +102,7 @@ describe Transcoder do
   
   describe "GETting from the transcoders" do
     before(:each) do
-      RestClient.stub!(:get).and_return '{"foo":"bar"}'
+      RestClient::Request.stub!(:execute).and_return '{"foo":"bar"}'
     end
     
     def do_get
@@ -110,13 +110,13 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
-      do_get
+      RestClient::Request.should_receive(:execute).with(:url => 'url', 'foo' => 'bar', :method => :get, :content_type => :json, :accept => :json, :timeout => 1)
+      do_get.should == { 'foo' => 'bar' }
     end
 
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub!(:get).and_raise ex
+        RestClient::Request.stub!(:execute).and_raise ex
         do_get.should == false
       end
     end
