@@ -39,23 +39,23 @@ ActiveRecord::Schema.define(:version => 20120910113949) do
   add_index "hosts", ["name"], :name => "index_hosts_on_name"
 
   create_table "jobs", :force => true do |t|
-    t.string   "source_file",                                                   :null => false
-    t.string   "destination_file",                                              :null => false
-    t.integer  "preset_id",                                                     :null => false
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
+    t.string   "source_file",                                                :null => false
+    t.string   "destination_file",                                           :null => false
+    t.integer  "preset_id",                                                  :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.string   "state"
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
     t.string   "callback_url"
-    t.text     "message",                :limit => 16777215
+    t.text     "message",                :limit => 65536
     t.float    "progress"
     t.integer  "duration"
     t.string   "filesize"
     t.datetime "completed_at"
     t.text     "arguments"
-    t.boolean  "locked",                                     :default => false
+    t.boolean  "locked",                                  :default => false
   end
 
   add_index "jobs", ["completed_at"], :name => "index_jobs_on_completed_at"
