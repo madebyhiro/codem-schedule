@@ -61,6 +61,7 @@ class Api::JobsController < Api::ApiController
   # <tt>output</tt>:: Output file to write to
   # <tt>preset</tt>:: Preset name to use
   # <tt>notify</tt>:: A list of email addresses and urls separated by commas.
+  # <tt>additional</tt>:: Additional parameters to override params.
   #
   # If a job enters the completed or failed state, a notification will be sent to the emails and urls specified in the 
   # <tt>notify</tt> parameter. Urls will receive a POST request with the JSON representation of the job as body.
@@ -74,6 +75,7 @@ class Api::JobsController < Api::ApiController
   #
   #   {
   #     "job": {
+  #       "additional_parameters":"",
   #       "callback_url":"http://localhost:3000/api/jobs/26",
   #       "completed_at":null,
   #       "created_at":"2011-05-10T08:25:00Z",
