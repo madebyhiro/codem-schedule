@@ -9,7 +9,7 @@ def command?(command)
 end
 
 class CodemCommand
-  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent, :status
+  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent, :status, :additional
   def initialize
     options = {}
 
@@ -57,6 +57,10 @@ class CodemCommand
         options[:arguments] = a
       end
       
+      opts.on('-d', '--additional-parameters [LIST]', "Extra parameters to override presets. Specify these with a leading space to allow correct parsing. Example: ' -v 100k'") do |d|
+        options[:additional] = d
+      end
+
       opts.on_tail('-h', '--help', 'Display this screen') do
         puts opts
         exit
@@ -65,16 +69,17 @@ class CodemCommand
 
     optparse.parse!
     
-    @input   = options[:input]
-    @output  = options[:output]
-    @preset  = options[:preset]
-    @host    = options[:host]
-    @verbose = options[:verbose]
-    @silent  = options[:silent]
-    @host    = options[:host]
-    @notify  = options[:notify]
-    @status  = options[:status]
-    @args    = options[:arguments]
+    @input      = options[:input]
+    @output     = options[:output]
+    @preset     = options[:preset]
+    @host       = options[:host]
+    @verbose    = options[:verbose]
+    @silent     = options[:silent]
+    @host       = options[:host]
+    @notify     = options[:notify]
+    @status     = options[:status]
+    @additional = options[:additional]
+    @args       = options[:arguments]
     
     unless @input && @output && @preset
       puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
@@ -83,7 +88,7 @@ class CodemCommand
   end
   
   def args
-    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}'"
+    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}&additional=#{@additional}'"
   end
   
   def run
