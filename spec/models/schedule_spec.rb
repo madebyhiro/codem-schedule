@@ -22,10 +22,18 @@ describe Schedule do
       Schedule.stub!(:to_be_updated_jobs).and_return []
 
       @host = FactoryGirl.create(:host)
-      Host.stub!(:with_available_slots).and_return [@host]
+
+      @strategy = double("Schedule strategy", :hosts => [@host])
+      Schedule.stub!(:schedule_strategy).and_return double("Factory", new: @strategy)
+
       Transcoder.stub!(:schedule).and_return 'attrs'
     end
     
+    it "should use the given schedule strategy" do
+      Schedule.should_receive(:schedule_strategy).and_return ScheduleStrategies::Simple
+      update
+    end
+
     it "should try to schedule the job at the host" do
       Transcoder.should_receive(:schedule).with(:host => @host, :job => @job)
       update

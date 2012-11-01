@@ -48,6 +48,10 @@ class Schedule
       sum
     end
 
+    def schedule_strategy
+      ScheduleStrategies::Simple
+    end
+
     private
     def update_job(job)
       if attrs = Transcoder.job_status(job)
@@ -64,12 +68,15 @@ class Schedule
     end
 
     def schedule_job(job)
-      for host in Host.with_available_slots
+      strategy = schedule_strategy.new(job)
+
+      strategy.hosts.each do |host|
         if attrs = Transcoder.schedule(:host => host, :job => job)
           job.enter(Job::Accepted, attrs)
           break
         end
       end
+
     end
   end
 end
