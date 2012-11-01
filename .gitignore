@@ -3,7 +3,7 @@ db/*.sqlite3
 log/*.log
 tmp/
 coverage/
-doc
+doc/
 .yardoc/
 public/assets
 Gemfile.lock
