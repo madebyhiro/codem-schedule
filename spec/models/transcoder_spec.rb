@@ -4,7 +4,7 @@ describe Transcoder do
   describe "scheduling a job" do
     before(:each) do
       @preset = FactoryGirl.create(:preset)
-      @job    = FactoryGirl.create(:job, :preset_id => @preset.id)
+      @job    = FactoryGirl.create(:job, :preset_id => @preset.id, :additional_params => 'additional')
       @host   = FactoryGirl.create(:host)
 
       Transcoder.stub!(:post)
@@ -12,6 +12,21 @@ describe Transcoder do
 
     def do_schedule
       Transcoder.schedule(:job => @job, :host => @host)
+    end
+
+    it "should post the job correctly to the host" do
+      Transcoder.should_receive(:job_to_json).with(@job).and_return 'payload'
+      Transcoder.should_receive(:post).with("url/jobs", {payload: 'payload'})
+      do_schedule
+    end
+
+    it "should convert a job to transcoder params correctly" do
+      Transcoder.job_to_json(@job).should == {
+        'source_file' => 'source',
+        'destination_file' => 'dest',
+        'encoder_options' => 'params additional',
+        'callback_urls' => ["callback_url"],
+      }.to_json
     end
 
     describe "success" do
@@ -33,15 +48,6 @@ describe Transcoder do
         do_schedule
         @job.state.should == Job::Scheduled
       end
-    end
-    
-    it "should convert a job to transcoder params correctly" do
-      Transcoder.job_to_json(@job).should == {
-        'source_file' => 'source',
-        'destination_file' => 'dest',
-        'encoder_options' => 'params',
-        'callback_urls' => ["callback_url"]
-      }.to_json
     end
   end
 

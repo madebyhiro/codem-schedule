@@ -15,7 +15,7 @@ class Transcoder
       {
         'source_file' => job.source_file,
         'destination_file' => job.destination_file,
-        'encoder_options' => job.preset.parameters,
+        'encoder_options' => job.preset_parameters,
         'callback_urls' => [ job.callback_url ]
       }.to_json
     end
