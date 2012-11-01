@@ -32,8 +32,12 @@ class Api::HostsController < Api::ApiController
   # the created host is returned. If the request could not be completed, a list of errors will be returned.
   #
   # === Parameters
+  # Required parameters:
   # <tt>name</tt>:: The name of the host
   # <tt>url</tt>::  The url of the host
+  # 
+  # Optional parameters:
+  # <tt>weight</tt>:: The weight of the host, used to determine optimal distrubtion of jobs
   #
   # === Response codes
   # <tt>success</tt>:: <tt>201 created</tt>

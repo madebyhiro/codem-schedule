@@ -7,7 +7,7 @@ describe Host do
 
   describe "creating via the api" do
     def create_host
-      Host.from_api('name' => 'name', 'url' => 'url')
+      Host.from_api('name' => 'name', 'url' => 'url', 'weight' => '3')
     end
     
     it "should map the parameters" do
@@ -15,6 +15,7 @@ describe Host do
       host = Host.last
       host.name.should == 'name'
       host.url.should == 'url'
+      host.weight.should == 3
     end
     
     it "should update the status" do

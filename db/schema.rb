@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121101133924) do
+ActiveRecord::Schema.define(:version => 20121101140251) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -26,14 +26,15 @@ ActiveRecord::Schema.define(:version => 20121101133924) do
   add_index "deliveries", ["state_change_id"], :name => "index_deliveries_on_state_change_id"
 
   create_table "hosts", :force => true do |t|
-    t.string   "name",                                 :null => false
-    t.string   "url",                                  :null => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.boolean  "available",         :default => false
-    t.integer  "total_slots",       :default => 0
-    t.integer  "available_slots",   :default => 0
+    t.string   "name",                                              :null => false
+    t.string   "url",                                               :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.boolean  "available",                      :default => false
+    t.integer  "total_slots",                    :default => 0
+    t.integer  "available_slots",                :default => 0
     t.datetime "status_updated_at"
+    t.integer  "weight",            :limit => 2
   end
 
   add_index "hosts", ["name"], :name => "index_hosts_on_name"

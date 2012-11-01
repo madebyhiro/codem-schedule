@@ -7,7 +7,7 @@ class Host < ActiveRecord::Base
 
   def self.from_api(opts)
     opts = opts[:host] if opts[:host] # Rails' forms wraps hashes in a root tag
-    host = new(:name => opts['name'], :url => opts['url'])
+    host = new(:name => opts['name'], :url => opts['url'], :weight => opts['weight'])
     if host.save
       host.update_status
     end
