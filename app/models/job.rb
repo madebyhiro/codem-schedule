@@ -46,6 +46,7 @@ class Job < ActiveRecord::Base
                 :destination_file => options['output'],
                 :preset => Preset.find_by_name(options['preset']),
                 :notifications => Notification.from_api(options[:notify]),
+                :additional_params => options['additional'],
                 :arguments => args)
 
       if job.save
@@ -108,5 +109,9 @@ class Job < ActiveRecord::Base
 
   def unlock!
     update_attributes :locked => false
+  end
+
+  def preset_parameters
+    [ preset.parameters, additional_params ].join(' ').strip
   end
 end

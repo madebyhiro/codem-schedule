@@ -13,7 +13,8 @@ describe Job do
             "input" => "input", 
             "output" => "output", 
             "preset" => @preset.name, 
-            "arguments" => "a=b,c=d"
+            "arguments" => "a=b,c=d",
+            "additional" => " -v 100k"
           }, 
           :callback_url => lambda { |job| "callback_#{job.id}" }
         )
@@ -25,6 +26,7 @@ describe Job do
         @job.preset.should == @preset
         @job.callback_url.should == "callback_#{@job.id}"
         @job.arguments.should == { :a => 'b', :c => 'd' }
+        @job.additional_params.should == ' -v 100k'
       end
       
       it "should be saved" do
@@ -164,6 +166,22 @@ describe Job do
       end
 
       @job.should_not be_locked
+    end
+  end
+
+  describe "preset parameters" do
+    before(:each) do
+      @preset = Preset.new(:parameters => 'foo=bar')
+      @job    = Job.new(:preset => @preset)
+    end
+
+    it "should work without additional params" do
+      @job.preset_parameters.should == 'foo=bar'
+    end
+
+    it "should work with additional params" do
+      @job.additional_params = 'abc=def'
+      @job.preset_parameters.should == 'foo=bar abc=def'
     end
   end
 end
