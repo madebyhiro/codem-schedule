@@ -26,9 +26,12 @@ class Api::PresetsController < Api::ApiController
   # the created preset is returned. If the request could not be completed, a list of errors will be returned.
   #
   # === Parameters
-  # All parameters are required
+  # Required parameters:
   # <tt>name</tt>:: Name of the preset
   # <tt>params</tt>:: Parameters to use
+  #
+  # Optional parameters:
+  # <tt>weight</tt>:: Weight of the preset, used to distribute workload evenly
   #
   # === Response codes
   # <tt>success</tt>:: <tt>201 created</tt>

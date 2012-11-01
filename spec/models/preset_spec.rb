@@ -8,4 +8,8 @@ describe Preset do
       preset.parameters.should == 'params'
     end
   end
+
+  it "a new preset should have a weight of nil" do
+    Preset.new.weight.should be_nil
+  end
 end
