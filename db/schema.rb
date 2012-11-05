@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121101140251) do
+ActiveRecord::Schema.define(:version => 20121105125954) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -58,10 +58,12 @@ ActiveRecord::Schema.define(:version => 20121101140251) do
     t.text     "arguments"
     t.boolean  "locked",                                  :default => false
     t.string   "additional_params"
+    t.integer  "priority",                                :default => 0
   end
 
   add_index "jobs", ["completed_at"], :name => "index_jobs_on_completed_at"
   add_index "jobs", ["created_at"], :name => "index_jobs_on_created_at"
+  add_index "jobs", ["priority"], :name => "index_jobs_on_priority"
   add_index "jobs", ["source_file"], :name => "index_jobs_on_source_file"
   add_index "jobs", ["state"], :name => "index_jobs_on_state"
   add_index "jobs", ["transcoding_started_at"], :name => "index_jobs_on_transcoding_started_at"
