@@ -61,7 +61,7 @@ class Api::JobsController < Api::ApiController
   # <tt>output</tt>:: Output file to write to.
   # <tt>preset</tt>:: Preset name to use.
   # <tt>notify</tt>:: A list of email addresses and urls separated by commas.
-  # <tt>additional</tt>:: Additional parameters to override params.
+  # <tt>additional</tt>:: Additional parameters to override preset params.
   # <tt>priority</tt>:: Priority of a job, higher number equals higher priority.
   #
   # If a job enters the completed or failed state, a notification will be sent to the emails and urls specified in the 
