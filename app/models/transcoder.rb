@@ -40,7 +40,6 @@ class Transcoder
     
     private
       def call_transcoder(method, url, *attrs)
-        Rails.logger.debug attrs.first.inspect
         begin
           opts = attrs.extract_options!
           opts.merge!({ :method => method, :url => url })
