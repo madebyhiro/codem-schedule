@@ -21,11 +21,11 @@ class Schedule
     end
 
     def to_be_scheduled_jobs
-      Job.scheduled.unlocked.order("created_at ASC").limit(get_available_slots)
+      Job.scheduled.unlocked.order("priority DESC, created_at ASC").limit(get_available_slots)
     end
     
     def to_be_updated_jobs
-      Job.unfinished.unlocked.order('created_at')
+      Job.unfinished.unlocked.order('priority DESC, created_at')
     end
   
     def update_progress(job, attrs=false)

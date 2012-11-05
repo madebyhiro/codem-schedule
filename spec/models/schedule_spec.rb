@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-
 describe Schedule do
   before(:each) do
     Job.destroy_all
@@ -203,5 +202,17 @@ describe Schedule do
       Host.stub!(:all).and_return [host]
       slots.should == 10
     end
+  end
+
+  it "should schedule the jobs with priority first" do
+    Job.destroy_all
+
+    @no_prio_1 = FactoryGirl.create(:job)
+    @no_prio_2 = FactoryGirl.create(:job)
+    @prio      = FactoryGirl.create(:job, :priority => 10)
+
+    Schedule.stub!(:get_available_slots).and_return 10
+
+    Schedule.to_be_scheduled_jobs.should == [ @prio, @no_prio_1, @no_prio_2 ]
   end
 end
