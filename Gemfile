@@ -8,6 +8,7 @@ gem 'rest-client'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'chronic'
+gem 'twitter-bootstrap-rails'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -19,7 +20,6 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
-  gem 'twitter-bootstrap-rails'
 end
 
 group :test do
