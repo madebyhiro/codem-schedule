@@ -14,7 +14,9 @@ describe Job do
             "output" => "output", 
             "preset" => @preset.name, 
             "arguments" => "a=b,c=d",
-            "additional" => " -v 100k"
+            "additional" => " -v 100k",
+            "notify" => "foo",
+            "priority" => "5"
           }, 
           :callback_url => lambda { |job| "callback_#{job.id}" }
         )
@@ -27,6 +29,8 @@ describe Job do
         @job.callback_url.should == "callback_#{@job.id}"
         @job.arguments.should == { :a => 'b', :c => 'd' }
         @job.additional_params.should == ' -v 100k'
+        @job.priority.should == 5
+        @job.notifications.first.value.should == 'foo'
       end
       
       it "should be saved" do
@@ -183,5 +187,9 @@ describe Job do
       @job.additional_params = 'abc=def'
       @job.preset_parameters.should == 'foo=bar abc=def'
     end
+  end
+
+  it "should have a priority of 0 when new" do
+    Job.new.priority.should == 0
   end
 end

@@ -45,9 +45,10 @@ class Job < ActiveRecord::Base
       job = new(:source_file => options['input'],
                 :destination_file => options['output'],
                 :preset => Preset.find_by_name(options['preset']),
-                :notifications => Notification.from_api(options[:notify]),
+                :notifications => Notification.from_api(options['notify']),
                 :additional_params => options['additional'],
-                :arguments => args)
+                :arguments => args,
+                :priority => options['priority'])
 
       if job.save
         job.update_attributes :callback_url => opts[:callback_url].call(job)
