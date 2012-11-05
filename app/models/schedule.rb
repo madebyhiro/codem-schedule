@@ -1,3 +1,5 @@
+require File.join(Rails.root, 'lib', 'retryable')
+
 class Schedule
   class << self
     def run!
@@ -51,6 +53,10 @@ class Schedule
     def schedule_strategy
       ScheduleStrategies::Simple
     end
+    
+    def retry_attempts
+      3
+    end
 
     private
     def update_job(job)
@@ -70,10 +76,12 @@ class Schedule
     def schedule_job(job)
       strategy = schedule_strategy.new(job)
 
-      strategy.hosts.each do |host|
-        if attrs = Transcoder.schedule(:host => host, :job => job)
-          job.enter(Job::Accepted, attrs)
-          break
+      Retryable.attempt(tries: retry_attempts) do
+        strategy.hosts.each do |host|
+          if attrs = Transcoder.schedule(:host => host, :job => job)
+            job.enter(Job::Accepted, attrs)
+            break
+          end
         end
       end
 
