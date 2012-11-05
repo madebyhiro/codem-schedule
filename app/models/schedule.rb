@@ -1,6 +1,8 @@
 require File.join(Rails.root, 'lib', 'retryable')
 
 class Schedule
+  class RetrySchedulingError < StandardError ; end
+
   class << self
     def run!
       count = 0
@@ -76,15 +78,18 @@ class Schedule
     def schedule_job(job)
       strategy = schedule_strategy.new(job)
 
-      Retryable.attempt(tries: retry_attempts) do
-        strategy.hosts.each do |host|
-          if attrs = Transcoder.schedule(:host => host, :job => job)
-            job.enter(Job::Accepted, attrs)
-            break
+      begin
+        Retryable.attempt(tries: retry_attempts) do                         # Retry this block `retry_attempts' times
+          strategy.hosts.each do |host|                                           # for each host in the current scheduling strategy,
+            if attrs = Transcoder.schedule(:host => host, :job => job)                # try to schedule the host, and if the job was scheduled
+              job.enter(Job::Accepted, attrs)                                             # enter accepted state,
+              break                                                                       # and break
+            end
           end
+          raise RetrySchedulingError                                              # or raise a RetryScheduling error to retry
         end
+      rescue RetrySchedulingError => e                                      # rescue after `retry_attempts' retries to continue normal flow
       end
-
     end
   end
 end
