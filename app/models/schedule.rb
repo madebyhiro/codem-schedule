@@ -76,7 +76,7 @@ class Schedule
     end
 
     def schedule_job(job)
-      strategy = schedule_strategy.new(job)
+      strategy = schedule_strategy.new
 
       begin
         Retryable.attempt(tries: retry_attempts) do                         # Retry this block `retry_attempts' times
