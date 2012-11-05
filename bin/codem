@@ -9,7 +9,7 @@ def command?(command)
 end
 
 class CodemCommand
-  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent, :status, :additional
+  attr_reader :host, :input, :output, :preset, :notify, :verbose, :silent, :status, :additional, :priority
   def initialize
     options = {}
 
@@ -61,6 +61,10 @@ class CodemCommand
         options[:additional] = d
       end
 
+      opts.on('-r', '--priority N', "Specify a priority for this job; higher number equals higher priority") do |prio|
+        options[:priority] = prio
+      end
+
       opts.on_tail('-h', '--help', 'Display this screen') do
         puts opts
         exit
@@ -80,6 +84,7 @@ class CodemCommand
     @status     = options[:status]
     @additional = options[:additional]
     @args       = options[:arguments]
+    @prio       = options[:priority]
     
     unless @input && @output && @preset
       puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
@@ -88,7 +93,7 @@ class CodemCommand
   end
   
   def args
-    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}&additional=#{@additional}'"
+    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}&additional=#{@additional}&priority=#{@prio}'"
   end
   
   def run
