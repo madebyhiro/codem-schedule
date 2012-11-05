@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ScheduleStrategies::Simple do
   def strategy
-    ScheduleStrategies::Simple.new('job')
+    ScheduleStrategies::Simple.new
   end
 
   it "should return the correct hosts" do

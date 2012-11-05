@@ -1,5 +1,5 @@
 module ScheduleStrategies
-  class Simple < Base
+  class Simple
     def hosts
       Host.with_available_slots
     end

@@ -53,7 +53,7 @@ class Schedule
     end
 
     def schedule_strategy
-      ScheduleStrategies::Simple
+      ScheduleStrategies::Weighted
     end
     
     def retry_attempts
