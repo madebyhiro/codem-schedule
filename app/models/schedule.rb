@@ -83,7 +83,7 @@ class Schedule
           strategy.hosts.each do |host|                                           # for each host in the current scheduling strategy,
             if attrs = Transcoder.schedule(:host => host, :job => job)                # try to schedule the host, and if the job was scheduled
               job.enter(Job::Accepted, attrs)                                             # enter accepted state,
-              break                                                                       # and break
+              return                                                                      # and break
             end
           end
           raise RetrySchedulingError                                              # or raise a RetryScheduling error to retry

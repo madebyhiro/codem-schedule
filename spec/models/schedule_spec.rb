@@ -37,6 +37,18 @@ describe Schedule do
       Transcoder.should_receive(:schedule).with(:host => @host, :job => @job)
       update
     end
+
+    it "should schedule the job only once when succesfull" do
+      Transcoder.should_receive(:schedule).once
+      update
+    end
+
+    it "should schedule the job `retry_attemps' times when failed" do
+      Schedule.stub!(:retry_attempts).and_return 2
+      Transcoder.stub!(:schedule).and_raise Schedule::RetrySchedulingError.new
+      Transcoder.should_receive(:schedule).exactly(3).times
+      update
+    end
     
     it "should enter accepted" do
       update
