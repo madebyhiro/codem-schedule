@@ -2,7 +2,6 @@ module Jobs
   module States
     def self.included(base)
       base.class_eval do
-        include ActiveModel::Dirty
         after_initialize :set_initial_state
       end
     end

@@ -6,7 +6,6 @@ describe JobsController do
       @job = double(Job)
       Job.stub(:recents).and_return [@job]
       History.stub!(:new).and_return 'history'
-      Schedule.stub!(:update_progress)
     end
     
     def do_get
@@ -28,11 +27,6 @@ describe JobsController do
       do_get
     end
     
-    it "should update the jobs status" do
-      Schedule.should_receive(:update_progress).with(@job)
-      do_get
-    end
-    
     it "should assign the recent jobs for the view" do
       do_get
       assigns[:jobs].should == [@job]
@@ -43,7 +37,6 @@ describe JobsController do
     before(:each) do
       @job = double(Job)
       Job.stub!(:find).and_return @job
-      Schedule.stub!(:update_progress)
     end
     
     def do_get
@@ -52,11 +45,6 @@ describe JobsController do
     
     it "should find the jobs" do
       Job.should_receive(:find).with('1', :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
-      do_get
-    end
-    
-    it "should update the jobs progress" do
-      Schedule.should_receive(:update_progress).with(@job)
       do_get
     end
     
