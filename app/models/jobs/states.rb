@@ -11,25 +11,18 @@ module Jobs
       Job::Scheduled
     end
     
-    def enter(state, params={})
-      self.state = state
+    def enter(new_state, params={})
+      old_state  = self.state
+      self.state = new_state
 
-      if state_changed?
-        add_state_change(:state => state, :message => params['message'])
+      if new_state != old_state
+        self.state_changes.create(:state => new_state, :message => params['message'])
       end
       
-      self.send("enter_#{state}", params)
+      self.send("enter_#{new_state}", params)
       save
 
       self
-    end
-    
-    def add_state_change(attrs)
-      transaction do
-        unless self.state_changes.find_by_state_and_created_at(attrs[:state], Time.now)
-          self.state_changes.create(attrs)
-        end
-      end
     end
     
     protected
