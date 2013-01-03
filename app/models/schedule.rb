@@ -49,27 +49,27 @@ class Schedule
     end
 
     private
-    def update_job(job)
-      if attrs = Transcoder.job_status(job)
-        if attrs['status'] == Job::Processing && job.state == Job::Processing
-          update_progress(job, attrs)
+      def update_job(job)
+        if attrs = Transcoder.job_status(job)
+          if attrs['status'] == Job::Processing
+            update_progress(job, attrs)
+          elsif job.state != attrs['status']
+            job.enter(attrs['status'], attrs)
+          end
         else
-          job.enter(attrs['status'], attrs)
+          job.enter(Job::OnHold)
         end
-      else
-        job.enter(Job::OnHold)
+
+        job
       end
 
-      job
-    end
-
-    def schedule_job(job)
-      for host in Host.with_available_slots
-        if attrs = Transcoder.schedule(:host => host, :job => job)
-          job.enter(Job::Accepted, attrs)
-          break
+      def schedule_job(job)
+        for host in Host.with_available_slots
+          if attrs = Transcoder.schedule(:host => host, :job => job)
+            job.enter(Job::Accepted, attrs)
+            break
+          end
         end
       end
-    end
   end
 end
