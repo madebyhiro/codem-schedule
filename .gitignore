@@ -7,3 +7,4 @@ doc
 .yardoc/
 public/assets
 Gemfile.lock
+.rvmrc
