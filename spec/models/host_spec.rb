@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Host do
   before(:each) do
-    Transcoder.stub!(:host_status).and_return {}
+    Transcoder.stub(:host_status).and_return {}
   end
 
   describe "creating via the api" do
@@ -18,8 +18,8 @@ describe Host do
     end
     
     it "should update the status" do
-      host = mock("Host", :save => true)
-      Host.stub!(:new).and_return host
+      host = double("Host", :save => true)
+      Host.stub(:new).and_return host
       host.should_receive(:update_status)
       create_host
     end
@@ -70,7 +70,7 @@ describe Host do
     
     describe "up" do
       before(:each) do
-        Transcoder.stub!(:host_status).and_return({'max_slots' => 2, 'free_slots' => 1})
+        Transcoder.stub(:host_status).and_return({'max_slots' => 2, 'free_slots' => 1})
       end
       
       it "should be available" do
@@ -95,7 +95,7 @@ describe Host do
     
     describe "down" do
       before(:each) do
-        Transcoder.stub!(:host_status).and_return false
+        Transcoder.stub(:host_status).and_return false
       end
       
       it "should not be available" do

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe History do
   before(:each) do
     @now = Time.new(2011, 01, 02)
-    Time.stub!(:current).and_return @now
+    Time.stub(:current).and_return @now
     @history = History.new
   end
   
@@ -16,7 +16,7 @@ describe History do
   end
   
   it "should return the correct jobs" do
-    @history.stub!(:between).and_return 'between'
+    @history.stub(:between).and_return 'between'
     Job.should_receive(:where).with(:created_at => 'between')
     @history.jobs
   end
@@ -43,8 +43,8 @@ describe History do
   
   describe "scopes" do
     before(:each) do
-      @jobs = mock("Scope of jobs")
-      @history.stub!(:jobs).and_return @jobs
+      @jobs = double("Scope of jobs")
+      @history.stub(:jobs).and_return @jobs
     end
     
     it "should return the completed jobs" do
@@ -53,7 +53,7 @@ describe History do
     end
     
     it "should return the number of completed jobs" do
-      @history.stub!(:completed_jobs).and_return [1,2,3]
+      @history.stub(:completed_jobs).and_return [1,2,3]
       @history.number_of_completed_jobs.should == 3
     end
     
@@ -63,7 +63,7 @@ describe History do
     end
     
     it "should return the number of failed jobs" do
-      @history.stub!(:failed_jobs).and_return [1,2]
+      @history.stub(:failed_jobs).and_return [1,2]
       @history.number_of_failed_jobs.should == 2
     end
 
@@ -73,41 +73,41 @@ describe History do
     end
     
     it "should return the number of processing jobs" do
-      @history.stub!(:processing_jobs).and_return [1]
+      @history.stub(:processing_jobs).and_return [1]
       @history.number_of_processing_jobs.should == 1
     end
   end
   
   it "should return the correct number of seconds encoded" do
-    @history.stub!(:completed_jobs).and_return [double(Job, :duration => 10), double(Job, :duration => 2)]
+    @history.stub(:completed_jobs).and_return [double(Job, :duration => 10), double(Job, :duration => 2)]
     @history.seconds_encoded.should == 12
     
-    @history.stub!(:completed_jobs).and_return []
+    @history.stub(:completed_jobs).and_return []
     @history.seconds_encoded.should == 0
   end
   
   it "should return the correct average processing time" do
-    @history.stub!(:completed_jobs).and_return [double(Job, :completed_at => 20, :transcoding_started_at => 10), 
+    @history.stub(:completed_jobs).and_return [double(Job, :completed_at => 20, :transcoding_started_at => 10), 
                                                 double(Job, :completed_at => 10, :transcoding_started_at => 5)]
     @history.average_processing_time.should == 7
     
-    @history.stub!(:completed_jobs).and_return []
+    @history.stub(:completed_jobs).and_return []
     @history.average_processing_time.should == 0
   end
 
   it "should return the correct average queue time" do
-    @history.stub!(:completed_jobs).and_return [double(Job, :created_at => 10, :transcoding_started_at => 20), 
+    @history.stub(:completed_jobs).and_return [double(Job, :created_at => 10, :transcoding_started_at => 20), 
                                                 double(Job, :created_at => 10, :transcoding_started_at => 30)]
     @history.average_queue_time.should == 15
     
-    @history.stub!(:completed_jobs).and_return []
+    @history.stub(:completed_jobs).and_return []
     @history.average_queue_time.should == 0
   end
   
   describe "serialization" do
     before(:each) do
       @history = History.new
-      @history.stub!(
+      @history.stub(
         :number_of_processing_jobs => 'p',
         :number_of_failed_jobs => 'f',
         :number_of_completed_jobs => 'c',

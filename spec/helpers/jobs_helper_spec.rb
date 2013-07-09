@@ -32,7 +32,7 @@ describe JobsHelper do
     end
     
     it "should handle missing files correctly" do
-      File.stub!(:size).and_raise Errno::ENOENT
+      File.stub(:size).and_raise Errno::ENOENT
       filesize.should == 'unknown (file gone)'
     end
   end
@@ -53,14 +53,14 @@ describe JobsHelper do
     end
     
     it "should handle not sent notifications" do
-      @not.stub!(:notified_at).and_return nil
+      @not.stub(:notified_at).and_return nil
       notify.should == nil
     end
   end
   
   it "should return the correct compression rate" do
-    stub!(:destination_filesize).and_return 1_000
-    job = double(Job, :filesize => 2_000)
+    File.stub(:size).with('/foo').and_return 1_000
+    job = double(Job, :filesize => 2_000, destination_file: '/foo')
     compression_rate(job).should == '50.00'
   end
   

@@ -6,9 +6,9 @@ describe Schedule do
     Job.destroy_all
     @job = FactoryGirl.create(:job)
 
-    Host.stub!(:all).and_return []
+    Host.stub(:all).and_return []
 
-    Transcoder.stub!(:job_status).and_return {}
+    Transcoder.stub(:job_status).and_return {}
   end
 
   def update
@@ -17,13 +17,13 @@ describe Schedule do
   
   describe "entering scheduled state" do
     before(:each) do
-      Schedule.stub!(:get_available_slots).and_return 10
+      Schedule.stub(:get_available_slots).and_return 10
 
-      Schedule.stub!(:to_be_updated_jobs).and_return []
+      Schedule.stub(:to_be_updated_jobs).and_return []
 
       @host = FactoryGirl.create(:host)
-      Host.stub!(:with_available_slots).and_return [@host]
-      Transcoder.stub!(:schedule).and_return 'attrs'
+      Host.stub(:with_available_slots).and_return [@host]
+      Transcoder.stub(:schedule).and_return 'attrs'
     end
     
     it "should try to schedule the job at the host" do
@@ -42,7 +42,7 @@ describe Schedule do
     end
     
     it "should stay scheduled if the job cannot be scheduled" do
-      Transcoder.stub!(:schedule).and_return false
+      Transcoder.stub(:schedule).and_return false
       update
       @job.state.should == Job::Scheduled
     end
@@ -50,11 +50,11 @@ describe Schedule do
 
   describe "entering on hold state" do
     before(:each) do
-      Schedule.stub!(:get_available_slots).and_return 10
+      Schedule.stub(:get_available_slots).and_return 10
 
       @host = double(Host, :available? => true, :update_status => true)
-      @job.stub!(:host).and_return @host
-      @job.stub!(:state).and_return Job::OnHold
+      @job.stub(:host).and_return @host
+      @job.stub(:state).and_return Job::OnHold
     end
   
     it "should try to schedule the job" do
@@ -65,8 +65,8 @@ describe Schedule do
 
   describe "updating a jobs status" do
     before(:each) do
-      Schedule.stub!(:get_available_slots).and_return 10
-      Transcoder.stub!(:job_status).and_return({ 'status' => 'accepted', 'bar' => 'baz' })
+      Schedule.stub(:get_available_slots).and_return 10
+      Transcoder.stub(:job_status).and_return({ 'status' => 'accepted', 'bar' => 'baz' })
     end
 
     it "should return the number of updated jobs" do
@@ -115,7 +115,7 @@ describe Schedule do
     
     describe "finished" do
       before(:each) do
-        @job.stub!(:finished?).and_return true
+        @job.stub(:finished?).and_return true
       end
       
       it "should not get the status" do
@@ -143,8 +143,8 @@ describe Schedule do
     describe "when the job is processing" do
       before(:each) do
         @job.update_attributes(:state => Job::Processing)
-        @job.stub!(:enter_status)
-        Transcoder.stub!(:job_status).and_return({'status' => 'status', 'foo' => 'bar'})
+        @job.stub(:enter_status)
+        Transcoder.stub(:job_status).and_return({'status' => 'status', 'foo' => 'bar'})
       end
       
       it "should request the status" do
@@ -174,13 +174,13 @@ describe Schedule do
     end
 
     it "should return 0 when no hosts are added" do
-      Host.stub!(:all).and_return []
+      Host.stub(:all).and_return []
       slots.should == 0
     end
 
     it "should sum the available slots of all hosts" do
       host = double(Host, :update_status => true, :available_slots => 10)
-      Host.stub!(:all).and_return [host]
+      Host.stub(:all).and_return [host]
       slots.should == 10
     end
   end

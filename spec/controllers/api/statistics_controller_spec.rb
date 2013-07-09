@@ -4,7 +4,7 @@ describe Api::StatisticsController do
   describe "GET 'show'" do
     before(:each) do
       @history = double(History)
-      History.stub!(:new).and_return @history
+      History.stub(:new).and_return @history
     end
     
     def do_get

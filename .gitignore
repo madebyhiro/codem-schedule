@@ -8,3 +8,4 @@ doc
 public/assets
 Gemfile.lock
 .rvmrc
+*.swp

@@ -60,7 +60,7 @@ describe Api::JobsController do
   describe "GET 'show'" do
     before(:each) do
       create_job
-      Job.stub!(:find).and_return @job
+      Job.stub(:find).and_return @job
     end
     
     def do_get(format=:json)
@@ -82,8 +82,8 @@ describe Api::JobsController do
   describe "PUT 'update'" do
     before(:each) do
       create_job
-      @job.stub!(:enter)
-      Job.stub!(:find).and_return @job
+      @job.stub(:enter)
+      Job.stub(:find).and_return @job
     end
     
     def do_put
@@ -274,7 +274,7 @@ describe Api::JobsController do
   describe "POST 'retry'" do
     before(:each) do
       @job = double(Job, :enter => true)
-      Job.stub!(:find).and_return @job
+      Job.stub(:find).and_return @job
     end
     
     def do_post

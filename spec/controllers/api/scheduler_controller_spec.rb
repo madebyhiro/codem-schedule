@@ -4,7 +4,7 @@ describe Api::SchedulerController do
   describe "GET 'schedule'" do
     before(:each) do
       @job = FactoryGirl.create(:job)
-      Schedule.stub!(:run!).and_return [@job]
+      Schedule.stub(:run!).and_return [@job]
     end
     
     def do_get

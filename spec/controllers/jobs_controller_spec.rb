@@ -5,7 +5,7 @@ describe JobsController do
     before(:each) do
       @job = double(Job)
       Job.stub(:recents).and_return [@job]
-      History.stub!(:new).and_return 'history'
+      History.stub(:new).and_return 'history'
     end
     
     def do_get
@@ -36,7 +36,7 @@ describe JobsController do
   describe "GET 'show'" do
     before(:each) do
       @job = double(Job)
-      Job.stub!(:find).and_return @job
+      Job.stub(:find).and_return @job
     end
     
     def do_get
@@ -57,7 +57,7 @@ describe JobsController do
   describe "GET 'new'" do
     before(:each) do
       @job = double(Job)
-      Job.stub!(:new).and_return @job
+      Job.stub(:new).and_return @job
     end
 
     def do_get

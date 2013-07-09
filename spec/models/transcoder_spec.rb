@@ -7,7 +7,7 @@ describe Transcoder do
       @job    = FactoryGirl.create(:job, :preset_id => @preset.id)
       @host   = FactoryGirl.create(:host)
 
-      Transcoder.stub!(:post)
+      Transcoder.stub(:post)
     end
 
     def do_schedule
@@ -16,7 +16,7 @@ describe Transcoder do
 
     describe "success" do
       before(:each) do
-        Transcoder.stub!(:post).and_return({'foo' => 'bar'})
+        Transcoder.stub(:post).and_return({'foo' => 'bar'})
       end
       
       it "should return the correct attributes" do
@@ -26,7 +26,7 @@ describe Transcoder do
 
     describe "failed" do
       before(:each) do
-        Transcoder.stub!(:post).and_return false
+        Transcoder.stub(:post).and_return false
       end
 
       it "should remain in scheduled state" do
@@ -48,7 +48,7 @@ describe Transcoder do
   describe "getting a host's status" do
     before(:each) do
       @host = FactoryGirl.create(:host)
-      Transcoder.stub!(:call_transcoder).and_return true
+      Transcoder.stub(:call_transcoder).and_return true
     end
     
     def do_get
@@ -65,7 +65,7 @@ describe Transcoder do
     before(:each) do
       @host = FactoryGirl.create(:host)
       @job  = FactoryGirl.create(:job, :host_id => @host.id)
-      Transcoder.stub!(:call_transcoder).and_return true
+      Transcoder.stub(:call_transcoder).and_return true
     end
     
     def do_get
@@ -80,7 +80,7 @@ describe Transcoder do
 
   describe "POSTing to the transcoders" do
     before(:each) do
-      RestClient.stub!(:post).and_return '{"foo":"bar"}'
+      RestClient.stub(:post).and_return '{"foo":"bar"}'
     end
     
     def do_post
@@ -94,7 +94,7 @@ describe Transcoder do
     
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub!(:post).and_raise ex
+        RestClient.stub(:post).and_raise ex
         do_post.should == false
       end
     end
@@ -102,7 +102,7 @@ describe Transcoder do
   
   describe "GETting from the transcoders" do
     before(:each) do
-      RestClient.stub!(:get).and_return '{"foo":"bar"}'
+      RestClient.stub(:get).and_return '{"foo":"bar"}'
     end
     
     def do_get
@@ -116,7 +116,7 @@ describe Transcoder do
 
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub!(:get).and_raise ex
+        RestClient.stub(:get).and_raise ex
         do_get.should == false
       end
     end

@@ -4,7 +4,7 @@ describe HostsController do
   describe "GET 'index'" do
     before(:each) do
       @host = double(Host, :update_status => true)
-      Host.stub!(:all).and_return [@host]
+      Host.stub(:all).and_return [@host]
     end
     
     def do_get
@@ -30,7 +30,7 @@ describe HostsController do
   describe "GET 'new'" do
     before(:each) do
       @host = double(Host)
-      Host.stub!(:new).and_return @host
+      Host.stub(:new).and_return @host
     end
 
     def do_get
@@ -51,7 +51,7 @@ describe HostsController do
   describe "GET 'edit'" do
     before(:each) do
       @host = double(Host)
-      Host.stub!(:find).and_return @host
+      Host.stub(:find).and_return @host
     end
     
     def do_get

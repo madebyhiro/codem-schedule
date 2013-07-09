@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Jobs::States do
   before(:each) do
     @job = FactoryGirl.create(:job)
-    @job.stub!(:notify_responders)
+    @job.stub(:notify_responders)
   end
 
   it "should set the initial state to scheduled" do
@@ -13,7 +13,7 @@ describe Jobs::States do
   
   describe "entering a state" do
     def do_enter
-      @job.stub!(:enter_void)
+      @job.stub(:enter_void)
       @job.enter(:void, :foo => 'bar')
     end
     
@@ -40,7 +40,7 @@ describe Jobs::States do
   describe "entering accepted state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
-      Time.stub!(:current).and_return @t
+      Time.stub(:current).and_return @t
     end
     
     def do_enter
@@ -126,7 +126,7 @@ describe Jobs::States do
   describe "entering success state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
-      Time.stub!(:current).and_return @t
+      Time.stub(:current).and_return @t
     end
     
     def do_enter

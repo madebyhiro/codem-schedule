@@ -3,14 +3,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe DashboardController do
   describe "GET 'show'" do
     before(:each) do
-      @jobs = mock("Array of jobs")
+      @jobs = double("Array of jobs")
       
       Job.stub_chain(:recents, :limit).and_return @jobs
-      @jobs.stub!(:scheduled).and_return 'scheduled'
-      @jobs.stub!(:processing).and_return [@job]
-      @jobs.stub!(:failed).and_return 'failed'
+      @jobs.stub(:scheduled).and_return 'scheduled'
+      @jobs.stub(:processing).and_return [@job]
+      @jobs.stub(:failed).and_return 'failed'
       
-      History.stub!(:new).and_return 'history'
+      History.stub(:new).and_return 'history'
     end
     
     def do_get

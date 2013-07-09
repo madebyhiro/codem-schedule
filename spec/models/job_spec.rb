@@ -112,8 +112,8 @@ describe Job do
   describe "searching" do
     before(:each) do
       @scope = Job.scoped
-      @scope.stub!(:where).and_return @scope
-      Job.stub!(:scoped).and_return @scope
+      @scope.stub(:where).and_return @scope
+      Job.stub(:scoped).and_return @scope
     end
 
     def search(str)

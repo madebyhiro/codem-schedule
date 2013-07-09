@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PresetsController do
   describe "GET 'index'" do
     before(:each) do
-      Preset.stub!(:all).and_return 'presets'
+      Preset.stub(:all).and_return 'presets'
     end
     
     def do_get
@@ -24,7 +24,7 @@ describe PresetsController do
   describe "GET 'new'" do
     before(:each) do
       @preset = mock_model(Preset)
-      Preset.stub!(:new).and_return @preset
+      Preset.stub(:new).and_return @preset
     end
     
     def do_get
@@ -50,7 +50,7 @@ describe PresetsController do
   describe "GET 'edit'" do
     before(:each) do
       @preset = mock_model(Preset)
-      Preset.stub!(:find).and_return @preset
+      Preset.stub(:find).and_return @preset
     end
     
     def do_get

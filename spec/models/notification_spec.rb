@@ -41,10 +41,10 @@ describe Notification do
   describe "when notifying" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
-      Time.stub!(:now).and_return @t
+      Time.stub(:now).and_return @t
       @job = FactoryGirl.create(:job, :state_changes => [StateChange.new(:state => Job::Scheduled)])
       @not = Notification.create!(:job => @job)
-      @not.stub!(:do_notify!)
+      @not.stub(:do_notify!)
     end
     
     def do_notify
@@ -67,7 +67,7 @@ describe Notification do
     
     describe "success" do
       before(:each) do
-        @not.stub!(:do_notify!).and_return true
+        @not.stub(:do_notify!).and_return true
       end
       
       it "should update the status of the delivery to success" do
@@ -78,7 +78,7 @@ describe Notification do
     
     describe "failed" do
       before(:each) do
-        @not.stub!(:do_notify!).and_raise "Foo"
+        @not.stub(:do_notify!).and_raise "Foo"
       end
 
       it "should update the status of the delivery to failed" do
