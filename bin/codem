@@ -34,6 +34,10 @@ class CodemCommand
         options[:preset] = p
       end
 
+      opts.on('-r', '--priority [NAME]', "Priority, as integer from 1 (highest) to 999 (lowest)") do |r|
+        options[:priority] = r
+      end
+
       opts.on('-n', '--notify [LIST]', "List of emails and/or urls separated by comma's to notify when the job is completed") do |n|
         options[:notify] = n
       end
@@ -65,16 +69,17 @@ class CodemCommand
 
     optparse.parse!
     
-    @input   = options[:input]
-    @output  = options[:output]
-    @preset  = options[:preset]
-    @host    = options[:host]
-    @verbose = options[:verbose]
-    @silent  = options[:silent]
-    @host    = options[:host]
-    @notify  = options[:notify]
-    @status  = options[:status]
-    @args    = options[:arguments]
+    @input     = options[:input]
+    @output    = options[:output]
+    @preset    = options[:preset]
+    @priority  = options[:priority]
+    @host      = options[:host]
+    @verbose   = options[:verbose]
+    @silent    = options[:silent]
+    @host      = options[:host]
+    @notify    = options[:notify]
+    @status    = options[:status]
+    @args      = options[:arguments]
     
     unless @input && @output && @preset
       puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
@@ -83,7 +88,7 @@ class CodemCommand
   end
   
   def args
-    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}'"
+    "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}&priority=#{@priority}'"
   end
   
   def run
