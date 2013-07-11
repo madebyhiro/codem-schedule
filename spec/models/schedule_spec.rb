@@ -15,6 +15,16 @@ describe Schedule do
     Schedule.run!
   end
   
+  describe "jobs to be scheduled" do
+    it "should find jobs by descending priority and ascending creation date" do
+      Schedule.stub!(:get_available_slots).and_return 5
+      jobs = double("Jobs", :limit => 'jobs')
+      Job.stub_chain(:scheduled, :unlocked).and_return jobs
+      jobs.should_receive(:order).with("priority DESC, created_at ASC").and_return jobs
+      Schedule.to_be_scheduled_jobs.should == 'jobs'
+    end
+  end
+
   describe "entering scheduled state" do
     before(:each) do
       Schedule.stub(:get_available_slots).and_return 10
