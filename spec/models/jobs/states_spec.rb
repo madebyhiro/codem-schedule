@@ -10,6 +10,13 @@ describe Jobs::States do
     Job.new.state.should == Job::Scheduled
     Job.new.initial_state.should == Job::Scheduled
   end
+
+  it "should save the initial state to the db" do
+    job = FactoryGirl.create(:job)
+    job.enter(Job::Scheduled)
+    job.state_changes.size.should == 1
+    job.state_changes.last.state.should == job.initial_state
+  end
   
   describe "entering a state" do
     def do_enter
@@ -32,7 +39,8 @@ describe Jobs::States do
       @job.enter(Job::Scheduled, {})
     end
 
-    it "should generate 0 state changes" do # job is already in Scheduled state
+    it "should generate 0 state changes if a state is present" do # job is already in Scheduled state
+      do_enter
       lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(0)
     end
   end

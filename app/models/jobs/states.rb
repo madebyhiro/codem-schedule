@@ -14,7 +14,7 @@ module Jobs
       old_state  = self.state
       self.state = new_state
 
-      if new_state != old_state
+      if new_state != old_state || state_changes.empty?
         self.state_changes.create(:state => new_state, :message => params['message'])
       end
       
