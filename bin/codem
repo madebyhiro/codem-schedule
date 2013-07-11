@@ -34,7 +34,7 @@ class CodemCommand
         options[:preset] = p
       end
 
-      opts.on('-r', '--priority [NAME]', "Priority, as integer from 1 (highest) to 999 (lowest)") do |r|
+      opts.on('-r', '--priority [INT]', "Priority, as integer from 1 (highest) to 999 (lowest)") do |r|
         options[:priority] = r
       end
 
