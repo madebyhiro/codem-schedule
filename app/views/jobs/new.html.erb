@@ -29,6 +29,13 @@
     </div>
 
     <div class="control-group">
+      <%= label_tag :priority, nil, class: 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :priority, @job.try(:priority), class: 'input-xlarge' %>
+      </div>
+    </div>
+
+    <div class="control-group">
       <%= label_tag :notify, nil, class: 'control-label' %>
       <div class="controls">
         <%= text_area_tag :notify, nil, rows: 3, class: 'input-xlarge' %>
