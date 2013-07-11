@@ -98,11 +98,12 @@ class Api::PresetsController < Api::ApiController
     if params[:preset]
       params[:name] = params[:preset][:name]
       params[:parameters] = params[:preset][:parameters]
+      params[:thumbnail_options] = params[:preset][:thumbnail_options]
     end
 
     preset = Preset.find(params[:id])
 
-    if preset.update_attributes(:name => params[:name], :parameters => params[:parameters])
+    if preset.update_attributes(:name => params[:name], :parameters => params[:parameters], :thumbnail_options => params[:thumbnail_options])
       respond_with preset, :location => api_preset_url(preset) do |format|
         format.html { redirect_to presets_path }
       end
