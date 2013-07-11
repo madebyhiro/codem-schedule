@@ -60,6 +60,7 @@ class Api::JobsController < Api::ApiController
   # <tt>input</tt>:: Input file to process
   # <tt>output</tt>:: Output file to write to
   # <tt>preset</tt>:: Preset name to use
+  # <tt>priority</tt>:: Priority as integer (default nil, maximum 999)
   # <tt>notify</tt>:: A list of email addresses and urls separated by commas.
   #
   # If a job enters the completed or failed state, a notification will be sent to the emails and urls specified in the 
@@ -84,6 +85,7 @@ class Api::JobsController < Api::ApiController
   #       "id":26,
   #       "message":null,
   #       "preset_id":1,
+  #       "priority":null,
   #       "progress":null,
   #       "remote_job_id":"fa832776a64b6844fb9f1a244757734a9d83c00f",
   #       "source_file":"/tmp/foo.flv",
