@@ -45,24 +45,15 @@ class Transcoder
       call_transcoder(:get, url, *attrs)
     end
 
-    def log(str)
-      logger.info "#{Time.now} - #{str}"
-    end
-    
     private
       def call_transcoder(method, url, *attrs)
         begin
-          log "Calling #{url} with #{attrs}"
           attrs << { :content_type => :json, :accept => :json, :timeout => 2 }
           response = RestClient.send(method, url, *attrs)
           JSON::parse response
         rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, RestClient::Exception, JSON::ParserError
           false
         end
-      end
-
-      def logger
-        @_logger = ActiveSupport::BufferedLogger.new(Rails.root.join('log/transcoder.log'))
       end
   end
 end

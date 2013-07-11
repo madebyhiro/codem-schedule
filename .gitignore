@@ -9,3 +9,4 @@ public/assets
 Gemfile.lock
 .rvmrc
 *.swp
+node_modules/
