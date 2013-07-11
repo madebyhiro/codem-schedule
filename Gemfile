@@ -8,6 +8,7 @@ gem 'rest-client'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'chronic'
+gem 'httparty'
 
 group :development, :test do
   gem 'rspec-rails'
