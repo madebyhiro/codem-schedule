@@ -12,6 +12,7 @@ describe Job do
           { 
             "input" => "input", 
             "output" => "output", 
+            "priority" => 1,
             "preset" => @preset.name, 
             "arguments" => "a=b,c=d"
           }, 
@@ -24,6 +25,7 @@ describe Job do
         @job.destination_file.should == 'output'
         @job.preset.should == @preset
         @job.callback_url.should == "callback_#{@job.id}"
+        @job.priority.should == 1
         @job.arguments.should == { :a => 'b', :c => 'd' }
       end
       

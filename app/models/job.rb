@@ -45,6 +45,7 @@ class Job < ActiveRecord::Base
       job = new(:source_file => options['input'],
                 :destination_file => options['output'],
                 :preset => Preset.find_by_name(options['preset']),
+                :priority => options['priority'],
                 :notifications => Notification.from_api(options[:notify]),
                 :arguments => args)
 
