@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/madebyhiro/codem-schedule.png)](http://travis-ci.org/madebyhiro/codem-schedule)
+[![Dependency Status](https://gemnasium.com/madebyhiro/codem-schedule.png)](https://gemnasium.com/madebyhiro/codem-schedule)
 
 Codem Scheduler
 ===============
