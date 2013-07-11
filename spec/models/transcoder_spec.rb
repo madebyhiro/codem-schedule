@@ -40,6 +40,7 @@ describe Transcoder do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
+        'thumbnail_options' => 'thumbs',
         'callback_urls' => ["callback_url"]
       }.to_json
     end

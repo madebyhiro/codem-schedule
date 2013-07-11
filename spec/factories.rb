@@ -10,6 +10,7 @@ FactoryGirl.define do
   factory :preset do |p|
     p.name 'h264'
     p.parameters 'params'
+    p.thumbnail_options 'thumbs'
   end
 
   factory :host do |h|

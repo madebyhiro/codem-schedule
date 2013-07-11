@@ -7,6 +7,7 @@ class Preset < ActiveRecord::Base
   def self.from_api(attributes)
     attributes = attributes[:preset] if attributes[:preset]
     create(:name => attributes['name'], 
-           :parameters => attributes['parameters'])
+           :parameters => attributes['parameters'],
+           :thumbnail_options => attributes['thumbnail_options'])
   end
 end

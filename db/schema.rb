@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711081554) do
+ActiveRecord::Schema.define(:version => 20130711090119) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -78,10 +78,11 @@ ActiveRecord::Schema.define(:version => 20130711081554) do
   add_index "notifications", ["job_id"], :name => "index_notifications_on_job_id"
 
   create_table "presets", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",              :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.text     "parameters"
+    t.text     "thumbnail_options"
   end
 
   add_index "presets", ["name"], :name => "index_presets_on_name"

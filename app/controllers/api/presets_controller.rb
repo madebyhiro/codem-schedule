@@ -13,6 +13,7 @@ class Api::PresetsController < Api::ApiController
   #       "id":1,
   #       "name":"h264",
   #       "parameters":"-acodec libfaac -ab 96k -ar 44100 -vcodec libx264 -vb 416k -vpre slow -vpre baseline -s 320x180 -y",
+  #       "thumbnail_options":null,
   #       "updated_at":"2011-05-09T11:59:53Z"}
   #     }
   #   ]
@@ -26,9 +27,11 @@ class Api::PresetsController < Api::ApiController
   # the created preset is returned. If the request could not be completed, a list of errors will be returned.
   #
   # === Parameters
-  # All parameters are required
+  # Required:
   # <tt>name</tt>:: Name of the preset
   # <tt>params</tt>:: Parameters to use
+  # Optional:
+  # <tt>thumbnail_options</tt>:: Thumbnail options to use
   #
   # === Response codes
   # <tt>success</tt>:: <tt>201 created</tt>
@@ -41,8 +44,8 @@ class Api::PresetsController < Api::ApiController
   #     "created_at":"2011-05-10T14:44:07Z",
   #     "id":3,
   #     "name":"webm",
-  #     "parameters":
-  #     "params",
+  #     "parameters":"params",
+  #     "thumbnail_options":null,
   #     "updated_at":"2011-05-10T14:44:07Z"}
   #   }
   def create
@@ -71,8 +74,8 @@ class Api::PresetsController < Api::ApiController
   #     "created_at":"2011-05-10T14:44:07Z",
   #     "id":3,
   #     "name":"webm",
-  #     "parameters":
-  #     "params",
+  #     "parameters":"params",
+  #     "thumbnail_options":null,
   #     "updated_at":"2011-05-10T14:44:07Z"}
   #   }
   def show
@@ -81,10 +84,11 @@ class Api::PresetsController < Api::ApiController
   
   # == Updates a preset
   #
-  # === Paramdeters
+  # === Parameters
   # <tt>id</tt>:: Id of the preset to update
   # <tt>name</tt>:: Name of the preset
   # <tt>parameters</tt>:: Parameters of the preset
+  # <tt>thumbnail_options</tt>:: Thumbnail options
   #
   # === Example
   #
