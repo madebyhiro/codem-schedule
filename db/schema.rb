@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910113949) do
+ActiveRecord::Schema.define(:version => 20130711081554) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20120910113949) do
     t.datetime "completed_at"
     t.text     "arguments"
     t.boolean  "locked",                                  :default => false
+    t.integer  "priority",               :limit => 3
   end
 
   add_index "jobs", ["completed_at"], :name => "index_jobs_on_completed_at"
