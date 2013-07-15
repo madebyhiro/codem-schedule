@@ -36,7 +36,7 @@ describe JobsController do
   describe "GET 'show'" do
     before(:each) do
       @job = double(Job)
-      Job.stub(:find).and_return @job
+      Job.stub(:show).and_return @job
     end
     
     def do_get
@@ -44,7 +44,7 @@ describe JobsController do
     end
     
     it "should find the jobs" do
-      Job.should_receive(:find).with('1', :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
+      Job.should_receive(:show).and_return @job
       do_get
     end
     

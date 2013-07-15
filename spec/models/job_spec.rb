@@ -207,6 +207,13 @@ describe Job do
     end
   end
 
+  describe "show" do
+    it "should use the correct includes" do
+      Job.should_receive(:find).with(1, :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
+      Job.show(1)
+    end
+  end
+
   describe "locking/unlocking" do
     before(:each) do
       @preset = Preset.create!(:name => 'n', :parameters => 'p')

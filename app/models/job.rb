@@ -76,6 +76,10 @@ class Job < ActiveRecord::Base
     def search(query)
       JobSearch.search(scoped, query)
     end
+
+    def show(id)
+      find id, :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]]
+    end
   end
 
   def needs_update?
