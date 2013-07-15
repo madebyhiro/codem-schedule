@@ -109,6 +109,13 @@ describe Schedule do
           update
           @job.reload.state.should == Job::Accepted
         end
+
+        it "should update the progress if the transcoder is processing" do
+          attrs = { 'status' => Job::Processing }
+          Transcoder.stub(:job_status).and_return attrs
+          #Transcoder.should_receive(:update_progress).with(@job, attrs)
+          update
+        end
       end
       
       describe "failed" do

@@ -36,11 +36,22 @@ describe Transcoder do
     end
     
     it "should convert a job to transcoder params correctly" do
+      # with thumbnail options presetn
       Transcoder.job_to_json(@job).should == {
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
         'thumbnail_options' => {seconds: 1},
+        'callback_urls' => ["callback_url"]
+      }.to_json
+      
+      # without thumbnail options
+      @job.preset.thumbnail_options = nil
+      Transcoder.job_to_json(@job).should == {
+        'source_file' => 'source',
+        'destination_file' => 'dest',
+        'encoder_options' => 'params',
+        'thumbnail_options' => nil,
         'callback_urls' => ["callback_url"]
       }.to_json
     end

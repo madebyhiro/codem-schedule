@@ -92,22 +92,24 @@ describe Job do
   end
   
   describe "getting the recent jobs" do
-    before(:each) do
-      @job = double(Job)
-      Job.stub_chain(:recent, :page).and_return [@job]
+    before do
+      @scope = double("Scope")
+      @scope.stub(:recent).and_return @scope
+      @scope.stub(:order).and_return @scope
+      @scope.stub(:page).and_return @scope
+
+      Job.stub(:scoped).and_return @scope
+      Job.stub(:search).and_return @scope
     end
-    
-    def recents
-      Job.recents
+
+    it "should accept a query" do
+      Job.should_receive(:search).with('q')
+      Job.recents(query: 'q')
     end
-    
-    it "should fetch the recent jobs" do
-      Job.should_receive(:recent)
-      recents
-    end
-    
-    it "should return the jobs" do
-      recents.should == [@job]
+
+    it "should accept an order and direction" do
+      @scope.should_receive(:order).with('jobs.foo bar')
+      Job.recents(sort: 'foo', dir: 'bar')
     end
   end
 
@@ -186,6 +188,11 @@ describe Job do
       t1 = t0 + 1.day
       @scope.should_receive(:where).with('jobs.transcoding_started_at BETWEEN ? AND ?', t0, t1)
       search('started:2_days_ago')
+    end
+
+    it "should work with an invalid date" do
+      @scope.should_not_receive(:where)
+      search('started:foo_bar_baz')
     end
 
     it "all together now!" do
