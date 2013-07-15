@@ -6,7 +6,6 @@ rvm:
   - 1.9.2
   - 1.9.3
   - 2.0.0
-  - ree
   - jruby
 before_script:
   - "rake db:migrate; rake db:test:prepare"
