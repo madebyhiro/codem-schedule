@@ -1,9 +1,9 @@
 class Preset < ActiveRecord::Base
   has_many :jobs
   
-  validates :name, :parameters, :presence => true
-  validates :name, :uniqueness => true
+  validates :name, :presence => true, :uniqueness => true
 
+  validate :should_have_params_or_thumbnail_options
   validate :thumbnail_options, :valid_json_options, :if => Proc.new { |p| p.thumbnail_options.present? }
   
   def self.from_api(attributes)
@@ -21,6 +21,12 @@ class Preset < ActiveRecord::Base
       rescue JSON::ParserError
         errors.add(:thumbnail_options, "must be valid JSON")
         false
+      end
+    end
+
+    def should_have_params_or_thumbnail_options
+      if not(parameters.present? || thumbnail_options.present?)
+        errors.add(:base, 'Either parameters or thumbnail options should be specified')
       end
     end
 end
