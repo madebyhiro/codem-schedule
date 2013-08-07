@@ -2,15 +2,24 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'sqlite3'
+gem 'mysql2'
 gem 'jquery-rails'
 gem 'rest-client'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'chronic'
+gem 'nokogiri'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'rspec-rails'
+end
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'capistrano_colors'
+  gem 'capistrano_transmit'
 end
 
 # Gems used only for assets and not required
@@ -19,7 +28,7 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
-  gem 'twitter-bootstrap-rails', '2.1.0'
+  gem 'twitter-bootstrap-rails', git: 'git://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'static'
 end
 
 group :test do

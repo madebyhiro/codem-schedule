@@ -1,0 +1,11 @@
+body { padding-top: 60px; }
+
+.pagination ul {
+width:700px;
+}
+
+form.navbar-search {
+  a.btn {
+    margin-top:0;
+  }
+}
