@@ -9,7 +9,6 @@ gem 'will_paginate'
 gem 'simple_form'
 gem 'chronic'
 gem 'nokogiri'
-gem 'sqlite3'
 
 group :development, :test do
   gem 'rspec-rails'
