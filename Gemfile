@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.16'
 
 gem 'mysql2'
 gem 'jquery-rails'
@@ -15,7 +15,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '< 3.0'
   gem 'capistrano-ext'
   gem 'capistrano_colors'
   gem 'capistrano_transmit'
@@ -31,8 +31,7 @@ end
 
 group :test do
   gem 'rake'
-	gem 'simplecov', :require => false
-	gem 'factory_girl_rails'
-	gem 'webmock'
-	gem 'ZenTest'
+  gem 'simplecov', :require => false
+  gem 'factory_girl_rails'
+  gem 'webmock'
 end
