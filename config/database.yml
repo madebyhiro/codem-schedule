@@ -19,5 +19,3 @@ production:
   <<: *common
   database: codem_schedule_production
     
-cucumber:
-  <<: *test
