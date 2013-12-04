@@ -121,11 +121,11 @@ describe Api::HostsController do
   
   describe "DELETE 'destroy'" do
     before(:each) do
-      create_host
+      @host = create_host
     end
     
     def do_delete
-      delete :destroy, :id => 1
+      delete :destroy, :id => @host.id
     end
     
     it "should delete the host" do

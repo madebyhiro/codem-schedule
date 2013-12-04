@@ -110,11 +110,11 @@ describe Api::PresetsController do
   
   describe "DELETE 'destroy'" do
     before(:each) do
-      create_preset
+      @preset = create_preset
     end
     
     def do_delete
-      delete :destroy, :id => 1
+      delete :destroy, :id => @preset.id
     end
     
     it "should delete the preset" do
