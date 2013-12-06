@@ -47,6 +47,26 @@ describe Api::PresetsController do
       response.body.should == @preset.to_xml
     end
   end
+
+  describe "GET 'find'" do
+    before(:each) do
+      @preset = FactoryGirl.create(:preset, name: "webpm")
+    end
+
+    def do_get(format)
+      get 'find', :name => @preset.name, :format => format
+    end
+    
+    it "shows a preset as JSON" do
+      do_get(:json)
+      response.body.should == @preset.to_json
+    end
+
+    it "shows a preset as XML" do
+      do_get(:xml)
+      response.body.should == @preset.to_xml
+    end
+  end
   
   describe "GET 'index'" do
     before(:each) do

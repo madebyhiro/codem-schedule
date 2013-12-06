@@ -11,7 +11,7 @@ Scheduler::Application.routes.draw do
         get :failed
         delete :purge
       end
-      
+
       member do
         post :retry
       end
@@ -23,17 +23,21 @@ Scheduler::Application.routes.draw do
     end
 
     match '/schedule' => 'scheduler#schedule'
-    
-    resources :presets
-    
+
+    resources :presets do
+      collection do
+        get 'find(/:name)' => 'presets#find'
+      end
+    end
+
     resources :hosts
-    
+
     match '/statistics' => 'statistics#show'
   end
 
   resources :jobs
-  
+
   resources :presets, :hosts
-  
+
   root :to => 'dashboard#show'
 end
