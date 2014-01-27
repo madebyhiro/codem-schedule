@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Jobs::States do
+  def headers
+    { 'HTTP_X_CODEM_NOTIFY_TIMESTAMP' => 1 }
+  end
+
   before(:each) do
     @job = FactoryGirl.create(:job)
     @job.stub(:notify_responders)
@@ -21,7 +25,7 @@ describe Jobs::States do
   describe "entering a state" do
     def do_enter
       @job.stub(:enter_void)
-      @job.enter(:void, :foo => 'bar')
+      @job.enter(:void, {:foo => 'bar'}, headers)
     end
     
     it "should enter the specified state with parameters" do
@@ -52,7 +56,7 @@ describe Jobs::States do
     end
     
     def do_enter
-      @job.enter(Job::Accepted, { 'job_id' => 2 })
+      @job.enter(Job::Accepted, { 'job_id' => 2 }, headers)
     end
     
     it "should set the parameters" do
@@ -74,7 +78,7 @@ describe Jobs::States do
   
   describe "entering processing state" do
     def do_enter
-      @job.enter(Job::Processing, {'progress' => 1, 'duration' => 2, 'filesize' => 3})
+      @job.enter(Job::Processing, {'progress' => 1, 'duration' => 2, 'filesize' => 3}, headers)
     end
     
     it "should set the parameters" do
@@ -138,7 +142,7 @@ describe Jobs::States do
     end
     
     def do_enter
-      @job.enter(Job::Success, {'message' => 'msg'})
+      @job.enter(Job::Success, {'message' => 'msg'}, headers)
     end
     
     it "should set the parameters" do

@@ -96,7 +96,13 @@ describe Api::JobsController do
     end
     
     it "should enter the correct state" do
-      @job.should_receive(:enter).with('status', {"status"=>"status", "id"=>@job.id.to_s, "controller"=>"api/jobs", "action"=>"update"})
+      request.stub(:headers).and_return 'headers'
+
+      @job.should_receive(:enter).with(
+        'status', 
+        {"status"=>"status", "id"=>@job.id.to_s, "controller"=>"api/jobs", "action"=>"update"},
+        'headers'
+      )
       do_put
     end
   end

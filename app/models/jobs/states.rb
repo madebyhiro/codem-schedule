@@ -10,21 +10,39 @@ module Jobs
       Job::Scheduled
     end
     
-    def enter(new_state, params={})
+    def enter(new_state, params={}, headers={})
       old_state  = self.state
       self.state = new_state
 
+      notified_at = find_notified_at(headers)
+
       if new_state != old_state || state_changes.empty?
-        self.state_changes.create(:state => new_state, :message => params['message'])
+        self.state_changes.create(:state => new_state, 
+                                  :message => params['message'], 
+                                  :notified_at => notified_at)
       end
       
-      self.send("enter_#{new_state}", params)
-      save
+      last_notified_at = state_changes.last.notified_at
+
+      if last_notified_at.blank? || notified_at >= last_notified_at
+        self.send("enter_#{new_state}", params)
+        save
+      end
 
       self
     end
     
     protected
+      def find_notified_at(headers)
+        timestamp = headers['HTTP_X_CODEM_NOTIFY_TIMESTAMP'].to_i
+
+        if timestamp == 0
+          Time.now.to_f
+        else
+          timestamp / 1000.0
+        end
+      end
+
       def set_initial_state
         self.state ||= Job::Scheduled
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711090119) do
+ActiveRecord::Schema.define(:version => 20140127091337) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -91,10 +91,12 @@ ActiveRecord::Schema.define(:version => 20130711090119) do
     t.integer  "job_id"
     t.string   "state"
     t.string   "message"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.float    "notified_at"
   end
 
   add_index "state_changes", ["job_id"], :name => "index_state_changes_on_job_id"
+  add_index "state_changes", ["notified_at"], :name => "index_state_changes_on_notified_at"
 
 end

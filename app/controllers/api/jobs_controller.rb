@@ -114,7 +114,7 @@ class Api::JobsController < Api::ApiController
   # This endpoint is specifically for updating a job from the transcoder and should not be called manually.
   def update #:nodoc:
     job = Job.find(params[:id])
-    job.enter(params[:status], params)
+    job.enter(params[:status], params, request.headers)
     respond_with job, :location => api_job_url(job)
   end
   
