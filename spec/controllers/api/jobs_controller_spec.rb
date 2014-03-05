@@ -302,4 +302,25 @@ describe Api::JobsController do
       response.should redirect_to(jobs_path)
     end
   end
+
+  describe "DELETE 'destroy'" do
+    before(:each) do
+      @job = double(Job, :destroy => true)
+      Job.stub(:find).and_return @job
+    end
+
+    def do_delete
+      delete "destroy", :id => 1
+    end
+
+    it "should delete the job" do
+      @job.should_receive(:destroy)
+      do_delete
+    end
+
+    it "should redirect to the index" do
+      do_delete
+      response.should redirect_to(jobs_path)
+    end
+  end
 end

@@ -175,6 +175,20 @@ class Api::JobsController < Api::ApiController
       format.html { redirect_to jobs_path }
     end
   end
+
+  # == Deletes a job
+  #
+  # Removes a job from the database, regardless of state
+  #
+  # == Parameters
+  # <tt>id</tt>:: The id of the job to destroy
+  def destroy
+    job = Job.find(params[:id])
+    job.destroy
+    respond_with job do |format|
+      format.html { redirect_to jobs_path }
+    end
+  end
     
   private #:nodoc:
     def jobs_index(jobs)
