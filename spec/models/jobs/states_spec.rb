@@ -105,6 +105,7 @@ describe Jobs::States do
     
     it "should set the parameters" do
       do_enter
+      @job.enter(Job::Scheduled)
       @job.message.should == 'msg'
     end
     
