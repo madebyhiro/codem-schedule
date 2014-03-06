@@ -14,6 +14,8 @@ class Job < ActiveRecord::Base
   has_many :state_changes, :order => 'notified_at ASC', :dependent => :destroy
   has_many :notifications, :dependent => :destroy
 
+  before_destroy :remove_job_from_transcoder
+
   serialize :arguments
 
   scope :scheduled,   :conditions => { :state => Scheduled }
@@ -114,4 +116,9 @@ class Job < ActiveRecord::Base
   def unlock!
     update_attributes :locked => false
   end
+
+  private
+    def remove_job_from_transcoder
+      Transcoder.remove_job(self)
+    end
 end

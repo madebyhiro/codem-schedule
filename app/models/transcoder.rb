@@ -37,12 +37,22 @@ class Transcoder
       end
     end
     
+    def remove_job(job)
+      if job.host.try(:url) && job.remote_job_id
+        delete("#{job.host.url}/jobs/#{job.remote_job_id}")
+      end
+    end
+
     def post(url, *attrs)
       call_transcoder(:post, url, *attrs)
     end
         
     def get(url, *attrs)
       call_transcoder(:get, url, *attrs)
+    end
+
+    def delete(url)
+      call_transcoder(:delete, url)
     end
 
     private

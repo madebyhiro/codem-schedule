@@ -133,4 +133,36 @@ describe Transcoder do
       end
     end
   end
+
+  describe "deleting a job" do
+    before do
+      @job = Job.new(host: Host.new(url: 'host'), remote_job_id: 'id')
+    end
+
+    def do_delete
+      Transcoder.remove_job(@job)
+    end
+
+    it "should do nothing if the job has no host" do
+      @job.host = nil
+      Transcoder.should_not_receive(:delete)
+      do_delete
+    end
+
+    it "should do nothing if the job has no remote_job_id" do
+      @job.remote_job_id = nil
+      Transcoder.should_not_receive(:delete)
+      do_delete
+    end
+
+    it "should delete the job from the transcoder" do
+      Transcoder.should_receive(:delete).with("host/jobs/id")
+      do_delete
+    end
+
+    it "should delegate the method correctly" do
+      Transcoder.should_receive(:call_transcoder).with(:delete, "host/jobs/id")
+      do_delete
+    end
+  end
 end
