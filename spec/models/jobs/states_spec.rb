@@ -105,7 +105,7 @@ describe Jobs::States do
   
   describe "entering failed state" do
     def do_enter
-      @job.enter(Job::Failed, {'message' => 'msg'}, { 'HTTP_X_CODEM_NOTIFY_TIMESTAMP' => (Time.now + 2.hour).to_i*1000 })
+      @job.enter(Job::Failed, {'message' => 'msg'}, headers)
       @job.reload
     end
     
