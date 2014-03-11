@@ -46,3 +46,7 @@
 <h2>Preset parameters</h2>
 <pre><%= @job.preset.parameters rescue 'Preset not found' %></pre>
 
+<% if @job.remote_job_id %>
+  <h2>Delete job</h2>
+  <%= link_to 'Delete job', api_job_path(@job), method: :delete, class: 'btn btn-danger' %>
+<% end %>
