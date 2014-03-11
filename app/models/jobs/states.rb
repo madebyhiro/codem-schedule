@@ -60,6 +60,7 @@ module Jobs
         update_attributes :progress => params['progress'],
                           :duration => params['duration'],
                           :filesize => params['filesize']
+        notify
       end
       
       def enter_on_hold(params)

@@ -96,6 +96,11 @@ describe Jobs::States do
     it "should generate 1 state change" do
       lambda { do_enter; do_enter }.should change(@job.state_changes, :size).by(1)
     end
+
+    it "should send notifications" do
+      @job.should_receive(:notify)
+      do_enter
+    end
   end
   
   describe "entering failed state" do
