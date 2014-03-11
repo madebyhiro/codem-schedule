@@ -105,13 +105,18 @@ describe Jobs::States do
   
   describe "entering failed state" do
     def do_enter
-      @job.enter(Job::Failed, {'message' => 'msg'})
+      @job.enter(Job::Failed, {'message' => 'msg'}, { 'HTTP_X_CODEM_NOTIFY_TIMESTAMP' => (Time.now + 2.hour).to_i*1000 })
+      @job.reload
     end
     
+    it "should set the state" do
+      do_enter
+      @job.state.should == Job::Failed
+    end
+
     it "should set the parameters" do
       do_enter
-      @job.enter(Job::Scheduled)
-      @job.message.should == 'msg'
+      @job.reload.message.should == 'msg'
     end
     
     it "should generate a state change" do
