@@ -191,7 +191,8 @@ module Api
     #     }
     # }
     def probe
-      respond_with Transcoder.probe(params[:source_file])
+      response = Transcoder.probe(params[:source_file])
+      render json: response
     end
   end
 end
