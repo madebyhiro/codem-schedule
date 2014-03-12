@@ -44,8 +44,12 @@ class Transcoder
     end
 
     def probe(file)
-      host = Host.with_available_slots.first
-      post("#{host.url}/probe", { source_file: file }.to_json)
+      begin
+        host = Host.with_available_slots.first
+        RestClient.send(:post, "#{host.url}/probe", { source_file: file }.to_json)
+      rescue => e
+        e
+      end
     end
 
     def post(url, *attrs)
