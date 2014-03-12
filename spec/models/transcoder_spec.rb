@@ -165,4 +165,31 @@ describe Transcoder do
       do_delete
     end
   end
+
+  describe "probing" do
+    before do
+      @host = FactoryGirl.create(:host)
+      Host.stub(:with_available_slots).and_return [ @host ]
+
+      Transcoder.stub(:call_transcoder).and_return 'probe_results'
+    end
+
+    def probe
+      Transcoder.probe('movie.mp4')
+    end
+
+    it 'should find a host with available slots' do
+      Host.should_receive(:with_available_slots).and_return [ @host ]
+      probe
+    end
+
+    it 'should delegate the method correctly' do
+      Transcoder.should_receive(:call_transcoder).with(:post, 'url/probe', { source_file: 'movie.mp4' }.to_json)
+      probe
+    end
+
+    it 'should return the probe results' do
+      probe.should == 'probe_results'
+    end
+  end
 end

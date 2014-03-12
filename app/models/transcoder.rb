@@ -43,6 +43,11 @@ class Transcoder
       end
     end
 
+    def probe(file)
+      host = Host.with_available_slots.first
+      post("#{host.url}/probe", { source_file: file }.to_json)
+    end
+
     def post(url, *attrs)
       call_transcoder(:post, url, *attrs)
     end

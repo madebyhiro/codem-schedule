@@ -22,6 +22,7 @@ Scheduler::Application.routes.draw do
       end
     end
 
+    match '/probe'   => 'api#probe'
     match '/schedule' => 'scheduler#schedule'
     
     resources :presets
