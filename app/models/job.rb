@@ -120,5 +120,6 @@ class Job < ActiveRecord::Base
   private
     def remove_job_from_transcoder
       Transcoder.remove_job(self)
+      true
     end
 end

@@ -266,4 +266,17 @@ describe Job do
       @job.should_not be_locked
     end
   end
+
+  describe 'deleting a job' do
+    subject { FactoryGirl.create(:job) }
+
+    it 'should delete the job from the transcoder' do
+      Transcoder.should_receive(:remove_job).with(subject)
+      subject.destroy
+    end
+
+    it 'should always return true' do
+      subject.send(:remove_job_from_transcoder).should == true
+    end
+  end
 end
