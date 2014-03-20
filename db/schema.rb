@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140127091337) do
+ActiveRecord::Schema.define(:version => 20140320155619) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -90,9 +90,9 @@ ActiveRecord::Schema.define(:version => 20140127091337) do
   create_table "state_changes", :force => true do |t|
     t.integer  "job_id"
     t.string   "state"
-    t.string   "message"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.text     "message",     :limit => 16777215
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.float    "notified_at"
   end
 
