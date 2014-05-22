@@ -20,7 +20,6 @@
 # ==== Endpoints
 # GET /api/jobs::             See Api::JobsController#index
 # GET /api/jobs/scheduled::   See Api::JobsController#scheduled
-# GET /api/jobs/accepted::    See Api::JobsController#accepted
 # GET /api/jobs/processing::  See Api::JobsController#processing
 # GET /api/jobs/on_hold::     See Api::JobsController#on_hold
 # GET /api/jobs/success::     See Api::JobsController#success

@@ -3,7 +3,6 @@ Scheduler::Application.routes.draw do
     resources :jobs do
       collection do
         get :scheduled
-        get :accepted
         get :processing
         get :on_hold
         get :success

@@ -12,7 +12,6 @@ module ApplicationHelper
 
   def state_label(state)
     css = case state.downcase
-          when 'accepted'; then 'info'
           when 'processing'; then 'warning'
           when 'onhold'; then 'inverse'
           when 'success'; then 'success'

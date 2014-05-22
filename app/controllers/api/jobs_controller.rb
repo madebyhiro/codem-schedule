@@ -4,7 +4,6 @@
 # A job can be in one of the following states:
 #
 # <tt>scheduled</tt>::   Scheduled to be sent to the Transcoder instances
-# <tt>accepted</tt>::    Accepted by a Transcoder instance, waiting to start processing
 # <tt>processing</tt>::  Being processed by a Transcoder Instance
 # <tt>\on_hold</tt>::    Waiting for a Transcoder to become responsive again
 # <tt>success</tt>::     Successfully completed
@@ -16,7 +15,7 @@
 # For example, to get the 5th page of successfully completed jobs, use:
 #   http://host.com/api/jobs/completed?page=5
 class Api::JobsController < Api::ApiController
-  respond_to :rss, :only => [:index, :scheduled, :accepted, :processing, :on_hold, :success, :failed]
+  respond_to :rss, :only => [:index, :scheduled, :processing, :on_hold, :success, :failed]
   # == Returns a list of jobs regardless of state.
   # This method uses pagination.
   def index;        jobs_index(Job.scoped); end
@@ -24,10 +23,6 @@ class Api::JobsController < Api::ApiController
   # Scheduled jobs are created, but not yet accepted by the transcoders.
   # This method uses pagination.
   def scheduled;    jobs_index(Job.scheduled); end
-  # == Returns a list of accepted jobs
-  # Accepted jobs are accepted by a \Transcoder, but have not yet begun transcoding.
-  # This method uses pagination.
-  def accepted;     jobs_index(Job.accepted); end
   # == Returns a list of jobs being processed.
   # Jobs being processed are being transcoded by a \Transcoder.
   # This method uses pagination.
@@ -89,7 +84,7 @@ class Api::JobsController < Api::ApiController
   #       "progress":null,
   #       "remote_job_id":"fa832776a64b6844fb9f1a244757734a9d83c00f",
   #       "source_file":"/tmp/foo.flv",
-  #       "state":"accepted",
+  #       "state":"scheduled",
   #       "transcoding_started_at":"2011-05-10T08:25:03Z",
   #       "updated_at":"2011-05-10T08:25:03Z" 
   #     }
@@ -141,7 +136,7 @@ class Api::JobsController < Api::ApiController
   #       "progress":null,
   #       "remote_job_id":"fa832776a64b6844fb9f1a244757734a9d83c00f",
   #       "source_file":"/tmp/foo.flv",
-  #       "state":"accepted",
+  #       "state":"scheduled",
   #       "transcoding_started_at":"2011-05-10T08:25:03Z",
   #       "updated_at":"2011-05-10T08:25:03Z" 
   #     }
@@ -192,7 +187,7 @@ class Api::JobsController < Api::ApiController
     
   private #:nodoc:
     def jobs_index(jobs)
-      @jobs = jobs.order("created_at DESC").page(params[:page])
-      respond_with @jobs
+      jobs = jobs.order("created_at DESC").page(params[:page])
+      respond_with jobs
     end
 end

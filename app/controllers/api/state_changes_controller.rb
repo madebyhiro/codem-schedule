@@ -14,7 +14,7 @@ class Api::StateChangesController < Api::ApiController
   # <tt>id</tt>::   The id of the job
   #
   # === Example
-  # The normal flow would be: <tt>accepted</tt>, <tt>processing</tt>, <tt>success</tt>:
+  # The normal flow would be: <tt>scheduled</tt>, <tt>processing</tt>, <tt>success</tt>:
   #   [
   #     {
   #       state_change: {
@@ -23,7 +23,7 @@ class Api::StateChangesController < Api::ApiController
   #         created_at: "2011-05-09T13:53:31Z"
   #         message: "The transcoder accepted your job."
   #         updated_at: "2011-05-09T13:53:31Z"
-  #         state: "accepted"
+  #         state: "scheduled"
   #       }
   #     },
   #     {
