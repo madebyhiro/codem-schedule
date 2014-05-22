@@ -64,10 +64,6 @@ describe Job do
       Job.new(:state => Job::Scheduled).should be_unfinished
     end
 
-    it "should be unfinished if Accepted" do
-      Job.new(:state => Job::Accepted).should be_unfinished
-    end
-
     it "should be unfinished if Processing" do
       Job.new(:state => Job::Processing).should be_unfinished
     end
@@ -78,10 +74,6 @@ describe Job do
   end
   
   describe "needs update" do
-    it "should need an update if Accepted" do
-      Job.new(:state => Job::Accepted).should be_needs_update
-    end
-
     it "should need an update if Processing" do
       Job.new(:state => Job::Processing).should be_needs_update
     end
@@ -218,52 +210,6 @@ describe Job do
     it "should use the correct includes" do
       Job.should_receive(:find).with(1, :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
       Job.show(1)
-    end
-  end
-
-  describe "locking/unlocking" do
-    before(:each) do
-      @preset = Preset.create!(:name => 'n', :parameters => 'p')
-
-      @job = Job.from_api(
-        { 
-          "input" => "input", 
-          "output" => "output", 
-          "preset" => @preset.name, 
-          "arguments" => "a=b,c=d"
-        }, 
-        :callback_url => lambda { |job| "callback_#{job.id}" }
-      )
-    end
-
-    it "should lock a job" do
-      @job.lock!
-      @job.should be_locked
-    end
-
-    it "should unlock a job" do
-      @job.lock!
-      @job.unlock!
-      @job.should_not be_locked
-    end
-
-    it "should allow a block" do
-      @job.lock! do
-        @job.update_attributes :arguments => 'block_test'
-      end
-      @job.arguments.should == 'block_test'
-      @job.should_not be_locked
-    end
-
-    it "should unlock a job if an error occurs in the block" do
-      begin
-        @job.lock! do
-          raise 'foo'
-        end
-      rescue => e
-      end
-
-      @job.should_not be_locked
     end
   end
 

@@ -2,7 +2,6 @@ class Job < ActiveRecord::Base
   include Jobs::States
 
   Scheduled   = 'scheduled'
-  Accepted    = 'accepted'
   Processing  = 'processing'
   OnHold      = 'on_hold'
   Success     = 'success'
@@ -11,7 +10,7 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   belongs_to :host
   
-  has_many :state_changes, :order => 'notified_at ASC', :dependent => :destroy
+  has_many :state_changes, :order => 'position ASC', :dependent => :destroy
   has_many :notifications, :dependent => :destroy
 
   before_destroy :remove_job_from_transcoder
@@ -19,18 +18,15 @@ class Job < ActiveRecord::Base
   serialize :arguments
 
   scope :scheduled,   :conditions => { :state => Scheduled }
-  scope :accepted,    :conditions => { :state => Accepted }
   scope :processing,  :conditions => { :state => Processing }
   scope :success,     :conditions => { :state => Success }
   scope :on_hold,     :conditions => { :state => OnHold }
   scope :failed,      :conditions => { :state => Failed }
 
-  scope :unlocked,    :conditions => { :locked => false }
-
   scope :recent,      :include => [:host, :preset]
   
-  scope :unfinished,  lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
-  scope :need_update, lambda { where("state in (?)", [Accepted, Processing, OnHold]) }
+  scope :unfinished,  lambda { where("state in (?)", [Processing, OnHold]) }
+  scope :need_update, lambda { where("state in (?)", [Processing, OnHold]) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -85,7 +81,7 @@ class Job < ActiveRecord::Base
   end
 
   def needs_update?
-    state == Accepted || state == Processing || state == OnHold
+    state == Processing || state == OnHold
   end
 
   def finished?
@@ -93,28 +89,7 @@ class Job < ActiveRecord::Base
   end
   
   def unfinished?
-    state == Scheduled || state == Accepted || state == Processing || state == OnHold
-  end
-
-  def lock!(&block)
-    raise "This job is already locked" if locked?
-
-    if block_given?
-      Job.transaction do
-        begin
-          update_attributes :locked => true
-          yield
-        ensure
-          unlock!
-        end
-      end
-    else
-      update_attributes :locked => true
-    end
-  end
-
-  def unlock!
-    update_attributes :locked => false
+    state == Scheduled || state == Processing || state == OnHold
   end
 
   private
