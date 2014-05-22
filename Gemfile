@@ -9,6 +9,7 @@ gem 'will_paginate'
 gem 'simple_form'
 gem 'chronic'
 gem 'nokogiri'
+gem 'acts_as_list'
 
 group :development, :test do
   gem 'rspec-rails'

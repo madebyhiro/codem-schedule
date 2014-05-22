@@ -1,1 +1,0 @@
-xml << (render :partial => "jobs", :locals => {:title => "Accepted jobs"})
