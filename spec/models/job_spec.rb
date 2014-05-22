@@ -16,7 +16,6 @@ describe Job do
             "preset" => @preset.name, 
             "arguments" => "a=b,c=d"
           }, 
-          :callback_url => lambda { |job| "callback_#{job.id}" }
         )
       end
       
@@ -24,7 +23,6 @@ describe Job do
         @job.source_file.should == 'input'
         @job.destination_file.should == 'output'
         @job.preset.should == @preset
-        @job.callback_url.should == "callback_#{@job.id}"
         @job.priority.should == 1
         @job.arguments.should == { :a => 'b', :c => 'd' }
       end
@@ -40,7 +38,7 @@ describe Job do
     
     describe "failed save" do
       before(:each) do
-        @job = Job.from_api({}, {})
+        @job = Job.from_api({})
       end
       
       it "should not be saved" do

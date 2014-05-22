@@ -70,7 +70,6 @@ class Api::JobsController < Api::ApiController
   #
   #   {
   #     "job": {
-  #       "callback_url":"http://localhost:3000/api/jobs/26",
   #       "completed_at":null,
   #       "created_at":"2011-05-10T08:25:00Z",
   #       "destination_file":"/tmp/bar.mp4",
@@ -90,7 +89,7 @@ class Api::JobsController < Api::ApiController
   #     }
   #   }  
   def create
-    job = Job.from_api(params, :callback_url => lambda { |job| api_job_url(job) })
+    job = Job.from_api(params)
     if job.valid?
       response.headers["X-State-Changes-Location"] = api_state_changes_url(job)
       response.headers["X-Notifications-Location"] = api_notifications_url(job)
@@ -123,7 +122,6 @@ class Api::JobsController < Api::ApiController
   # === Example
   #   {
   #     "job": {
-  #       "callback_url":"http://localhost:3000/api/jobs/26",
   #       "completed_at":null,
   #       "created_at":"2011-05-10T08:25:00Z",
   #       "destination_file":"/tmp/bar.mp4",

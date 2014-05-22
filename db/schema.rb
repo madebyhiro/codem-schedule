@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521145413) do
+ActiveRecord::Schema.define(:version => 20140522082136) do
 
   create_table "deliveries", :force => true do |t|
     t.integer  "notification_id", :null => false
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20140521145413) do
     t.string   "remote_job_id"
     t.datetime "transcoding_started_at"
     t.integer  "host_id"
-    t.string   "callback_url"
     t.text     "message",                :limit => 16777215
     t.float    "progress"
     t.integer  "duration"

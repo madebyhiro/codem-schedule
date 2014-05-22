@@ -31,7 +31,7 @@ class Job < ActiveRecord::Base
   validates :source_file, :destination_file, :preset_id, :presence => true
   
   class << self
-    def from_api(options, opts)
+    def from_api(options)
       options = options[:job] if options[:job]
 
       args = {}
@@ -48,7 +48,6 @@ class Job < ActiveRecord::Base
                 :arguments => args)
 
       if job.save
-        job.update_attributes :callback_url => opts[:callback_url].call(job)
         job.enter(Job::Scheduled)
       end
 

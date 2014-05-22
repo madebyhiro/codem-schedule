@@ -18,7 +18,6 @@ describe Api::JobsController do
         job.source_file.should == 'input'
         job.destination_file.should == 'output'
         job.preset.name.should == 'h264'
-        job.callback_url.should == api_job_url(job)
       end
 
       it "should set the state changes header" do
