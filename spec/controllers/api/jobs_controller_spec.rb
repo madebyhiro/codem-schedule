@@ -5,10 +5,6 @@ describe Api::JobsController do
     @preset = FactoryGirl.create(:preset)
   end
 
-  def create_job
-    @job = FactoryGirl.create(:job)
-  end
-  
   describe "POST 'create'" do
     describe "valid request" do
       def do_post(format=:json)
@@ -58,49 +54,50 @@ describe Api::JobsController do
   end
   
   describe "GET 'show'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      Job.stub(:find).and_return @job
+      Job.stub(:find).and_return subject
     end
     
     def do_get(format=:json)
-      get 'show', :id => @job.id, :format => format
+      get 'show', :id => subject.id, :format => format
     end
     
     it "shows a job as JSON" do
       do_get(:json)
-      response.body.should == @job.to_json
+      response.body.should == subject.to_json
     end
 
-    # bug in to_xml
-    # it "shows a job as XML" do
-    #   do_get(:xml)
-    #   response.body.should == @job.attributes.to_xml(:root => 'job')
-    # end
+    it "shows a job as XML" do
+      do_get(:xml)
+      response.body.should == subject.to_xml
+    end
   end
   
   describe "PUT 'update'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.stub(:enter)
-      Job.stub(:find).and_return @job
+      Job.stub(:find).and_return subject
+      subject.stub(:enter_status)
     end
     
     def do_put
-      put 'update', :id => @job.id, :status => 'status'
+      put 'update', :id => subject.id, :status => 'status'
     end
     
     it "should find the job" do
-      Job.should_receive(:find).with(@job.id.to_s)
+      Job.should_receive(:find).with(subject.id.to_s)
       do_put
     end
     
     it "should enter the correct state" do
       request.stub(:headers).and_return 'headers'
 
-      @job.should_receive(:enter).with(
+      subject.should_receive(:enter).with(
         'status', 
-        {"status"=>"status", "id"=>@job.id.to_s, "controller"=>"api/jobs", "action"=>"update"},
+        {"status"=>"status", "id"=>subject.id.to_s, "controller"=>"api/jobs", "action"=>"update"},
         'headers'
       )
       do_put
@@ -108,9 +105,7 @@ describe Api::JobsController do
   end
   
   describe "GET 'index'" do
-    before(:each) do
-      create_job
-    end
+    subject { FactoryGirl.create(:job) }
     
     def do_get(format)
       get 'index', :format => format
@@ -128,9 +123,10 @@ describe Api::JobsController do
   end
   
   describe "GET 'scheduled'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Scheduled)
+      subject.update_attributes(:state => Job::Scheduled)
     end
     
     def do_get(format)
@@ -139,42 +135,21 @@ describe Api::JobsController do
     
     it "shows scheduled jobs as JSON" do
       do_get(:json)
-      response.body.should == [@job].to_json
+      response.body.should == [subject].to_json
     end
     
     it "shows scheduled jobs as XML" do
       do_get(:xml)
-      response.body.should == [@job].to_xml
+      response.body.should == [subject].to_xml
     end
   end
 
-  describe "GET 'accepted'" do
-    before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Accepted)
-      Job.stub_chain(:accepted, :order, :page).and_return [@job]
-    end
-    
-    def do_get(format)
-      get 'accepted', :format => format
-    end
-    
-    it "shows accepted jobs as JSON" do
-      do_get(:json)
-      response.body.should == [@job].to_json
-    end
-    
-    it "shows accepted jobs as XML" do
-      do_get(:xml)
-      response.body.should == [@job].to_xml
-    end
-  end
-  
   describe "GET 'processing'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Processing)
-      Job.stub_chain(:processing, :order, :page).and_return [@job]
+      subject.update_attributes(:state => Job::Processing)
+      Job.stub_chain(:processing, :order, :page).and_return [subject]
     end
     
     def do_get(format)
@@ -183,20 +158,21 @@ describe Api::JobsController do
     
     it "shows processing jobs as JSON" do
       do_get(:json)
-      response.body.should == [@job].to_json
+      response.body.should == [subject].to_json
     end
     
     it "shows processing jobs as XML" do
       do_get(:xml)
-      response.body.should == [@job].to_xml
+      response.body.should == [subject].to_xml
     end
   end
   
   describe "GET 'on_hold'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::OnHold)
-      Job.stub_chain(:on_hold, :order, :page).and_return [@job]
+      subject.update_attributes(:state => Job::OnHold)
+      Job.stub_chain(:on_hold, :order, :page).and_return [subject]
     end
     
     def do_get(format)
@@ -205,19 +181,20 @@ describe Api::JobsController do
     
     it "shows on hold jobs as JSON" do
       do_get(:json)
-      response.body.should == [@job].to_json
+      response.body.should == [subject].to_json
     end
     
     it "shows on hold jobs as XML" do
       do_get(:xml)
-      response.body.should == [@job].to_xml
+      response.body.should == [subject].to_xml
     end
   end
 
   describe "GET 'success'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Success)
+      subject.update_attributes(:state => Job::Success)
     end
     
     def do_get(format)
@@ -226,19 +203,20 @@ describe Api::JobsController do
     
     it "shows success jobs as JSON" do
       do_get(:json)
-      response.body.should == [@job].to_json
+      response.body.should == [subject].to_json
     end
     
     it "shows success jobs as XML" do
       do_get(:xml)
-      response.body.should == [@job].to_xml
+      response.body.should == [subject].to_xml
     end
   end
 
   describe "GET 'failed'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Failed)
+      subject.update_attributes(:state => Job::Failed)
     end
     
     def do_get(format)
@@ -247,19 +225,20 @@ describe Api::JobsController do
     
     it "shows failed jobs as JSON" do
       do_get(:json)
-      response.body.should == [@job].to_json
+      response.body.should == [subject].to_json
     end
     
     it "shows failed jobs as XML" do
       do_get(:xml)
-      response.body.should == [@job].to_xml
+      response.body.should == [subject].to_xml
     end
   end
   
   describe "DELETE 'purge'" do
+    subject { FactoryGirl.create(:job) }
+
     before(:each) do
-      create_job
-      @job.update_attributes(:state => Job::Failed)
+      subject.update_attributes(:state => Job::Failed)
     end
     
     def do_delete
@@ -278,9 +257,10 @@ describe Api::JobsController do
   end
 
   describe "POST 'retry'" do
+    subject { double(Job, :enter => true) }
+
     before(:each) do
-      @job = double(Job, :enter => true)
-      Job.stub(:find).and_return @job
+      Job.stub(:find).and_return subject
     end
     
     def do_post
@@ -293,7 +273,7 @@ describe Api::JobsController do
     end
     
     it "should set the state to scheduled" do
-      @job.should_receive(:enter).with(Job::Scheduled)
+      subject.should_receive(:enter).with(Job::Scheduled)
       do_post
     end
     
@@ -304,9 +284,10 @@ describe Api::JobsController do
   end
 
   describe "DELETE 'destroy'" do
+    subject { double(Job, :destroy => true) }
+
     before(:each) do
-      @job = double(Job, :destroy => true)
-      Job.stub(:find).and_return @job
+      Job.stub(:find).and_return subject
     end
 
     def do_delete
@@ -314,7 +295,7 @@ describe Api::JobsController do
     end
 
     it "should delete the job" do
-      @job.should_receive(:destroy)
+      subject.should_receive(:destroy)
       do_delete
     end
 
