@@ -7,7 +7,6 @@ describe ApplicationHelper do
   end
 
   it "should return a nice label" do
-    state_label('accepted').should == '<span class="label label-info">Accepted</span>'
     state_label('processing').should == '<span class="label label-warning">Processing</span>'
     state_label('onhold').should == '<span class="label label-inverse">Onhold</span>'
     state_label('success').should == '<span class="label label-success">Success</span>'
