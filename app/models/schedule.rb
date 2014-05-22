@@ -3,35 +3,29 @@ class Schedule
     def run!
       count = 0
 
-      to_be_scheduled_jobs.each do |job|
-        job.lock! do
-          schedule_job(job)
-          count += 1
+      jobs = to_be_updated_jobs
+
+      jobs.each do |job|
+
+        job.with_lock(true) do
+          if job.state == Job::Scheduled
+            schedule_job(job)
+          else
+            update_job(job)
+          end
         end
-      end
-      
-      to_be_updated_jobs.each do |job|
-        job.lock! do
-          update_job(job)
-          count += 1
-        end
+
       end
      
-      count
+      jobs.size
     end
 
-    def to_be_scheduled_jobs
-      Job.scheduled.unlocked.order("priority DESC, created_at ASC").limit(get_available_slots)
-    end
-    
     def to_be_updated_jobs
-      Job.unfinished.unlocked.order('created_at')
+      Job.where(state: [ Job::Scheduled, Job::Processing, Job::OnHold ]).order('created_at')
     end
   
     def update_progress(job, attrs=false)
-      attrs ||= Transcoder.job_status(job)
-
-      if attrs
+      if attrs = Transcoder.job_status(job)
         job.update_attributes :progress => attrs['progress'],
           :duration => attrs['duration'],
           :filesize => attrs['filesize']
@@ -66,7 +60,12 @@ class Schedule
       def schedule_job(job)
         for host in Host.with_available_slots
           if attrs = Transcoder.schedule(:host => host, :job => job)
-            job.enter(Job::Accepted, attrs)
+            job.update_attributes :host_id => attrs['host_id'],
+                                  :remote_job_id => attrs['job_id'],
+                                  :transcoding_started_at => Time.current
+
+            job.enter(Job::Processing, attrs)
+
             break
           end
         end

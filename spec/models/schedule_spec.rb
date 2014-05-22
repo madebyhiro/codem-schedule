@@ -1,13 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-
 describe Schedule do
-  before(:each) do
+  before do
     Job.destroy_all
-    @job = FactoryGirl.create(:job)
-
     Host.stub(:all).and_return []
-
     Transcoder.stub(:job_status).and_return {}
   end
 
@@ -15,124 +11,144 @@ describe Schedule do
     Schedule.run!
   end
   
-  describe "jobs to be scheduled" do
-    it "should find jobs by descending priority and ascending creation date" do
-      Schedule.stub(:get_available_slots).and_return 5
-      jobs = double("Jobs", :limit => 'jobs')
-      Job.stub_chain(:scheduled, :unlocked).and_return jobs
-      jobs.should_receive(:order).with("priority DESC, created_at ASC").and_return jobs
-      Schedule.to_be_scheduled_jobs.should == 'jobs'
-    end
-  end
+  describe "scheduling jobs" do
+    let!(:job) { FactoryGirl.create(:job) }
+    let(:host) { FactoryGirl.create(:host) }
 
-  describe "entering scheduled state" do
-    before(:each) do
+    before do
       Schedule.stub(:get_available_slots).and_return 10
-
-      Schedule.stub(:to_be_updated_jobs).and_return []
-
-      @host = FactoryGirl.create(:host)
-      Host.stub(:with_available_slots).and_return [@host]
+      Host.stub(:with_available_slots).and_return [host]
       Transcoder.stub(:schedule).and_return 'attrs'
     end
-    
-    it "should try to schedule the job at the host" do
-      Transcoder.should_receive(:schedule).with(:host => @host, :job => @job)
+
+    def run
+      Schedule.run!
+    end
+
+    it "should try to schedule the job" do
+      Transcoder.should_receive(:schedule).with(:host => host, :job => job)
       update
     end
     
-    it "should enter accepted" do
-      update
-      @job.reload.state.should == Job::Accepted
+    it "should enter processing" do
+      run
+      job.reload.state.should == Job::Processing
     end
     
     it "should generate a state change" do
-      update
-      @job.state_changes.last.state.should == Job::Accepted
+      run
+      job.state_changes.last.state.should == Job::Processing
     end
     
     it "should stay scheduled if the job cannot be scheduled" do
       Transcoder.stub(:schedule).and_return false
-      update
-      @job.state.should == Job::Scheduled
+      run
+      job.reload.state.should == Job::Scheduled
     end
   end
 
   describe "entering on hold state" do
+    let!(:job)  { FactoryGirl.create(:job) }
+    let(:host) { FactoryGirl.create(:host) }
+
     before(:each) do
       Schedule.stub(:get_available_slots).and_return 10
 
-      @host = double(Host, :available? => true, :update_status => true)
-      @job.stub(:host).and_return @host
-      @job.stub(:state).and_return Job::OnHold
+      host = double(Host, :available? => true, :update_status => true)
+      job.stub(:host).and_return host
+      job.stub(:state).and_return Job::OnHold
     end
   
     it "should try to schedule the job" do
-      Schedule.should_receive(:schedule_job).with(@job)
+      Schedule.should_receive(:schedule_job).with(job)
       update
+    end
+
+    it 'should enter on hold' do
+      update
+      job.state.should == Job::OnHold
     end
   end
 
   describe "updating a jobs status" do
-    before(:each) do
+    let!(:job) { FactoryGirl.create(:job) }
+
+    before do
       Schedule.stub(:get_available_slots).and_return 10
-      Transcoder.stub(:job_status).and_return({ 'status' => 'accepted', 'bar' => 'baz' })
+      Transcoder.stub(:job_status).and_return({ 'status' => 'processing', 'bar' => 'baz' })
     end
 
     it "should return the number of updated jobs" do
+      Schedule.stub(:to_be_updated_jobs).and_return [ job ]
       update.should == 1
     end
     
     describe "as Scheduled" do
-      before(:each) do
-        @job.update_attributes :state => Job::Scheduled
+      before do
+        job.update_attributes :state => Job::Scheduled
       end
       
       it "should try to schedule the job" do
-        Schedule.should_receive(:schedule_job).with(@job)
+        Schedule.should_receive(:schedule_job).with(job)
         update
       end
     end
     
     describe "unfinished" do
-      before(:each) do
-        @job.update_attributes(:state => Job::Processing)
+      before do
+        job.update_attributes(:state => Job::Processing)
       end
       
       describe "success" do
         it "should ask the transcoder for the jobs status " do
-          Transcoder.should_receive(:job_status).with(@job)
+          Transcoder.should_receive(:job_status).with(job)
           update
         end
     
         it "should enter the correct state" do
           update
-          @job.reload.state.should == Job::Accepted
+          job.reload.state.should == Job::Processing
         end
 
         it "should update the progress if the transcoder is processing" do
           attrs = { 'status' => Job::Processing }
           Transcoder.stub(:job_status).and_return attrs
-          #Transcoder.should_receive(:update_progress).with(@job, attrs)
           update
+        end
+      end
+
+      describe 'other states' do
+        let!(:job) { FactoryGirl.create(:job) }
+
+        before do
+          Transcoder.stub(:job_status).and_return({ 'status' => 'success', 'message' => 'bar' })
+        end
+
+        it 'should enter the correct state' do
+          update
+          job.reload
+          job.state.should == Job::Success
+          job.message.should == 'bar'
         end
       end
       
       describe "failed" do
+        let(:job) { FactoryGirl.create(:job) }
+
         before(:each) do
-          Transcoder.should_receive(:job_status).with(@job).and_return false
+          Transcoder.should_receive(:job_status).with(job).and_return false
         end
         
         it "should enter on hold" do
           update
-          @job.reload.state.should == Job::OnHold
+          job.reload.state.should == Job::OnHold
         end
       end
     end
     
     describe "finished" do
       before(:each) do
-        @job.stub(:finished?).and_return true
+        job.stub(:finished?).and_return true
       end
       
       it "should not get the status" do
@@ -143,44 +159,42 @@ describe Schedule do
   end
   
   describe "updating a single job status" do
-    before(:each) do
-      @job = FactoryGirl.create(:job)
-    end
+    let(:job) { FactoryGirl.create(:job) }
     
     def update
-      Schedule.update_progress(@job)
+      Schedule.update_progress(job)
     end
     
     it "should do nothing if the job's state is not Processing" do
-      updated_at = @job.updated_at
+      updated_at = job.updated_at
       update
-      @job.updated_at.should == updated_at
+      job.updated_at.should == updated_at
     end
 
     describe "when the job is processing" do
       before(:each) do
-        @job.update_attributes(:state => Job::Processing)
-        @job.stub(:enter_status)
+        job.update_attributes(:state => Job::Processing)
+        job.stub(:enter_status)
         Transcoder.stub(:job_status).and_return({'status' => 'status', 'foo' => 'bar'})
       end
       
       it "should request the status" do
-        Transcoder.should_receive(:job_status).with(@job)
+        Transcoder.should_receive(:job_status).with(job)
         update
       end
      
       it "should not re-enter processing" do
-        @job.should_not_receive(:enter)
+        job.should_not_receive(:enter)
         update
       end
 
       it "should update the status" do
-        Schedule.should_receive(:update_progress).with(@job).and_return true
+        Schedule.should_receive(:update_progress).with(job).and_return true
         update
       end
       
       it "should return the job" do
-        update.should == @job
+        update.should == job
       end
     end
   end
