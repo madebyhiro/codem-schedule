@@ -13,6 +13,8 @@ gem 'acts_as_list'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'guard'
+  gem 'guard-rspec'
 end
 
 group :development do
@@ -35,6 +37,4 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
   gem 'webmock'
-  gem 'guard'
-  gem 'guard-rspec'
 end
