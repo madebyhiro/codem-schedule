@@ -41,8 +41,7 @@ describe Transcoder do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'thumbnail_options' => {seconds: 1},
-        'callback_urls' => ["callback_url"]
+        'thumbnail_options' => {seconds: 1}
       }.to_json
       
       # without thumbnail options
@@ -51,8 +50,7 @@ describe Transcoder do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'thumbnail_options' => nil,
-        'callback_urls' => ["callback_url"]
+        'thumbnail_options' => nil
       }.to_json
     end
   end

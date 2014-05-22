@@ -23,7 +23,6 @@ class Transcoder
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
         'thumbnail_options' => thumb_opts,
-        'callback_urls' => [ job.callback_url ]
       }.to_json
     end
     
