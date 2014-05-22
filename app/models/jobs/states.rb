@@ -2,7 +2,8 @@ module Jobs
   module States
     def self.included(base)
       base.class_eval do
-        after_initialize :set_initial_state
+        before_create :set_initial_state
+        after_create  :create_initial_state_change
       end
     end
     
@@ -11,51 +12,36 @@ module Jobs
     end
     
     def enter(new_state, params={}, headers={})
-      old_state  = self.state
-      self.state = new_state
+      with_lock(true) do
+        if state != new_state
+          self.state = new_state
 
-      notified_at = find_notified_at(headers)
+          create_state_change(params['message'])
 
-      if new_state != old_state || state_changes.empty?
-        self.state_changes.create(:state => new_state, 
-                                  :message => params['message'], 
-                                  :notified_at => notified_at)
-      end
-      
-      last_notified_at = state_changes.last.notified_at
-
-      if last_notified_at.blank? || notified_at >= last_notified_at
-        self.send("enter_#{new_state}", params)
-        save
+          self.send("enter_#{new_state}", params)
+          save
+        end
       end
 
       self
     end
+
+    def create_state_change(message=nil)
+      self.state_changes.create!(:state => self.state, :message => message)
+    end
     
     protected
-      def find_notified_at(headers)
-        timestamp = headers['HTTP_X_CODEM_NOTIFY_TIMESTAMP'].to_i
-
-        if timestamp == 0
-          Time.now.to_f
-        else
-          timestamp / 1000.0
-        end
+      def set_initial_state
+        self.state = initial_state
       end
 
-      def set_initial_state
-        self.state ||= Job::Scheduled
+      def create_initial_state_change
+        create_state_change
       end
 
       def enter_scheduled(params)
       end
 
-      def enter_accepted(params)
-        update_attributes :host_id => params['host_id'],
-                          :remote_job_id => params['job_id'],
-                          :transcoding_started_at => Time.current
-      end
-      
       def enter_processing(params)
         update_attributes :progress => params['progress'],
                           :duration => params['duration'],
