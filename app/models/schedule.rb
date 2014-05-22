@@ -24,15 +24,6 @@ class Schedule
       Job.where(state: [ Job::Scheduled, Job::Processing, Job::OnHold ]).order('created_at')
     end
   
-    def update_progress(job, attrs=false)
-      if attrs = Transcoder.job_status(job)
-        job.update_attributes :progress => attrs['progress'],
-          :duration => attrs['duration'],
-          :filesize => attrs['filesize']
-      end
-      job
-    end
-
     def get_available_slots
       sum = 0
       Host.all.each do |h| 
@@ -45,11 +36,14 @@ class Schedule
     private
       def update_job(job)
         if attrs = Transcoder.job_status(job)
-          if attrs['status'] == Job::Processing
-            update_progress(job, attrs)
-          elsif job.state != attrs['status']
+          job.update_attributes :progress => attrs['progress'],
+                                :duration => attrs['duration'],
+                                :filesize => attrs['filesize']
+
+          if job.state != attrs['status']
             job.enter(attrs['status'], attrs)
           end
+
         else
           job.enter(Job::OnHold)
         end
@@ -60,6 +54,7 @@ class Schedule
       def schedule_job(job)
         for host in Host.with_available_slots
           if attrs = Transcoder.schedule(:host => host, :job => job)
+
             job.update_attributes :host_id => attrs['host_id'],
                                   :remote_job_id => attrs['job_id'],
                                   :transcoding_started_at => Time.current

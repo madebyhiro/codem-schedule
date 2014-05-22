@@ -158,47 +158,6 @@ describe Schedule do
     end
   end
   
-  describe "updating a single job status" do
-    let(:job) { FactoryGirl.create(:job) }
-    
-    def update
-      Schedule.update_progress(job)
-    end
-    
-    it "should do nothing if the job's state is not Processing" do
-      updated_at = job.updated_at
-      update
-      job.updated_at.should == updated_at
-    end
-
-    describe "when the job is processing" do
-      before(:each) do
-        job.update_attributes(:state => Job::Processing)
-        job.stub(:enter_status)
-        Transcoder.stub(:job_status).and_return({'status' => 'status', 'foo' => 'bar'})
-      end
-      
-      it "should request the status" do
-        Transcoder.should_receive(:job_status).with(job)
-        update
-      end
-     
-      it "should not re-enter processing" do
-        job.should_not_receive(:enter)
-        update
-      end
-
-      it "should update the status" do
-        Schedule.should_receive(:update_progress).with(job).and_return true
-        update
-      end
-      
-      it "should return the job" do
-        update.should == job
-      end
-    end
-  end
-
   describe "returning the number of available slots" do
     def slots
       Schedule.get_available_slots
