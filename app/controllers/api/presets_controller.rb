@@ -81,6 +81,26 @@ class Api::PresetsController < Api::ApiController
   def show
     respond_with Preset.find(params[:id])
   end
+
+  # == Displays a preset, find by name
+  #
+  # === Parameters
+  # <tt>name</tt>:: Name of the preset to display
+  #
+  # === Example
+  #   $ curl http://localhost:3000/api/presets/find/webpm
+  #
+  #   {"preset":{
+  #     "created_at":"2011-05-10T14:44:07Z",
+  #     "id":3,
+  #     "name":"webm",
+  #     "parameters":"params",
+  #     "thumbnail_options":null,
+  #     "updated_at":"2011-05-10T14:44:07Z"}
+  #   }
+  def find
+    respond_with Preset.where(name: params[:name]).first
+  end
   
   # == Updates a preset
   #
