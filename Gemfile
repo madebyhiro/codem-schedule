@@ -12,7 +12,7 @@ gem 'nokogiri'
 gem 'acts_as_list'
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.2'
   gem 'guard'
   gem 'guard-rspec'
 end
