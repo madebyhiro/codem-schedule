@@ -14,6 +14,10 @@ Install instructions
 You'll need a Ruby on Rails installation, served by the webserver of your choice. Please note: Ruby 1.9.2 or greater is required.
 See <http://rubyonrails.org/download> for installation instructions.
 
+### Full-stack standalone installers
+We've prepared standalone installers for Ubuntu, CentOS and Mac OS X. These packages contain everything you need to run the Scheduler and Transcoder, no additional installs are needed.
+The packages can be downloaded from the Codem website at <http://transcodem.com/installation/>
+
 ### Database
 The preferred database backend for the Scheduler is either MySQL or SQLite. One of these should be available to
 the Scheduler. If you're using MySQL, you can enter your connection details in `config/database.yml`.
