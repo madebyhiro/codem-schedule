@@ -1,25 +1,7 @@
-<div class="navbar navbar-fixed-top">  
-  <div class="navbar-inner">  
-    <div class="container">  
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".collapse">  
-        <span class="icon-bar"></span>  
-        <span class="icon-bar"></span>  
-        <span class="icon-bar"></span>  
-      </a>  
-      <%= link_to 'Codem', root_url, class: 'brand' %>
-      <div class="nav-collapse">  
-        <ul class="nav">  
-          <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>  
-          <li class="<%= 'active' if current_page?(jobs_path) %>"><%= link_to "Jobs", jobs_path %></li>  
-          <li class="<%= 'active' if current_page?(hosts_path) %>"><%= link_to "Hosts", hosts_path %></li>  
-          <li class="<%= 'active' if current_page?(presets_path) %>"><%= link_to "Presets", presets_path %></li>  
-        </ul>  
-        <%= form_tag jobs_path, method: :get, class: 'navbar-search pull-right' do %>
-          <%= search_field_tag 'q', params[:q], class: 'search-query', placeholder: 'Search' %>
-          <a href="#help" role="button" class="btn" data-toggle="modal">Help</a>
-        <% end %>
-      </div>  
-    </div>  
-  </div>  
-</div>  
+<ul class="nav nav-list">
+  <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>  
+  <li class="<%= 'active' if current_page?(jobs_path) %>"><%= link_to "Jobs", jobs_path %></li>  
+  <li class="<%= 'active' if current_page?(hosts_path) %>"><%= link_to "Hosts", hosts_path %></li>  
+  <li class="<%= 'active' if current_page?(presets_path) %>"><%= link_to "Presets", presets_path %></li>  
+</ul>
 

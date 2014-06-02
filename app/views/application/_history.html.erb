@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs history">
   <li class="<%= 'active' if params[:period].blank? || params[:period] == 'today' %>">
     <%= link_to 'Today', url_for(params.merge(:period => 'today')) %>
   </li>

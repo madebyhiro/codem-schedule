@@ -1,0 +1,158 @@
+.content .content-head {
+  padding-bottom:10px;
+}
+
+.content .content-head .breadcrumb {
+  padding-bottom:10px;
+}
+
+div.pagination {
+  width:100%;
+  height:23px;
+  text-align:center;
+
+  span, em, a {
+  }
+
+  span, em, a {
+    margin:0;
+    border:1px solid #ccc;
+    border-radius:2px;
+    padding:5px 10px;
+  }
+
+  a span, span span {
+    border:0;
+  }
+}
+
+a.brand {
+  text-decoration:none;
+}
+
+strong, b {
+  font-weight:bold !important;
+}
+
+.content-head h2 a {
+  color:inherit;
+  text-decoration:none;
+}
+
+.content .content-body {
+  padding: 30px 0 30px 0;
+}
+
+.sidebar {
+  height:100%;
+  position:fixed;
+}
+
+.sidebar .wrapper {
+  width:280px;
+}
+
+.bs-callout {
+  margin: 20px 0;
+  padding: 20px;
+  border-left: 3px solid #eee;
+}
+
+.bs-callout-info {
+  background-color: #f4f8fa;
+  border-color: #5bc0de;
+}
+
+.search button {
+  border:0;
+  background-color:transparent;
+}
+
+form {
+  padding:0 2px;
+
+  label {
+    color:#555;
+    font-weight:bold;
+  }
+}
+
+.module-head b ul.module-control {
+  margin:-10px -15px !important;
+}
+
+div.tab-pane.fade {
+  display:none;
+}
+
+div.tab-pane.fade.active {
+  display:block;
+}
+
+div.field_with_errors input {
+  border-color: #ebccd1 !important;
+}
+
+.progress .progress-bar {
+  text-align:right;
+
+  small {
+    padding-right:8px;
+    font-weight:bold;
+  }
+}
+
+label.required:after {
+  content: ' *'
+}
+
+a.new {
+  display:inline-block;
+  margin-bottom:24px;
+}
+
+th {
+  vertical-align: middle !important;
+}
+
+th.progress {
+  background-image: none !important;
+  box-shadow:none;
+}
+
+dl.dl-tiny {
+  font-size:10px;
+  dd, dt {
+    width: auto;
+  }
+
+  dd {
+    text-align:right;
+    font-size:11px;
+    margin-left:35px;
+    margin-right:5px;
+  }
+}
+
+td:first-child a {
+  font-weight:bold;
+}
+
+mark {
+  font-weight:bold;
+  color:black;
+  background-color:transparent;
+}
+
+.sidebar .nav > li > a {
+  padding-left:5px;
+}
+
+h1.title {
+  margin-top:10px;
+  margin-bottom:0;
+
+  a:hover {
+    text-decoration:none;
+  }
+}

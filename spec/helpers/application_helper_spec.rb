@@ -41,4 +41,13 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "section" do
+    it "should render the template with the correct options" do
+      opts = { :title => 'title', :contents => 'contents', :options => { :foo => 'options', :class => ['row-fluid'] } }
+      helper.should_receive(:render).with('section', opts).and_return 'rendered'
+      result = section('title', { foo: 'options' }) { 'contents' }
+      result.should == 'rendered'
+    end
+  end
 end

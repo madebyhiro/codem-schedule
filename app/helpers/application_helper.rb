@@ -20,4 +20,9 @@ module ApplicationHelper
           end
     content_tag(:span, class: "label label-#{css}") { state.capitalize }
   end
+
+  def section(title, options={}, &block)
+    options[:class] = Array(options[:class]) << 'row-fluid'
+    render 'section', title: title, options: options, contents: capture(&block)
+  end
 end

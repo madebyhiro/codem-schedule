@@ -12,11 +12,36 @@
 </head>
 <body>
 
+<%= render "/layouts/help" %>
 
-  <div class="container">
-    <div class="row">
+<div class="frame">
+  <div class="sidebar">
+    <div class="wrapper">
+      <div class="profile">
+      </div>
+
+      <%= render '/layouts/help' %>
       <%= render "/layouts/menu" %>
+    </div>
+  </div>
 
+  <div class="content">
+    <div class="navbar navbar-static-tops">
+      <div class="navbar-inner">
+        <%= link_to 'Codem', root_url, class: 'brand' %>
+      </div>
+    </div>
+
+    <div class="content-head">
+      <form action="<%= jobs_path %>" method="get" class="navbar-search pull-right">
+        <%= search_field_tag 'q', params[:q], class: 'search-query', placeholder: 'Search' %>
+        <a href="#help" role="button" class="btn" data-toggle="modal">Help</a>
+      </form>
+
+      <h1 class="title"><%= link_to yield(:title), url_for(params.slice(:controller, :action)) %></h1>
+
+
+      <div class="content-body">
       <% flash.each do |name, message| %>
         <div class="alert alert-block alert-<%= name %>">
           <a class="close" data-dismiss="alert">×</a>
@@ -24,15 +49,12 @@
         </div>
       <% end %>
 
-      <div class="page-header">
-        <h1><%= yield :title %></h1>
-      </div>
-
       <%= yield %>
 
-      <%= render "/layouts/help" %>
+
     </div>
   </div>
+</div>
 
 </body>
 </html>
