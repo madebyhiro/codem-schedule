@@ -1,8 +1,8 @@
 <% title 'Presets' %>
 
-<div class="row">
+<%= section 'Presets', class: 'presets' do %>
   <%= render @presets %>
-</div>
+<% end %>
 
 <div class="form-actions">
   <%= link_to 'New preset', new_preset_path, class: 'btn btn-primary' %>

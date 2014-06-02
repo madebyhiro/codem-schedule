@@ -1,4 +1,4 @@
-<%= content_tag_for :div, host, :class => "span4 #{host.available ? 'success' : 'error'}" do %>
+<%= content_tag_for :div, host, :class => "#{host.available ? 'success' : 'error'}" do %>
   <div class="alert alert-<%= host.available ? 'success' : 'error' %>">
     <h3><%= host.name %> (<%= host.available ? 'Available' : 'Not available' %>)</h3>
     <h4><%= host.url %></h4>

@@ -1,5 +1,5 @@
 <%= simple_form_for [:api, @preset], html: {class: 'form-horizontal'} do |f| %>
-  <%= render "/shared/error_messages", f: f %>
+  <%= render "error_messages", f: f %>
   <%= f.input :name %>
   <%= f.input :parameters %>
   <%= f.input :thumbnail_options do %>
