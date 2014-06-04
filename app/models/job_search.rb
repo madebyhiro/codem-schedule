@@ -19,10 +19,10 @@ class JobSearch
             jobs = jobs.where("source_file LIKE ? OR destination_file LIKE ?", value, value)
           when /^preset/
             value = '%'+value+'%'
-            jobs = jobs.includes(:preset).where("presets.name LIKE ?", value)
+            jobs = jobs.joins(:preset).where("presets.name LIKE ?", value)
           when /^host/
             value = '%'+value+'%'
-            jobs = jobs.includes(:host).where("hosts.name LIKE ?", value)
+            jobs = jobs.joins(:host).where("hosts.name LIKE ?", value)
           when /^submitted|^created/
             if dates = val_to_date(value)
               jobs = jobs.where("jobs.created_at BETWEEN ? AND ?", dates[0], dates[1])
