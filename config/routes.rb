@@ -21,14 +21,14 @@ Scheduler::Application.routes.draw do
       end
     end
 
-    match '/probe'   => 'api#probe'
-    match '/schedule' => 'scheduler#schedule'
+    get '/probe'   => 'api#probe'
+    get '/schedule' => 'scheduler#schedule'
     
     resources :presets
     
     resources :hosts
     
-    match '/statistics' => 'statistics#show'
+    get '/statistics' => 'statistics#show'
   end
 
   resources :jobs

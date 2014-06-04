@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '4.1.1'
 
 gem 'mysql2'
 gem 'jquery-rails'
@@ -10,6 +10,12 @@ gem 'simple_form'
 gem 'chronic'
 gem 'nokogiri'
 gem 'acts_as_list'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
+
+gem 'sass-rails', '~>4.0.0'
+gem 'coffee-rails', '~>4.0.0'
+gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'rspec-rails', '2.14.2'
@@ -22,14 +28,6 @@ group :development do
   gem 'capistrano-ext'
   gem 'capistrano_colors'
   gem 'capistrano_transmit'
-end
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
 end
 
 group :test do
