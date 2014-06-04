@@ -2,5 +2,5 @@
   <h4><%= preset.name %></h4>
   <pre><%= preset.parameters %></pre>
   <%= link_to 'Edit', edit_preset_path(preset), class: 'btn btn-mini' %> 
-  <%= link_to 'Delete', api_preset_path(preset), class: 'btn btn-mini', method: :delete, confirm: t('confirm.delete', :model_name => 'preset') %>
+  <%= link_to 'Delete', api_preset_path(preset), class: 'btn btn-mini', method: :delete, data: { confirm: 'Are you sure you want to delete this preset?' } %>
 <% end %>

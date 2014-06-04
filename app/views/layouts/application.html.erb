@@ -17,9 +17,6 @@
 <div class="frame">
   <div class="sidebar">
     <div class="wrapper">
-      <div class="profile">
-      </div>
-
       <%= render '/layouts/help' %>
       <%= render "/layouts/menu" %>
     </div>
@@ -34,7 +31,7 @@
 
     <div class="content-head">
       <form action="<%= jobs_path %>" method="get" class="navbar-search pull-right">
-        <%= search_field_tag 'q', params[:q], class: 'search-query', placeholder: 'Search' %>
+        <%= search_field_tag 'q', params[:q], class: 'form-control search-query', placeholder: 'Search' %>
         <a href="#help" role="button" class="btn" data-toggle="modal">Help</a>
       </form>
 

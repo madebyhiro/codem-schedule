@@ -2,27 +2,41 @@
 
 <%= form_tag api_jobs_path, class: 'form-horizontal' do %>
 	
-	<%#= error_messages_for @job %>
-	
+	<% if @job.errors.any? %>
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        Job could not be saved
+      </div>
+
+      <div class="panel-body">
+        <ul>
+          <% @job.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
 	<fieldset>
     <legend>Create a new job</legend>
 
     <div class="control-group">
-      <%= label_tag :input, nil, class: 'control-label' %>
+      <%= label_tag :input, nil, class: 'control-label required' %>
       <div class="controls">
-        <%= text_field_tag :input, @job.try(:source_file), class: 'input-xlarge' %>
+        <%= text_field_tag :input, @job.try(:source_file), class: 'form-control' %>
       </div>
     </div>
 
     <div class="control-group">
-      <%= label_tag :output, nil, class: 'control-label' %>
+      <%= label_tag :output, nil, class: 'control-label required' %>
       <div class="controls">
-        <%= text_field_tag :output, @job.try(:destination_file), class: 'input-xlarge' %>
+        <%= text_field_tag :output, @job.try(:destination_file), class: 'form-control' %>
       </div>
     </div>
 
     <div class="control-group">
-      <%= label_tag :preset, nil, class: 'control-label' %>
+      <%= label_tag :preset, nil, class: 'control-label required' %>
       <div class="controls">
         <%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)), class: 'input-xlarge' %>
       </div>
@@ -31,14 +45,14 @@
     <div class="control-group">
       <%= label_tag :priority, nil, class: 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :priority, @job.try(:priority), class: 'input-xlarge' %>
+        <%= text_field_tag :priority, @job.try(:priority), class: 'form-control' %>
       </div>
     </div>
 
     <div class="control-group">
       <%= label_tag :notify, nil, class: 'control-label' %>
       <div class="controls">
-        <%= text_area_tag :notify, nil, rows: 3, class: 'input-xlarge' %>
+        <%= text_area_tag :notify, nil, rows: 3, class: 'form-control' %>
       </div>
     </div>
 

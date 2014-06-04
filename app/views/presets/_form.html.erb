@@ -1,43 +1,84 @@
-<%= simple_form_for [:api, @preset], html: {class: 'form-horizontal'} do |f| %>
-  <%= render "error_messages", f: f %>
-  <%= f.input :name %>
-  <%= f.input :parameters %>
-  <%= f.input :thumbnail_options do %>
-    <%= f.text_area :thumbnail_options %>
-    <span class="help-block">
-      <a href="#thumbnail_help" role="button" class="btn" data-toggle="modal">Help</a>
-    </span>
+<%= form_tag api_presets_path, class: 'form-horizontal' do %>
+	<% if @preset.errors.any? %>
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        Preset could not be saved
+      </div>
+
+      <div class="panel-body">
+        <ul>
+          <% @preset.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
   <% end %>
 
-  <%= f.button :wrapped, :cancel => presets_path %>
+  <fieldset>
+    <legend>Create a new preset</legend>
+
+    <div class="control-group">
+      <%= label_tag :name, nil, class: 'control-label required' %>
+      <div class="controls">
+        <%= text_field_tag :name, @preset.try(:name), class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :parameters, nil, class: 'control-label required' %>
+      <div class="controls">
+        <%= text_field_tag :parameters, @preset.try(:parameters), class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :thumbnail_options, nil, class: 'control-label required' %>
+      <div class="controls">
+        <%= text_field_tag :thumbnail_options, @preset.try(:thumbnail_options), class: 'form-control' %>
+      <a href="#thumbnail_help" role="button" class="btn" data-toggle="modal">Help</a>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <div class="form-actions"> 
+    <%= submit_tag 'Create Preset', class: 'btn btn-primary' %> or 
+    <%= link_to 'Cancel', presets_path %>
+  </div>
 <% end %>
 
-<div class="modal hide fade" id="thumbnail_help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Thumbnail options</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-    It's possible to automatically generate thumbnails while transcoding the input file. These options can be specified for each preset, and use the following syntax:
-    </p>
-    <ul>
-      <li>Either "percentages" or "seconds" (but not both at the same time), valid options are:</li>
-      <ul>
-   		  <li><p>A single percentage, this will trigger a thumbnail every x.<pre>{ "percentages": 0.1 }</pre> will generate thumbnails at 0%, 10%, 20%, [...], 100%.</p></li>
-   		  <li><p>An array of explicit percentages, this will trigger thumbnails only at the specified positions.<pre>{ "percentages": [0.25, 0.5, 0.75] }</pre> will generate thumbnails at 25%, 50% and 75%.</p></li>
-   		  <li>A single offset in seconds, this will trigger a thumbnail every x seconds.<pre>{ "seconds": 10 }</pre> will generate thumbnails at 0 seconds, 10 seconds, 20 seconds, etc., until the end of the source file.</li>
-   		  <li><p>An array of explicit offsets, this will trigger thumbnails only at the specified positions.<pre>{ "seconds": [30, 60, 90] }</pre> will generate thumbnails at 30 seconds, 60 seconds and 90 seconds.</p></li>
-        </ul>
+<div class="modal fade" id="thumbnail_help">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Thumbnail options</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+        It's possible to automatically generate thumbnails while transcoding the input file. These options can be specified for each preset, and use the following syntax:
+        </p>
         <ul>
-          <li>A size can be specified in pixels (width x height). If omitted it will generate thumbnails the size of the source video. (optional)</li>
-          <li>A format for the thumbnails. The format must be supported by your ffmpeg binary. If omitted it will generate thumbnails in the JPEG format. Most people will use either "jpg" or "png". (optional)</li>
-        </ul>		
+          <li>Either "percentages" or "seconds" (but not both at the same time), valid options are:</li>
+          <ul>
+   		      <li><p>A single percentage, this will trigger a thumbnail every x.<pre>{ "percentages": 0.1 }</pre> will generate thumbnails at 0%, 10%, 20%, [...], 100%.</p></li>
+   		      <li><p>An array of explicit percentages, this will trigger thumbnails only at the specified positions.<pre>{ "percentages": [0.25, 0.5, 0.75] }</pre> will generate thumbnails at 25%, 50% and 75%.</p></li>
+   		      <li>A single offset in seconds, this will trigger a thumbnail every x seconds.<pre>{ "seconds": 10 }</pre> will generate thumbnails at 0 seconds, 10 seconds, 20 seconds, etc., until the end of the source file.</li>
+   		      <li><p>An array of explicit offsets, this will trigger thumbnails only at the specified positions.<pre>{ "seconds": [30, 60, 90] }</pre> will generate thumbnails at 30 seconds, 60 seconds and 90 seconds.</p></li>
+          </ul>
+          <ul>
+            <li>A size can be specified in pixels (width x height). If omitted it will generate thumbnails the size of the source video. (optional)</li>
+            <li>A format for the thumbnails. The format must be supported by your ffmpeg binary. If omitted it will generate thumbnails in the JPEG format. Most people will use either "jpg" or "png". (optional)</li>
+          </ul>		
+        </ul>
       </ul>
-    </ul>
-    <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>
+      <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
-  </div>
+</div>
 </div>

@@ -1,12 +1,12 @@
 <%= content_tag_for :div, host, :class => "#{host.available ? 'success' : 'error'}" do %>
-  <div class="alert alert-<%= host.available ? 'success' : 'error' %>">
+  <div class="alert alert-<%= host.available ? 'success' : 'danger' %>">
     <h3><%= host.name %> (<%= host.available ? 'Available' : 'Not available' %>)</h3>
     <h4><%= host.url %></h4>
 
     <br/>
 
     <%= link_to 'Edit', edit_host_path(host), class: 'btn btn-mini' %> 
-    <%= link_to 'Delete', api_host_path(host), class: 'btn btn-mini', method: :delete, confirm: t('confirm.delete', :model_name => 'host')  %>
+    <%= link_to 'Delete', api_host_path(host), class: 'btn btn-mini', method: :delete, data: { confirm: 'Are you sure you want to delete this host?' }  %>
 
     <% if host.available %>
       <table class="table table-condensed">

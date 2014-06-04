@@ -1,6 +1,42 @@
-<%= simple_form_for [:api, @host], html: {class: 'form-horizontal'} do |f| %>
-  <%= render "error_messages", f: f %>
-  <%= f.input :name, :name => 'name' %>
-  <%= f.input :url, :name => 'url' %>
-  <%= f.button :wrapped, :cancel => hosts_path %>
+<%= form_tag api_hosts_path, class: 'form-horizontal' do %>
+
+	<% if @host.errors.any? %>
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        Host could not be saved
+      </div>
+
+      <div class="panel-body">
+        <ul>
+          <% @host.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+  <fieldset>
+    <legend>Create a new host</legend>
+
+    <div class="control-group">
+      <%= label_tag :name, nil, class: 'control-label required' %>
+      <div class="controls">
+        <%= text_field_tag :name, @host.try(:name), class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :url, nil, class: 'control-label required' %>
+      <div class="controls">
+        <%= text_field_tag :url, @host.try(:url), class: 'form-control' %>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-actions"> 
+    <%= submit_tag 'Create Host', class: 'btn btn-primary' %> or 
+    <%= link_to 'Cancel', hosts_path %>
+  </div>
 <% end %>

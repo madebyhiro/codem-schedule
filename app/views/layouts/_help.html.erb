@@ -1,81 +1,85 @@
-<div class="modal hide fade" id="help" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Search Help</h3>
-  </div>
-  <div class="modal-body">
-    <p>The search box uses the following syntax:</p>
-    <pre>operator1:value1 operator2:value2 operator3:value3</pre>
-    <p>
-      The searcher combines multiple operators using boolean AND. 
-      Dates and times are parsed using <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a>.
-      When using a date or time, replace spaces with underscores so five days ago becomes <code>five_days_ago</code>. 
-      When searching for a specific date or time, a range of a full day is used.
-      Using <code>submitted:5_days_ago_at_5pm</code> would display all jobs submitted between 6 days ago at midnight and 5 days ago at midnight.
-    </p>
+<div class="modal fade" id="help">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Search Help</h3>
+      </div>
+      <div class="modal-body">
+        <p>The search box uses the following syntax:</p>
+        <pre>operator1:value1 operator2:value2 operator3:value3</pre>
+        <p>
+        The searcher combines multiple operators using boolean AND. 
+        Dates and times are parsed using <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a>.
+        When using a date or time, replace spaces with underscores so five days ago becomes <code>five_days_ago</code>. 
+        When searching for a specific date or time, a range of a full day is used.
+        Using <code>submitted:5_days_ago_at_5pm</code> would display all jobs submitted between 6 days ago at midnight and 5 days ago at midnight.
+        </p>
 
-    <br/>
+        <br/>
 
-    <p>The following operators are supported:</p>
-    <table class="table">
-      <tr>
-        <th>Operator</th>
-        <th>Description</th>
-        <th>Examples</th>
-      </tr>
-      <tr>
-        <td><b>id</b> or <b>job</b></td>
-        <td>Job ID equal to</td>
-        <td>id:12345<br/>job:6789</td>
-      </tr>
-      <tr>
-        <td><b>state</b></td>
-        <td>Job state equal to</td>
-        <td>state:failed<br/>state:completed</td>
-      </tr>
-      <tr>
-        <td><b>source</b> or <b>input</b></td>
-        <td>Source file matches</td>
-        <td>source:foo</br>input:bar.mp4</td>
-      </tr>
-      <tr>
-        <td><b>destination</b> or <b>output</b></td>
-        <td>Destination file matches</td>
-        <td>destination:foo</br>output:bar.mp4</td>
-      </tr>
-      <tr>
-        <td><b>file</b></td>
-        <td>Source or destination file matches</td>
-        <td>file:foo.bar</td>
-      </tr>
-      <tr>
-        <td><b>preset</b></td>
-        <td>Preset name matches</td>
-        <td>preset:h264_1000</td>
-      </tr>
-      <tr>
-        <td><b>host</b></td>
-        <td>Host name matches</td>
-        <td>host:host1</td>
-      </tr>
-      <tr>
-        <td><b>submitted</b> or <b>created</b></td>
-        <td>Job submitted on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
-        <td>submitted:5_days_ago<br/>created:15_aug</td>
-      </tr>
-      <tr>
-        <td><b>completed</b></td>
-        <td>Job completed on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
-        <td>completed:2_days_ago<br/>completed:3_jan_2012</td>
-      </tr>
-      <tr>
-        <td><b>started</b></td>
-        <td>Job started transcoding on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
-        <td>started:3_days_ago<br/>started:yesterday</td>
-      </tr>
-    </table>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+        <p>The following operators are supported:</p>
+        <table class="table">
+          <tr>
+            <th>Operator</th>
+            <th>Description</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td><b>id</b> or <b>job</b></td>
+            <td>Job ID equal to</td>
+            <td>id:12345<br/>job:6789</td>
+          </tr>
+          <tr>
+            <td><b>state</b></td>
+            <td>Job state equal to</td>
+            <td>state:failed<br/>state:completed</td>
+          </tr>
+          <tr>
+            <td><b>source</b> or <b>input</b></td>
+            <td>Source file matches</td>
+            <td>source:foo</br>input:bar.mp4</td>
+          </tr>
+          <tr>
+            <td><b>destination</b> or <b>output</b></td>
+            <td>Destination file matches</td>
+            <td>destination:foo</br>output:bar.mp4</td>
+          </tr>
+          <tr>
+            <td><b>file</b></td>
+            <td>Source or destination file matches</td>
+            <td>file:foo.bar</td>
+          </tr>
+          <tr>
+            <td><b>preset</b></td>
+            <td>Preset name matches</td>
+            <td>preset:h264_1000</td>
+          </tr>
+          <tr>
+            <td><b>host</b></td>
+            <td>Host name matches</td>
+            <td>host:host1</td>
+          </tr>
+          <tr>
+            <td><b>submitted</b> or <b>created</b></td>
+            <td>Job submitted on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
+            <td>submitted:5_days_ago<br/>created:15_aug</td>
+          </tr>
+          <tr>
+            <td><b>completed</b></td>
+            <td>Job completed on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
+            <td>completed:2_days_ago<br/>completed:3_jan_2012</td>
+          </tr>
+          <tr>
+            <td><b>started</b></td>
+            <td>Job started transcoding on, uses <a href="https://github.com/mojombo/chronic#examples" rel="external" target="_blank">Chronic</a></td>
+            <td>started:3_days_ago<br/>started:yesterday</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
   </div>
 </div>
