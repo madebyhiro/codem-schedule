@@ -10,23 +10,23 @@ class Job < ActiveRecord::Base
   belongs_to :preset
   belongs_to :host
   
-  has_many :state_changes, :order => 'position ASC', :dependent => :destroy
+  has_many :state_changes, -> { order('position ASC') }, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
 
   before_destroy :remove_job_from_transcoder
 
   serialize :arguments
 
-  scope :scheduled,   :conditions => { :state => Scheduled }
-  scope :processing,  :conditions => { :state => Processing }
-  scope :success,     :conditions => { :state => Success }
-  scope :on_hold,     :conditions => { :state => OnHold }
-  scope :failed,      :conditions => { :state => Failed }
+  scope :scheduled,   -> { where(:state => Scheduled) }
+  scope :processing,  -> { where(:state => Processing) }
+  scope :success,     -> { where(:state => Success) }
+  scope :on_hold,     -> { where(:state => OnHold) }
+  scope :failed,      -> { where(:state => Failed) }
 
-  scope :recent,      :include => [:host, :preset]
+  scope :recent,      -> { includes([:host, :preset]) }
   
-  scope :unfinished,  lambda { where("state in (?)", [Processing, OnHold]) }
-  scope :need_update, lambda { where("state in (?)", [Processing, OnHold]) }
+  scope :unfinished,  -> { where("state in (?)", [Processing, OnHold]) }
+  scope :need_update, -> { where("state in (?)", [Processing, OnHold]) }
   
   validates :source_file, :destination_file, :preset_id, :presence => true
   
@@ -55,7 +55,7 @@ class Job < ActiveRecord::Base
     end
 
     def recents(opts={})
-      jobs = scoped
+      jobs = all
 
       if opts[:query]
         jobs = Job.search(opts[:query])
@@ -71,7 +71,7 @@ class Job < ActiveRecord::Base
     end
 
     def search(query)
-      JobSearch.search(scoped, query)
+      JobSearch.search(all, query)
     end
 
     def show(id)

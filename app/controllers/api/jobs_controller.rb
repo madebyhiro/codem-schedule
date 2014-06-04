@@ -18,7 +18,7 @@ class Api::JobsController < Api::ApiController
   respond_to :rss, :only => [:index, :scheduled, :processing, :on_hold, :success, :failed]
   # == Returns a list of jobs regardless of state.
   # This method uses pagination.
-  def index;        jobs_index(Job.scoped); end
+  def index;        jobs_index(Job.all); end
   # == Returns a list of scheduled jobs
   # Scheduled jobs are created, but not yet accepted by the transcoders.
   # This method uses pagination.

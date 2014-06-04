@@ -45,6 +45,6 @@ class Api::NotificationsController < Api::ApiController
   
   private
     def find_job
-      @job = Job.find(params[:id], :include => [:notifications])
+      @job = Job.includes(:notifications).find(params[:id])
     end
 end

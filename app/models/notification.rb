@@ -1,6 +1,6 @@
 class Notification < ActiveRecord::Base
   belongs_to :job
-  has_many :deliveries, :dependent => :destroy, :order => "notified_at DESC"
+  has_many :deliveries, -> { order("notified_at DESC") }, :dependent => :destroy
 
   after_initialize :set_initial_state
 
