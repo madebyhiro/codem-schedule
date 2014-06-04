@@ -103,16 +103,6 @@ describe Job do
     end
   end
 
-  describe "searching" do
-  end
-
-  describe "show" do
-    it "should use the correct includes" do
-      Job.should_receive(:find).with(1, :include => [:host, :preset, [:state_changes => [:deliveries => :notification]]])
-      Job.show(1)
-    end
-  end
-
   describe 'deleting a job' do
     subject { FactoryGirl.create(:job) }
 
