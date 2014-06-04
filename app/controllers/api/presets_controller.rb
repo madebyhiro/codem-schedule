@@ -127,7 +127,7 @@ class Api::PresetsController < Api::ApiController
     preset = Preset.find(params[:id])
     preset.destroy
     respond_with preset do |format|
-      format.html { redirect_to presets_path, :notice => t('notice.deleted', :model_name => 'Preset') }
+      format.html { redirect_to presets_path }
     end
   end
 end

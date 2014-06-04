@@ -59,7 +59,7 @@ class Api::HostsController < Api::ApiController
 
     if host.valid?
       respond_with host, :location => api_host_url(host) do |format|
-        format.html { redirect_to hosts_path, :notice => t('flash.hosts.created') }
+        format.html { redirect_to hosts_path }
       end
     else
       respond_with host do |format|
@@ -139,7 +139,7 @@ class Api::HostsController < Api::ApiController
     host = Host.find(params[:id])
     host.destroy
     respond_with host do |format|
-      format.html { redirect_to hosts_path, :notice => t('notice.deleted', :model_name => 'Host') }
+      format.html { redirect_to hosts_path }
     end
   end
 end
