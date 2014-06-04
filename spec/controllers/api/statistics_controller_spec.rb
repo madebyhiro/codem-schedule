@@ -8,7 +8,7 @@ describe Api::StatisticsController do
     end
     
     def do_get
-      get 'show', :period => 'period'
+      get 'show', :period => 'period', format: 'json'
     end
     
     it "should generate a new history" do

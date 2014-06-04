@@ -47,7 +47,7 @@ describe Api::JobsController do
       
       it "should render /jobs/new if :html" do
         do_post(:html)
-        response.should render_template('/jobs/new')
+        response.should render_template(:new)
       end
     end
   end
@@ -83,7 +83,7 @@ describe Api::JobsController do
     end
     
     def do_put
-      put 'update', :id => subject.id, :status => 'status'
+      put 'update', :id => subject.id, :status => 'status', format: 'json'
     end
     
     it "should find the job" do
@@ -96,7 +96,7 @@ describe Api::JobsController do
 
       subject.should_receive(:enter).with(
         'status', 
-        {"status"=>"status", "id"=>subject.id.to_s, "controller"=>"api/jobs", "action"=>"update"},
+        {"status"=>"status", "id"=>subject.id.to_s, "format"=>"json", "controller"=>"api/jobs", "action"=>"update"},
         'headers'
       )
       do_put
@@ -134,7 +134,9 @@ describe Api::JobsController do
     
     it "shows scheduled jobs as JSON" do
       do_get(:json)
-      response.body.should == [subject].to_json
+      expected = JSON.load(subject.to_json)
+      actual   = JSON.load(response.body).first
+      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
     end
     
     it "shows scheduled jobs as XML" do
@@ -193,7 +195,7 @@ describe Api::JobsController do
     subject { FactoryGirl.create(:job) }
 
     before(:each) do
-      subject.update_attributes(:state => Job::Success)
+      subject.update_attribute(:state, Job::Success)
     end
     
     def do_get(format)
@@ -202,7 +204,9 @@ describe Api::JobsController do
     
     it "shows success jobs as JSON" do
       do_get(:json)
-      response.body.should == [subject].to_json
+      expected = JSON.load(subject.to_json)
+      actual   = JSON.load(response.body).first
+      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
     end
     
     it "shows success jobs as XML" do
@@ -224,7 +228,9 @@ describe Api::JobsController do
     
     it "shows failed jobs as JSON" do
       do_get(:json)
-      response.body.should == [subject].to_json
+      expected = JSON.load(subject.to_json)
+      actual   = JSON.load(response.body).first
+      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
     end
     
     it "shows failed jobs as XML" do

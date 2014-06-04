@@ -24,27 +24,27 @@ describe Api::PresetsController do
     
     it "should render /presets/new if invalid and :html" do
       post 'create', :name => 'name', :format => :html
-      response.should render_template('/presets/new')
+      response.should render_template(:new)
     end
   end
   
   describe "GET 'show'" do
-    before(:each) do
-      create_preset
-    end
+    subject { FactoryGirl.create(:preset) }
     
     def do_get(format)
-      get 'show', :id => @preset.id, :format => format
+      get 'show', :id => subject.id, :format => format
     end
     
     it "shows a preset as JSON" do
       do_get(:json)
-      response.body.should == @preset.to_json
+      expected = JSON.load(subject.to_json)
+      actual   = JSON.load(response.body)
+      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
     end
 
     it "shows a preset as XML" do
       do_get(:xml)
-      response.body.should == @preset.to_xml
+      response.body.should == subject.to_xml
     end
   end
   
@@ -97,7 +97,7 @@ describe Api::PresetsController do
     
     it "should re-render /presets/edit if the update fails as HTML" do
       put 'update', :id => @preset.id, :name => nil, :format => :html
-      response.should render_template('/presets/edit')
+      response.should render_template(:edit)
     end
     
     it "should work with a Rails-style hash" do

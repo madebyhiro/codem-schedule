@@ -49,27 +49,27 @@ describe Api::HostsController do
     
     it "should render /hosts/new if invalid and :html" do
       post 'create', :name => 'name', :format => :html
-      response.should render_template('/hosts/new')
+      response.should render_template(:new)
     end
   end
   
   describe "GET 'show'" do
-    before(:each) do
-      create_host
-    end
+    subject { FactoryGirl.create(:host) }
     
     def do_get(format)
-      get 'show', :id => @host.id, :format => format
+      get 'show', :id => subject.id, :format => format
     end
     
     it "shows a job as json" do
       do_get(:json)
-      response.body.should == @host.to_json
+      expected = JSON.load(subject.to_json)
+      actual   = JSON.load(response.body)
+      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
     end
     
     it "shows a job as xml" do
       do_get(:xml)
-      response.body.should == @host.to_xml
+      response.body.should == subject.to_xml
     end
   end
   
@@ -107,7 +107,7 @@ describe Api::HostsController do
     
     it "should re-render /hosts/edit if the update fails as HTML" do
       put 'update', :id => @host.id, :name => nil, :format => :html
-      response.should render_template('/hosts/edit')
+      response.should render_template(:edit)
     end
     
     it "should also work with a Rails-style form" do
