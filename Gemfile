@@ -35,4 +35,6 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
   gem 'webmock'
+  gem 'capybara'
+  gem 'launchy'
 end

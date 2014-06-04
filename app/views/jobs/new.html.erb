@@ -38,7 +38,7 @@
     <div class="control-group">
       <%= label_tag :preset, nil, class: 'control-label required' %>
       <div class="controls">
-        <%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)), class: 'input-xlarge' %>
+        <%= select_tag :preset, options_for_select(Preset.all.map { |p| [p.name] }, @job.try(:preset).try(:name)), class: 'form-control' %>
       </div>
     </div>
 
