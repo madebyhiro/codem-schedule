@@ -1,4 +1,4 @@
-<%= form_tag api_presets_path, class: 'form-horizontal' do %>
+<%= form_for [:api, @preset], class: 'form-horizontal' do |f| %>
 	<% if @preset.errors.any? %>
     <div class="panel panel-warning">
       <div class="panel-heading">
@@ -16,26 +16,24 @@
   <% end %>
 
   <fieldset>
-    <legend>Create a new preset</legend>
-
     <div class="control-group">
-      <%= label_tag :name, nil, class: 'control-label required' %>
+      <%= f.label :name, class: 'control-label required' %>
       <div class="controls">
-        <%= text_field_tag :name, @preset.try(:name), class: 'form-control' %>
+        <%= f.text_field :name, class: 'form-control' %>
       </div>
     </div>
 
     <div class="control-group">
-      <%= label_tag :parameters, nil, class: 'control-label required' %>
+      <%= f.label :parameters, nil, class: 'control-label required' %>
       <div class="controls">
-        <%= text_field_tag :parameters, @preset.try(:parameters), class: 'form-control' %>
+        <%= f.text_field :parameters, class: 'form-control' %>
       </div>
     </div>
 
     <div class="control-group">
-      <%= label_tag :thumbnail_options, nil, class: 'control-label required' %>
+      <%= f.label :thumbnail_options, class: 'control-label required' %>
       <div class="controls">
-        <%= text_field_tag :thumbnail_options, @preset.try(:thumbnail_options), class: 'form-control' %>
+        <%= f.text_field :thumbnail_options, class: 'form-control' %>
       <a href="#thumbnail_help" role="button" class="btn" data-toggle="modal">Help</a>
       </div>
     </div>
@@ -43,7 +41,7 @@
   </fieldset>
 
   <div class="form-actions"> 
-    <%= submit_tag 'Create Preset', class: 'btn btn-primary' %> or 
+    <%= f.submit class: 'btn btn-primary' %> or 
     <%= link_to 'Cancel', presets_path %>
   </div>
 <% end %>
