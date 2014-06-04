@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 feature "Searching for jobs" do
-  let!(:job) { FactoryGirl.create(:job) }
-  let!(:not_found) { FactoryGirl.create(:job) }
+  let!(:job) { FactoryGirl.create(:job, source_file: 'find_me') }
+  let!(:not_found) { FactoryGirl.create(:job, source_file: 'not_to_be_found') }
 
   def search(key, value)
     visit jobs_path
 
     visit jobs_path(q: "#{key}:#{value}")
 
-    expect(page).to have_text(job.id)
-    expect(page).to_not have_text(not_found.id)
+    expect(page).to have_text('find_me')
+    expect(page).to_not have_text('not_to_be_found')
   end
 
   scenario "by id" do
