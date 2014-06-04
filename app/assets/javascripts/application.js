@@ -8,4 +8,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap_ujs
+//= require turbolinks
+//= require jquery.turbolinks
 //= require_directory .
