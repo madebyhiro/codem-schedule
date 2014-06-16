@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Api::HostsController do
+describe Api::HostsController, :type => :controller do
   before(:each) do
-    Time.stub(:now).and_return Time.utc(2011,1,2,3,4,5)
-    Transcoder.stub(:host_status).and_return {}
+    allow(Time).to receive(:now).and_return Time.utc(2011,1,2,3,4,5)
+    allow(Transcoder).to receive(:host_status) {}
   end
   
   def create_host
@@ -21,12 +21,12 @@ describe Api::HostsController do
     
     it "shows hosts as JSON" do
       do_get(:json)
-      response.body.should == Host.all.to_json
+      expect(response.body).to eq(Host.all.to_json)
     end
     
     it "shows jobs as XML" do
       do_get(:xml)
-      response.body.should == Host.all.to_xml
+      expect(response.body).to eq(Host.all.to_xml)
     end
   end
   
@@ -38,18 +38,18 @@ describe Api::HostsController do
     it "creates hosts" do
       do_post
       host = Host.last
-      host.name.should == 'name'
-      host.url.should == 'url'
+      expect(host.name).to eq('name')
+      expect(host.url).to eq('url')
     end
     
     it "should redirect to /hosts if :html" do
       do_post(:html)
-      response.should redirect_to(hosts_path)
+      expect(response).to redirect_to(hosts_path)
     end
     
     it "should render /hosts/new if invalid and :html" do
       post 'create', :name => 'name', :format => :html
-      response.should render_template(:new)
+      expect(response).to render_template(:new)
     end
   end
   
@@ -64,12 +64,12 @@ describe Api::HostsController do
       do_get(:json)
       expected = JSON.load(subject.to_json)
       actual   = JSON.load(response.body)
-      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
+      expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
     
     it "shows a job as xml" do
       do_get(:xml)
-      response.body.should == subject.to_xml
+      expect(response.body).to eq(subject.to_xml)
     end
   end
   
@@ -86,35 +86,35 @@ describe Api::HostsController do
 
     it "should update a host as JSON" do
       do_put(:json)
-      @host.name.should == 'name'
-      @host.url.should == 'url'
+      expect(@host.name).to eq('name')
+      expect(@host.url).to eq('url')
     end
 
     it "should have updated the status" do
-      @host.should_not be_available
+      expect(@host).not_to be_available
     end
     
     it "should update a host as XML" do
       do_put(:xml)
-      @host.name.should == 'name'
-      @host.url.should == 'url'
+      expect(@host.name).to eq('name')
+      expect(@host.url).to eq('url')
     end
     
     it "should redirect to the hosts path as HTML" do
       do_put(:html)
-      response.should redirect_to(hosts_path)
+      expect(response).to redirect_to(hosts_path)
     end
     
     it "should re-render /hosts/edit if the update fails as HTML" do
       put 'update', :id => @host.id, :name => nil, :format => :html
-      response.should render_template(:edit)
+      expect(response).to render_template(:edit)
     end
     
     it "should also work with a Rails-style form" do
       put 'update', :host => {:name => 'rails-name', :url => 'rails-url'}, :id => @host.id
       @host.reload
-      @host.name.should == 'rails-name'
-      @host.url.should == 'rails-url'
+      expect(@host.name).to eq('rails-name')
+      expect(@host.url).to eq('rails-url')
     end
 
   end
@@ -130,7 +130,7 @@ describe Api::HostsController do
     
     it "should delete the host" do
       do_delete
-      Host.count.should == 0
+      expect(Host.count).to eq(0)
     end
   end
 

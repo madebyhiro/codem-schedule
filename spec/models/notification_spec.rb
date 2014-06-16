@@ -1,50 +1,50 @@
 require 'spec_helper'
 
-describe Notification do
+describe Notification, :type => :model do
   describe "creating via the API" do
     it "should return [] without parameters" do
-      Notification.from_api.should == []
+      expect(Notification.from_api).to eq([])
     end
     
     it "should return an EmailNotification if the options include an email" do
-      EmailNotification.should_receive(:new).with(:value => 'foo@bar.com').and_return 'notification'
-      Notification.from_api('foo@bar.com').should == ['notification']
+      expect(EmailNotification).to receive(:new).with(:value => 'foo@bar.com').and_return 'notification'
+      expect(Notification.from_api('foo@bar.com')).to eq(['notification'])
     end
 
     it "should return an UrlNotification if the options include an url" do
-      UrlNotification.should_receive(:new).with(:value => 'foo.com').and_return 'notification'
-      Notification.from_api('foo.com').should == ['notification']
+      expect(UrlNotification).to receive(:new).with(:value => 'foo.com').and_return 'notification'
+      expect(Notification.from_api('foo.com')).to eq(['notification'])
     end
     
     it "should return a notification for each option" do
-      EmailNotification.should_receive(:new).with(:value => 'foo@bar.com').and_return 'email'
-      UrlNotification.should_receive(:new).with(:value => 'foo.com').and_return 'url'
-      Notification.from_api('foo@bar.com,foo.com').should == ['email', 'url']
+      expect(EmailNotification).to receive(:new).with(:value => 'foo@bar.com').and_return 'email'
+      expect(UrlNotification).to receive(:new).with(:value => 'foo.com').and_return 'url'
+      expect(Notification.from_api('foo@bar.com,foo.com')).to eq(['email', 'url'])
     end
     
     it "should handle spaces" do
-      EmailNotification.should_receive(:new).with(:value => 'foo@bar.com').and_return 'email'
-      Notification.from_api(' foo@bar.com ').should == ['email']
+      expect(EmailNotification).to receive(:new).with(:value => 'foo@bar.com').and_return 'email'
+      expect(Notification.from_api(' foo@bar.com ')).to eq(['email'])
     end
   end
   
   it "should return the correct name" do
-    EmailNotification.new.name.should == 'Email'
-    UrlNotification.new.name.should   == 'Url'
+    expect(EmailNotification.new.name).to eq('Email')
+    expect(UrlNotification.new.name).to   eq('Url')
   end
   
   it "should have the correct initial state" do
-    Notification.new.initial_state.should == Job::Scheduled
-    Notification.new.state.should == Job::Scheduled
+    expect(Notification.new.initial_state).to eq(Job::Scheduled)
+    expect(Notification.new.state).to eq(Job::Scheduled)
   end
   
   describe "when notifying" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
-      Time.stub(:now).and_return @t
+      allow(Time).to receive(:now).and_return @t
       @job = FactoryGirl.create(:job, :state_changes => [StateChange.new(:state => Job::Scheduled)])
       @not = Notification.create!(:job => @job)
-      @not.stub(:do_notify!)
+      allow(@not).to receive(:do_notify!)
     end
     
     def do_notify
@@ -52,38 +52,38 @@ describe Notification do
     end
 
     it "should perform the notification" do
-      @not.should_receive(:notify!).with('args')
+      expect(@not).to receive(:notify!).with('args')
       do_notify
     end
     
     it "should set the notified at for the last delivery" do
       do_notify
-      @not.deliveries.last.notified_at.should == @t
+      expect(@not.deliveries.last.notified_at).to eq(@t)
     end
     
     it "should return self" do
-      do_notify.should == @not
+      expect(do_notify).to eq(@not)
     end
     
     describe "success" do
       before(:each) do
-        @not.stub(:do_notify!).and_return true
+        allow(@not).to receive(:do_notify!).and_return true
       end
       
       it "should update the status of the delivery to success" do
         do_notify
-        @not.deliveries.last.state.should == Job::Success
+        expect(@not.deliveries.last.state).to eq(Job::Success)
       end
     end
     
     describe "failed" do
       before(:each) do
-        @not.stub(:do_notify!).and_raise "Foo"
+        allow(@not).to receive(:do_notify!).and_raise "Foo"
       end
 
       it "should update the status of the delivery to failed" do
         do_notify
-        @not.deliveries.last.state.should == Job::Failed
+        expect(@not.deliveries.last.state).to eq(Job::Failed)
       end
     end
   end

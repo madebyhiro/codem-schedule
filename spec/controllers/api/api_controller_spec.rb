@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Api::ApiController do
+describe Api::ApiController, :type => :controller do
   describe "GET 'probe'" do
     before(:each) do
-      Transcoder.stub(:probe).and_return 'results'
+      allow(Transcoder).to receive(:probe).and_return 'results'
     end
 
     def do_get
@@ -11,7 +11,7 @@ describe Api::ApiController do
     end
 
     it 'should probe using the transcoder' do
-      Transcoder.should_receive(:probe).with('foo').and_return 'results'
+      expect(Transcoder).to receive(:probe).with('foo').and_return 'results'
       do_get
     end
   end

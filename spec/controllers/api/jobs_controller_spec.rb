@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::JobsController do
+describe Api::JobsController, :type => :controller do
   before(:each) do
     @preset = FactoryGirl.create(:preset)
   end
@@ -15,24 +15,24 @@ describe Api::JobsController do
         do_post
 
         job = Job.last
-        job.source_file.should == 'input'
-        job.destination_file.should == 'output'
-        job.preset.name.should == 'h264'
+        expect(job.source_file).to eq('input')
+        expect(job.destination_file).to eq('output')
+        expect(job.preset.name).to eq('h264')
       end
 
       it "should set the state changes header" do
         do_post
-        response.headers['X-State-Changes-Location'].should == api_state_changes_url(Job.last)
+        expect(response.headers['X-State-Changes-Location']).to eq(api_state_changes_url(Job.last))
       end
       
       it "should set the notifications header" do
         do_post
-        response.headers['X-Notifications-Location'].should == api_notifications_url(Job.last)
+        expect(response.headers['X-Notifications-Location']).to eq(api_notifications_url(Job.last))
       end
       
       it "should redirect to /jobs if :html" do
         do_post(:html)
-        response.should redirect_to(jobs_path)
+        expect(response).to redirect_to(jobs_path)
       end
     end
     
@@ -42,12 +42,12 @@ describe Api::JobsController do
       end
       
       it "should not create jobs" do
-        lambda { do_post }.should_not change(Job, :count)
+        expect { do_post }.not_to change(Job, :count)
       end
       
       it "should render /jobs/new if :html" do
         do_post(:html)
-        response.should render_template(:new)
+        expect(response).to render_template(:new)
       end
     end
   end
@@ -56,7 +56,7 @@ describe Api::JobsController do
     subject { FactoryGirl.create(:job) }
 
     before(:each) do
-      Job.stub(:find).and_return subject
+      allow(Job).to receive(:find).and_return subject
     end
     
     def do_get(format=:json)
@@ -65,12 +65,12 @@ describe Api::JobsController do
     
     it "shows a job as JSON" do
       do_get(:json)
-      response.body.should == subject.to_json
+      expect(response.body).to eq(subject.to_json)
     end
 
     it "shows a job as XML" do
       do_get(:xml)
-      response.body.should == subject.to_xml
+      expect(response.body).to eq(subject.to_xml)
     end
   end
   
@@ -78,8 +78,8 @@ describe Api::JobsController do
     subject { FactoryGirl.create(:job) }
 
     before(:each) do
-      Job.stub(:find).and_return subject
-      subject.stub(:enter_status)
+      allow(Job).to receive(:find).and_return subject
+      allow(subject).to receive(:enter_status)
     end
     
     def do_put
@@ -87,14 +87,14 @@ describe Api::JobsController do
     end
     
     it "should find the job" do
-      Job.should_receive(:find).with(subject.id.to_s)
+      expect(Job).to receive(:find).with(subject.id.to_s)
       do_put
     end
     
     it "should enter the correct state" do
-      request.stub(:headers).and_return 'headers'
+      allow(request).to receive(:headers).and_return 'headers'
 
-      subject.should_receive(:enter).with(
+      expect(subject).to receive(:enter).with(
         'status', 
         {"status"=>"status", "id"=>subject.id.to_s, "format"=>"json", "controller"=>"api/jobs", "action"=>"update"},
         'headers'
@@ -112,12 +112,12 @@ describe Api::JobsController do
     
     it "shows jobs as JSON" do
       do_get(:json)
-      response.body.should == Job.all.to_json
+      expect(response.body).to eq(Job.all.to_json)
     end
     
     it "shows jobs as XML" do
       do_get(:xml)
-      response.body.should == Job.all.to_xml
+      expect(response.body).to eq(Job.all.to_xml)
     end
   end
   
@@ -136,12 +136,12 @@ describe Api::JobsController do
       do_get(:json)
       expected = JSON.load(subject.to_json)
       actual   = JSON.load(response.body).first
-      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
+      expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
     
     it "shows scheduled jobs as XML" do
       do_get(:xml)
-      response.body.should == [subject].to_xml
+      expect(response.body).to eq([subject].to_xml)
     end
   end
 
@@ -159,12 +159,12 @@ describe Api::JobsController do
     
     it "shows processing jobs as JSON" do
       do_get(:json)
-      response.body.should == [subject].to_json
+      expect(response.body).to eq([subject].to_json)
     end
     
     it "shows processing jobs as XML" do
       do_get(:xml)
-      response.body.should == [subject].to_xml
+      expect(response.body).to eq([subject].to_xml)
     end
   end
   
@@ -182,12 +182,12 @@ describe Api::JobsController do
     
     it "shows on hold jobs as JSON" do
       do_get(:json)
-      response.body.should == [subject].to_json
+      expect(response.body).to eq([subject].to_json)
     end
     
     it "shows on hold jobs as XML" do
       do_get(:xml)
-      response.body.should == [subject].to_xml
+      expect(response.body).to eq([subject].to_xml)
     end
   end
 
@@ -206,12 +206,12 @@ describe Api::JobsController do
       do_get(:json)
       expected = JSON.load(subject.to_json)
       actual   = JSON.load(response.body).first
-      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
+      expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
     
     it "shows success jobs as XML" do
       do_get(:xml)
-      response.body.should == [subject].to_xml
+      expect(response.body).to eq([subject].to_xml)
     end
   end
 
@@ -230,12 +230,12 @@ describe Api::JobsController do
       do_get(:json)
       expected = JSON.load(subject.to_json)
       actual   = JSON.load(response.body).first
-      expected.slice(:created_at, :updated_at).should == actual.slice(:created_at, :updated_at)
+      expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
     
     it "shows failed jobs as XML" do
       do_get(:xml)
-      response.body.should == [subject].to_xml
+      expect(response.body).to eq([subject].to_xml)
     end
   end
   
@@ -252,12 +252,12 @@ describe Api::JobsController do
     
     it "should delete all failed jobs" do
       do_delete
-      Job.count.should == 0
+      expect(Job.count).to eq(0)
     end
     
     it "should render nothing" do
       do_delete
-      response.body.should == ' '
+      expect(response.body).to eq(' ')
     end
   end
 
@@ -265,7 +265,7 @@ describe Api::JobsController do
     subject { double(Job, :enter => true) }
 
     before(:each) do
-      Job.stub(:find).and_return subject
+      allow(Job).to receive(:find).and_return subject
     end
     
     def do_post
@@ -273,18 +273,18 @@ describe Api::JobsController do
     end
     
     it "should find the job" do
-      Job.should_receive(:find).with('1')
+      expect(Job).to receive(:find).with('1')
       do_post
     end
     
     it "should set the state to scheduled" do
-      subject.should_receive(:enter).with(Job::Scheduled)
+      expect(subject).to receive(:enter).with(Job::Scheduled)
       do_post
     end
     
     it "should redirect to the index" do
       do_post
-      response.should redirect_to(jobs_path)
+      expect(response).to redirect_to(jobs_path)
     end
   end
 
@@ -292,7 +292,7 @@ describe Api::JobsController do
     subject { double(Job, :destroy => true) }
 
     before(:each) do
-      Job.stub(:find).and_return subject
+      allow(Job).to receive(:find).and_return subject
     end
 
     def do_delete
@@ -300,13 +300,13 @@ describe Api::JobsController do
     end
 
     it "should delete the job" do
-      subject.should_receive(:destroy)
+      expect(subject).to receive(:destroy)
       do_delete
     end
 
     it "should redirect to the index" do
       do_delete
-      response.should redirect_to(jobs_path)
+      expect(response).to redirect_to(jobs_path)
     end
   end
 end

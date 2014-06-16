@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe StateChange do
+describe StateChange, :type => :model do
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Job do
+describe Job, :type => :model do
   describe "generating a job via the API" do
     before(:each) do
       @preset = FactoryGirl.create(:preset)
@@ -20,19 +20,19 @@ describe Job do
       end
       
       it "should map the attributes correctly" do
-        @job.source_file.should == 'input'
-        @job.destination_file.should == 'output'
-        @job.preset.should == @preset
-        @job.priority.should == 1
-        @job.arguments.should == { :a => 'b', :c => 'd' }
+        expect(@job.source_file).to eq('input')
+        expect(@job.destination_file).to eq('output')
+        expect(@job.preset).to eq(@preset)
+        expect(@job.priority).to eq(1)
+        expect(@job.arguments).to eq({ :a => 'b', :c => 'd' })
       end
       
       it "should be saved" do
-        @job.should_not be_new_record
+        expect(@job).not_to be_new_record
       end
     
       it "should be in the scheduled state" do
-        @job.state.should == Job::Scheduled
+        expect(@job.state).to eq(Job::Scheduled)
       end
     end
     
@@ -42,63 +42,63 @@ describe Job do
       end
       
       it "should not be saved" do
-        @job.should be_new_record
+        expect(@job).to be_new_record
       end
     end
   end
 
   describe "finished" do
     it "should be finished if Success" do
-      Job.new(:state => Job::Success).should be_finished
+      expect(Job.new(:state => Job::Success)).to be_finished
     end
 
     it "should be finished if Failed" do
-      Job.new(:state => Job::Failed).should be_finished
+      expect(Job.new(:state => Job::Failed)).to be_finished
     end
   end
   
   describe "unfinished" do
     it "should be unfinished if Scheduled" do
-      Job.new(:state => Job::Scheduled).should be_unfinished
+      expect(Job.new(:state => Job::Scheduled)).to be_unfinished
     end
 
     it "should be unfinished if Processing" do
-      Job.new(:state => Job::Processing).should be_unfinished
+      expect(Job.new(:state => Job::Processing)).to be_unfinished
     end
 
     it "should be unfinished if Processing" do
-      Job.new(:state => Job::OnHold).should be_unfinished
+      expect(Job.new(:state => Job::OnHold)).to be_unfinished
     end
   end
   
   describe "needs update" do
     it "should need an update if Processing" do
-      Job.new(:state => Job::Processing).should be_needs_update
+      expect(Job.new(:state => Job::Processing)).to be_needs_update
     end
     
     it "should need an update if OnHold" do
-      Job.new(:state => Job::OnHold).should be_needs_update
+      expect(Job.new(:state => Job::OnHold)).to be_needs_update
     end
   end
   
   describe "getting the recent jobs" do
     before do
       @scope = double("Scope")
-      @scope.stub(:recent).and_return @scope
-      @scope.stub(:order).and_return @scope
-      @scope.stub(:page).and_return @scope
+      allow(@scope).to receive(:recent).and_return @scope
+      allow(@scope).to receive(:order).and_return @scope
+      allow(@scope).to receive(:page).and_return @scope
 
-      Job.stub(:all).and_return @scope
-      Job.stub(:search).and_return @scope
+      allow(Job).to receive(:all).and_return @scope
+      allow(Job).to receive(:search).and_return @scope
     end
 
     it "should accept a query" do
-      Job.should_receive(:search).with('q')
+      expect(Job).to receive(:search).with('q')
       Job.recents(query: 'q')
     end
 
     it "should accept an order and direction" do
-      @scope.should_receive(:order).with('jobs.foo bar')
+      expect(@scope).to receive(:order).with('jobs.foo bar')
       Job.recents(sort: 'foo', dir: 'bar')
     end
   end
@@ -107,12 +107,12 @@ describe Job do
     subject { FactoryGirl.create(:job) }
 
     it 'should delete the job from the transcoder' do
-      Transcoder.should_receive(:remove_job).with(subject)
+      expect(Transcoder).to receive(:remove_job).with(subject)
       subject.destroy
     end
 
     it 'should always return true' do
-      subject.send(:remove_job_from_transcoder).should == true
+      expect(subject.send(:remove_job_from_transcoder)).to eq(true)
     end
   end
 end

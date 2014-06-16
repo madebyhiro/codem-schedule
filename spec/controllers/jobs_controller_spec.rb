@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe JobsController do
+describe JobsController, :type => :controller do
   describe "GET 'index'" do
     before(:each) do
       @job = double(Job)
-      Job.stub(:recents).and_return [@job]
-      History.stub(:new).and_return 'history'
+      allow(Job).to receive(:recents).and_return [@job]
+      allow(History).to receive(:new).and_return 'history'
     end
     
     def do_get
@@ -13,30 +13,30 @@ describe JobsController do
     end
     
     it "should generate the correct history" do
-      History.should_receive(:new).with('period')
+      expect(History).to receive(:new).with('period')
       do_get
     end
     
     it "should assign the history for the view" do
       do_get
-      assigns[:history].should == 'history'
+      expect(assigns[:history]).to eq('history')
     end
     
     it "should find the recent jobs" do
-      Job.should_receive(:recents)
+      expect(Job).to receive(:recents)
       do_get
     end
     
     it "should assign the recent jobs for the view" do
       do_get
-      assigns[:jobs].should == [@job]
+      expect(assigns[:jobs]).to eq([@job])
     end
   end
   
   describe "GET 'show'" do
     before(:each) do
       @job = double(Job)
-      Job.stub(:find).and_return @job
+      allow(Job).to receive(:find).and_return @job
     end
     
     def do_get
@@ -44,20 +44,20 @@ describe JobsController do
     end
     
     it "should find the jobs" do
-      Job.should_receive(:find).and_return @job
+      expect(Job).to receive(:find).and_return @job
       do_get
     end
     
     it "should assign the job for the view" do
       do_get
-      assigns[:job].should == @job
+      expect(assigns[:job]).to eq(@job)
     end
   end
 
   describe "GET 'new'" do
     before(:each) do
       @job = double(Job)
-      Job.stub(:new).and_return @job
+      allow(Job).to receive(:new).and_return @job
     end
 
     def do_get
@@ -65,13 +65,13 @@ describe JobsController do
     end
 
     it "should generate a new job" do
-      Job.should_receive(:new)
+      expect(Job).to receive(:new)
       do_get
     end
 
     it "should assign the job for the view" do
       do_get
-      assigns[:job].should == @job
+      expect(assigns[:job]).to eq(@job)
     end
   end
 end

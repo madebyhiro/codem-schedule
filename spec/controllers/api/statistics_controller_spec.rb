@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Api::StatisticsController do
+describe Api::StatisticsController, :type => :controller do
   describe "GET 'show'" do
     before(:each) do
       @history = double(History)
-      History.stub(:new).and_return @history
+      allow(History).to receive(:new).and_return @history
     end
     
     def do_get
@@ -12,7 +12,7 @@ describe Api::StatisticsController do
     end
     
     it "should generate a new history" do
-      History.should_receive(:new).with('period')
+      expect(History).to receive(:new).with('period')
       do_get
     end
   end

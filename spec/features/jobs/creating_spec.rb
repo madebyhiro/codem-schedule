@@ -21,9 +21,9 @@ feature "Creating a job" do
     expect(page).to have_text('input')
 
     j = Job.last
-    j.source_file.should == 'input'
-    j.destination_file.should == 'output'
-    j.preset.should == preset
+    expect(j.source_file).to eq('input')
+    expect(j.destination_file).to eq('output')
+    expect(j.preset).to eq(preset)
   end
 
   scenario "without an input file" do

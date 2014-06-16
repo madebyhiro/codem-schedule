@@ -1,16 +1,16 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe DashboardController do
+describe DashboardController, :type => :controller do
   describe "GET 'show'" do
     before(:each) do
       @jobs = double("Array of jobs")
       
       Job.stub_chain(:recents, :limit).and_return @jobs
-      @jobs.stub(:scheduled).and_return 'scheduled'
-      @jobs.stub(:processing).and_return [@job]
-      @jobs.stub(:failed).and_return 'failed'
+      allow(@jobs).to receive(:scheduled).and_return 'scheduled'
+      allow(@jobs).to receive(:processing).and_return [@job]
+      allow(@jobs).to receive(:failed).and_return 'failed'
       
-      History.stub(:new).and_return 'history'
+      allow(History).to receive(:new).and_return 'history'
     end
     
     def do_get
@@ -19,27 +19,27 @@ describe DashboardController do
     
     it "should assign the recently scheduled jobs" do
       do_get
-      assigns[:scheduled_jobs].should == 'scheduled'
+      expect(assigns[:scheduled_jobs]).to eq('scheduled')
     end
     
     it "should assign the recently processing jobs" do
       do_get
-      assigns[:processing_jobs].should == [@job]
+      expect(assigns[:processing_jobs]).to eq([@job])
     end
     
     it "should assign the recently failed jobs" do
       do_get
-      assigns[:failed_jobs].should == 'failed'
+      expect(assigns[:failed_jobs]).to eq('failed')
     end
     
     it "should generate a new history" do
-      History.should_receive(:new).with('period')
+      expect(History).to receive(:new).with('period')
       do_get
     end
     
     it "should assign the history for the view" do
       do_get
-      assigns[:history].should == 'history'
+      expect(assigns[:history]).to eq('history')
     end
   end
 end

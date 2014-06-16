@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe PresetsController do
+describe PresetsController, :type => :controller do
   describe "GET 'index'" do
     before(:each) do
-      Preset.stub(:all).and_return 'presets'
+      allow(Preset).to receive(:all).and_return 'presets'
     end
     
     def do_get
@@ -11,20 +11,20 @@ describe PresetsController do
     end
     
     it "should find the presets" do
-      Preset.should_receive(:all)
+      expect(Preset).to receive(:all)
       do_get
     end
     
     it "should assign the presets for the view" do
       do_get
-      assigns[:presets].should == 'presets'
+      expect(assigns[:presets]).to eq('presets')
     end
   end
   
   describe "GET 'new'" do
     before(:each) do
       @preset = mock_model(Preset)
-      Preset.stub(:new).and_return @preset
+      allow(Preset).to receive(:new).and_return @preset
     end
     
     def do_get
@@ -32,25 +32,25 @@ describe PresetsController do
     end
     
     it "should generate a new preset" do
-      Preset.should_receive(:new)
+      expect(Preset).to receive(:new)
       do_get
     end
     
     it "should assign the new preset for the view" do
       do_get
-      assigns[:preset].should == @preset
+      expect(assigns[:preset]).to eq(@preset)
     end
     
     it "should render the template" do
       do_get
-      response.should render_template('new')
+      expect(response).to render_template('new')
     end
   end
   
   describe "GET 'edit'" do
     before(:each) do
       @preset = mock_model(Preset)
-      Preset.stub(:find).and_return @preset
+      allow(Preset).to receive(:find).and_return @preset
     end
     
     def do_get
@@ -58,13 +58,13 @@ describe PresetsController do
     end
     
     it "should find the preset" do
-      Preset.should_receive(:find).with('1')
+      expect(Preset).to receive(:find).with('1')
       do_get
     end
     
     it "should assign the preset for the view" do
       do_get
-      assigns[:preset].should == @preset
+      expect(assigns[:preset]).to eq(@preset)
     end
   end
 end

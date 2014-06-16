@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Transcoder do
+describe Transcoder, :type => :model do
   describe "scheduling a job" do
     before(:each) do
       @preset = FactoryGirl.create(:preset)
       @job    = FactoryGirl.create(:job, :preset_id => @preset.id)
       @host   = FactoryGirl.create(:host)
 
-      Transcoder.stub(:post)
+      allow(Transcoder).to receive(:post)
     end
 
     def do_schedule
@@ -16,49 +16,49 @@ describe Transcoder do
 
     describe "success" do
       before(:each) do
-        Transcoder.stub(:post).and_return({'foo' => 'bar'})
+        allow(Transcoder).to receive(:post).and_return({'foo' => 'bar'})
       end
       
       it "should return the correct attributes" do
-        do_schedule.should == { 'host_id' => @host.id, 'foo' => 'bar' }
+        expect(do_schedule).to eq({ 'host_id' => @host.id, 'foo' => 'bar' })
       end
     end
 
     describe "failed" do
       before(:each) do
-        Transcoder.stub(:post).and_return false
+        allow(Transcoder).to receive(:post).and_return false
       end
 
       it "should remain in scheduled state" do
         do_schedule
-        @job.state.should == Job::Scheduled
+        expect(@job.state).to eq(Job::Scheduled)
       end
     end
     
     it "should convert a job to transcoder params correctly" do
       # with thumbnail options presetn
-      Transcoder.job_to_json(@job).should == {
+      expect(Transcoder.job_to_json(@job)).to eq({
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
         'thumbnail_options' => {seconds: 1}
-      }.to_json
+      }.to_json)
       
       # without thumbnail options
       @job.preset.thumbnail_options = nil
-      Transcoder.job_to_json(@job).should == {
+      expect(Transcoder.job_to_json(@job)).to eq({
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
         'thumbnail_options' => nil
-      }.to_json
+      }.to_json)
     end
   end
 
   describe "getting a host's status" do
     before(:each) do
       @host = FactoryGirl.create(:host)
-      Transcoder.stub(:call_transcoder).and_return true
+      allow(Transcoder).to receive(:call_transcoder).and_return true
     end
     
     def do_get
@@ -66,8 +66,8 @@ describe Transcoder do
     end
     
     it "should get the status" do
-      Transcoder.should_receive(:call_transcoder).with(:get, "url/jobs")
-      do_get.should == true
+      expect(Transcoder).to receive(:call_transcoder).with(:get, "url/jobs")
+      expect(do_get).to eq(true)
     end
   end
   
@@ -75,7 +75,7 @@ describe Transcoder do
     before(:each) do
       @host = FactoryGirl.create(:host)
       @job  = FactoryGirl.create(:job, :host_id => @host.id)
-      Transcoder.stub(:call_transcoder).and_return true
+      allow(Transcoder).to receive(:call_transcoder).and_return true
     end
     
     def do_get
@@ -83,14 +83,14 @@ describe Transcoder do
     end
     
     it "should get the status" do
-      Transcoder.should_receive(:call_transcoder).with(:get, "url/jobs/1")
-      do_get.should == true
+      expect(Transcoder).to receive(:call_transcoder).with(:get, "url/jobs/1")
+      expect(do_get).to eq(true)
     end
   end
 
   describe "POSTing to the transcoders" do
     before(:each) do
-      RestClient.stub(:post).and_return '{"foo":"bar"}'
+      allow(RestClient).to receive(:post).and_return '{"foo":"bar"}'
     end
     
     def do_post
@@ -98,21 +98,21 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
-      do_post.should == {'foo' => 'bar'}
+      expect(RestClient).to receive(:post).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
+      expect(do_post).to eq({'foo' => 'bar'})
     end
     
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub(:post).and_raise ex
-        do_post.should == false
+        allow(RestClient).to receive(:post).and_raise ex
+        expect(do_post).to eq(false)
       end
     end
   end
   
   describe "GETting from the transcoders" do
     before(:each) do
-      RestClient.stub(:get).and_return '{"foo":"bar"}'
+      allow(RestClient).to receive(:get).and_return '{"foo":"bar"}'
     end
     
     def do_get
@@ -120,14 +120,14 @@ describe Transcoder do
     end
     
     it "should make the correct call" do
-      RestClient.should_receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
+      expect(RestClient).to receive(:get).with('url', {'foo' => 'bar'}, {:content_type => :json, :accept => :json, :timeout => 2})
       do_get
     end
 
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        RestClient.stub(:get).and_raise ex
-        do_get.should == false
+        allow(RestClient).to receive(:get).and_raise ex
+        expect(do_get).to eq(false)
       end
     end
   end
@@ -143,23 +143,23 @@ describe Transcoder do
 
     it "should do nothing if the job has no host" do
       @job.host = nil
-      Transcoder.should_not_receive(:delete)
+      expect(Transcoder).not_to receive(:delete)
       do_delete
     end
 
     it "should do nothing if the job has no remote_job_id" do
       @job.remote_job_id = nil
-      Transcoder.should_not_receive(:delete)
+      expect(Transcoder).not_to receive(:delete)
       do_delete
     end
 
     it "should delete the job from the transcoder" do
-      Transcoder.should_receive(:delete).with("host/jobs/id")
+      expect(Transcoder).to receive(:delete).with("host/jobs/id")
       do_delete
     end
 
     it "should delegate the method correctly" do
-      Transcoder.should_receive(:call_transcoder).with(:delete, "host/jobs/id")
+      expect(Transcoder).to receive(:call_transcoder).with(:delete, "host/jobs/id")
       do_delete
     end
   end
@@ -167,9 +167,9 @@ describe Transcoder do
   describe "probing" do
     before do
       @host = FactoryGirl.create(:host)
-      Host.stub(:with_available_slots).and_return [ @host ]
+      allow(Host).to receive(:with_available_slots).and_return [ @host ]
 
-      RestClient.stub(:post).and_return 'probe_results'
+      allow(RestClient).to receive(:post).and_return 'probe_results'
     end
 
     def probe
@@ -177,23 +177,23 @@ describe Transcoder do
     end
 
     it 'should find a host with available slots' do
-      Host.should_receive(:with_available_slots).and_return [ @host ]
+      expect(Host).to receive(:with_available_slots).and_return [ @host ]
       probe
     end
 
     it 'should delegate the method correctly' do
-      RestClient.should_receive(:send).with(:post, 'url/probe', { source_file: 'movie.mp4' }.to_json)
+      expect(RestClient).to receive(:send).with(:post, 'url/probe', { source_file: 'movie.mp4' }.to_json)
       probe
     end
 
     it 'should return the probe results' do
-      probe.should == 'probe_results'
+      expect(probe).to eq('probe_results')
     end
 
     it 'should return the exception if any occurrs' do
       e = StandardError.new('error')
-      RestClient.stub(:send).and_raise(e)
-      probe.should == e
+      allow(RestClient).to receive(:send).and_raise(e)
+      expect(probe).to eq(e)
     end
   end
 end

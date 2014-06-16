@@ -17,9 +17,9 @@ feature 'Creating a preset' do
     click_button 'Create Preset'
     expect(page).to have_text('name')
     p = Preset.last
-    p.name.should == 'name'
-    p.parameters.should == 'foo'
-    p.thumbnail_options.should == '{"foo":"bar"}'
+    expect(p.name).to eq('name')
+    expect(p.parameters).to eq('foo')
+    expect(p.thumbnail_options).to eq('{"foo":"bar"}')
   end
 
   scenario 'no name' do

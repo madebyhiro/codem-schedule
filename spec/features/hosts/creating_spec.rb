@@ -21,8 +21,8 @@ feature 'Creating a host' do
 
     expect(page).to have_text('locohost')
     h = Host.last
-    h.name.should == 'locohost'
-    h.url.should == 'http://locohost:8080'
+    expect(h.name).to eq('locohost')
+    expect(h.url).to eq('http://locohost:8080')
   end
 
   scenario 'without a name' do

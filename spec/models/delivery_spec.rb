@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Delivery do
+describe Delivery, :type => :model do
 end

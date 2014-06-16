@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Jobs::States do
+describe Jobs::States, :type => :model do
   def headers
     { 'HTTP_X_CODEM_NOTIFY_TIMESTAMP' => 1 }
   end
@@ -8,30 +8,30 @@ describe Jobs::States do
   let(:job) { FactoryGirl.create(:job) }
 
   it "should set the initial state to scheduled" do
-    job.state.should == Job::Scheduled
-    Job.new.initial_state.should == Job::Scheduled
+    expect(job.state).to eq(Job::Scheduled)
+    expect(Job.new.initial_state).to eq(Job::Scheduled)
   end
 
   it "should save the initial state to the db" do
     job.reload
     job.save!
-    job.state_changes.size.should == 1
-    job.state_changes.last.state.should == job.initial_state
+    expect(job.state_changes.size).to eq(1)
+    expect(job.state_changes.last.state).to eq(job.initial_state)
   end
   
   describe "entering a state" do
     def do_enter
-      job.stub(:enter_void)
+      allow(job).to receive(:enter_void)
       job.enter(:void, {:foo => 'bar'}, headers)
     end
     
     it "should enter the specified state with parameters" do
-      job.should_receive(:enter_void).with(:foo => 'bar')
+      expect(job).to receive(:enter_void).with(:foo => 'bar')
       do_enter
     end
     
     it "should return the job" do
-      do_enter.should == job
+      expect(do_enter).to eq(job)
     end
   end
   
@@ -44,7 +44,7 @@ describe Jobs::States do
 
     it "should generate 0 state changes if a state is present" do # job is already in Scheduled state
       do_enter
-      lambda { do_enter; do_enter }.should change(job.state_changes, :size).by(0)
+      expect { do_enter; do_enter }.to change(job.state_changes, :size).by(0)
     end
   end
   
@@ -57,22 +57,22 @@ describe Jobs::States do
     
     it "should set the parameters" do
       do_enter
-      job.progress.should == 1
-      job.duration.should == 2
-      job.filesize.should == 3
+      expect(job.progress).to eq(1)
+      expect(job.duration).to eq(2)
+      expect(job.filesize).to eq(3)
     end
     
     it "should generate a state change" do
       do_enter
-      job.reload.state_changes.last.state.should == Job::Processing
+      expect(job.reload.state_changes.last.state).to eq(Job::Processing)
     end
     
     it "should generate 1 state change" do
-      lambda { do_enter; do_enter }.should change(job.state_changes, :size).by(1)
+      expect { do_enter; do_enter }.to change(job.state_changes, :size).by(1)
     end
 
     it "should send notifications" do
-      job.should_receive(:notify)
+      expect(job).to receive(:notify)
       do_enter
     end
   end
@@ -87,28 +87,28 @@ describe Jobs::States do
     
     it "should set the state" do
       do_enter
-      job.state.should == Job::Failed
+      expect(job.state).to eq(Job::Failed)
     end
 
     it "should set the parameters" do
       do_enter
-      job.reload.message.should == 'msg'
+      expect(job.reload.message).to eq('msg')
     end
     
     it "should generate a state change" do
       do_enter
       change = job.state_changes.last
-      change.state.should == Job::Failed
-      change.message.should == 'msg'
+      expect(change.state).to eq(Job::Failed)
+      expect(change.message).to eq('msg')
     end
 
     it "should send notifications" do
-      job.should_receive(:notify)
+      expect(job).to receive(:notify)
       do_enter
     end
 
     it "should generate 1 state change" do
-      lambda { do_enter; do_enter }.should change(job.state_changes, :size).by(1)
+      expect { do_enter; do_enter }.to change(job.state_changes, :size).by(1)
     end
   end
   
@@ -118,14 +118,14 @@ describe Jobs::States do
     end
 
     it "should generate 1 state change" do
-      lambda { do_enter; do_enter }.should change(job.state_changes, :size).by(1)
+      expect { do_enter; do_enter }.to change(job.state_changes, :size).by(1)
     end
   end
   
   describe "entering success state" do
     before(:each) do
       @t = Time.new(2011, 1, 2, 3, 4, 5)
-      Time.stub(:current).and_return @t
+      allow(Time).to receive(:current).and_return @t
     end
     
     def do_enter
@@ -134,25 +134,25 @@ describe Jobs::States do
     
     it "should set the parameters" do
       do_enter
-      job.message.should == 'msg'
-      job.completed_at.should == @t
-      job.progress.should == 1.0
+      expect(job.message).to eq('msg')
+      expect(job.completed_at).to eq(@t)
+      expect(job.progress).to eq(1.0)
     end
     
     it "should generate a state change" do
       do_enter
       change = job.state_changes.last
-      change.state.should == Job::Success
-      change.message.should == 'msg'
+      expect(change.state).to eq(Job::Success)
+      expect(change.message).to eq('msg')
     end
     
     it "should send notifications" do
-      job.should_receive(:notify)
+      expect(job).to receive(:notify)
       do_enter
     end
 
     it "should generate 1 state change" do
-      lambda { do_enter; do_enter }.should change(job.state_changes, :size).by(1)
+      expect { do_enter; do_enter }.to change(job.state_changes, :size).by(1)
     end
   end
 end

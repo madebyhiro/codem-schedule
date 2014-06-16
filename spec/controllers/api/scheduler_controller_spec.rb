@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Api::SchedulerController do
+describe Api::SchedulerController, :type => :controller do
   describe "GET 'schedule'" do
     before(:each) do
       @job = FactoryGirl.create(:job)
-      Schedule.stub(:run!).and_return [@job]
+      allow(Schedule).to receive(:run!).and_return [@job]
     end
     
     def do_get
@@ -12,13 +12,13 @@ describe Api::SchedulerController do
     end
     
     it "should let the runner schedule" do
-      Schedule.should_receive(:run!)
+      expect(Schedule).to receive(:run!)
       do_get
     end
     
     it "should render the jobs" do
       do_get
-      response.body.should == [@job].to_json
+      expect(response.body).to eq([@job].to_json)
     end
   end
 end
