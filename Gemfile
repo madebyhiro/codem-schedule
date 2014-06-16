@@ -18,16 +18,9 @@ gem 'coffee-rails', '~>4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
-  gem 'rspec-rails', '2.14.2'
+  gem 'rspec-rails', '2.99'
   gem 'guard'
   gem 'guard-rspec'
-end
-
-group :development do
-  gem 'capistrano', '2.15.5'
-  gem 'capistrano-ext'
-  gem 'capistrano_colors'
-  gem 'capistrano_transmit'
 end
 
 group :test do
