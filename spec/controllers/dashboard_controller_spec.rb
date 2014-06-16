@@ -5,7 +5,8 @@ describe DashboardController, :type => :controller do
     before(:each) do
       @jobs = double("Array of jobs")
       
-      Job.stub_chain(:recents, :limit).and_return @jobs
+      allow(Job).to receive(:recents).and_return @jobs
+      allow(@jobs).to receive(:limit).and_return @jobs
       allow(@jobs).to receive(:scheduled).and_return 'scheduled'
       allow(@jobs).to receive(:processing).and_return [@job]
       allow(@jobs).to receive(:failed).and_return 'failed'

@@ -23,7 +23,7 @@ describe PresetsController, :type => :controller do
   
   describe "GET 'new'" do
     before(:each) do
-      @preset = mock_model(Preset)
+      @preset = double(Preset)
       allow(Preset).to receive(:new).and_return @preset
     end
     
@@ -49,7 +49,7 @@ describe PresetsController, :type => :controller do
   
   describe "GET 'edit'" do
     before(:each) do
-      @preset = mock_model(Preset)
+      @preset = double(Preset)
       allow(Preset).to receive(:find).and_return @preset
     end
     

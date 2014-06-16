@@ -58,7 +58,8 @@ describe History, :type => :model do
     end
     
     it "should return the failed jobs" do
-      Job.stub_chain(:where, :where).and_return @jobs
+      allow(Job).to receive(:where).and_return @jobs
+      allow(@jobs).to receive(:where).and_return @jobs
       expect(@history.failed_jobs).to eq(@jobs)
     end
     
@@ -107,14 +108,12 @@ describe History, :type => :model do
   describe "serialization" do
     before(:each) do
       @history = History.new
-      @history.stub(
-        :number_of_processing_jobs => 'p',
-        :number_of_failed_jobs => 'f',
-        :number_of_completed_jobs => 'c',
-        :seconds_encoded => 'se',
-        :average_processing_time => 'ap',
-        :average_queue_time => 'aq'
-      )
+      allow(@history).to receive(:number_of_processing_jobs).and_return 'p'
+      allow(@history).to receive(:number_of_failed_jobs).and_return 'f'
+      allow(@history).to receive(:number_of_completed_jobs).and_return 'c'
+      allow(@history).to receive(:seconds_encoded).and_return 'se'
+      allow(@history).to receive(:average_processing_time).and_return 'ap'
+      allow(@history).to receive(:average_queue_time).and_return 'aq'
     end
     
     it "should serialize to json correctly" do

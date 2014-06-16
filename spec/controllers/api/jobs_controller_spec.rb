@@ -149,8 +149,8 @@ describe Api::JobsController, :type => :controller do
     subject { FactoryGirl.create(:job) }
 
     before(:each) do
+      allow(Time).to receive(:now).and_return DateTime.parse('2014-07-16 10:11:00')
       subject.update_attributes(:state => Job::Processing)
-      Job.stub_chain(:processing, :order, :page).and_return [subject]
     end
     
     def do_get(format)
@@ -172,8 +172,8 @@ describe Api::JobsController, :type => :controller do
     subject { FactoryGirl.create(:job) }
 
     before(:each) do
+      allow(Time).to receive(:now).and_return DateTime.parse('2014-07-16 10:11:00')
       subject.update_attributes(:state => Job::OnHold)
-      Job.stub_chain(:on_hold, :order, :page).and_return [subject]
     end
     
     def do_get(format)
