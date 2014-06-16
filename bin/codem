@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-ARGV << "-h" if ARGV.empty?
+ARGV << '-h' if ARGV.empty?
 
 def command?(command)
   system("which #{ command} > /dev/null 2>&1")
@@ -14,27 +14,27 @@ class CodemCommand
     options = {}
 
     optparse = OptionParser.new do |opts|
-      opts.banner = "Usage: codem [OPTIONS]"
-      opts.separator ""
+      opts.banner = 'Usage: codem [OPTIONS]'
+      opts.separator ''
 
       options[:host] = 'http://127.0.0.1:3000'
-      opts.on('-H', '--host [HOST]', "Host to connect to, defaults to 127.0.0.1:3000") do |h|
+      opts.on('-H', '--host [HOST]', 'Host to connect to, defaults to 127.0.0.1:3000') do |h|
         options[:host] = h
       end
 
-      opts.on('-i', '--input [FILE]', "Input file to convert") do |i|
+      opts.on('-i', '--input [FILE]', 'Input file to convert') do |i|
         options[:input] = i
       end
 
-      opts.on('-o', '--output [FILE]', "Output file to write to") do |o|
+      opts.on('-o', '--output [FILE]', 'Output file to write to') do |o|
         options[:output] = o
       end
 
-      opts.on('-p', '--preset [NAME]', "Preset to use") do |p|
+      opts.on('-p', '--preset [NAME]', 'Preset to use') do |p|
         options[:preset] = p
       end
 
-      opts.on('-r', '--priority [INT]', "Priority, as integer from 1 (highest) to 999 (lowest)") do |r|
+      opts.on('-r', '--priority [INT]', 'Priority, as integer from 1 (highest) to 999 (lowest)') do |r|
         options[:priority] = r
       end
 
@@ -43,24 +43,24 @@ class CodemCommand
       end
 
       options[:verbose] = false
-      opts.on('-v', '--verbose', "Print verbose output") do |v|
+      opts.on('-v', '--verbose', 'Print verbose output') do |v|
         options[:verbose] = true
       end
-      
+
       options[:silent] = false
       opts.on('-s', '--silent', 'Be silent; no output') do |s|
         options[:silent] = true
       end
-      
+
       options[:status] = false
       opts.on('-S', '--status', 'Only report status code from Scheduler') do |s|
         options[:status] = true
       end
 
-      opts.on('-a', '--arguments [LIST]', "Comma-separated list of arbitrary key=values to store with the job") do |a|
+      opts.on('-a', '--arguments [LIST]', 'Comma-separated list of arbitrary key=values to store with the job') do |a|
         options[:arguments] = a
       end
-      
+
       opts.on_tail('-h', '--help', 'Display this screen') do
         puts opts
         exit
@@ -68,7 +68,7 @@ class CodemCommand
     end
 
     optparse.parse!
-    
+
     @input     = options[:input]
     @output    = options[:output]
     @preset    = options[:preset]
@@ -80,17 +80,17 @@ class CodemCommand
     @notify    = options[:notify]
     @status    = options[:status]
     @args      = options[:arguments]
-    
+
     unless @input && @output && @preset
       puts "ERROR: Not all required parameters (`input', `output', `preset') have been specified"
       exit 1
     end
   end
-  
+
   def args
     "'input=#{@input}&output=#{@output}&preset=#{@preset}&notify=#{@notify}&arguments=#{@args}&priority=#{@priority}'"
   end
-  
+
   def run
     if status
       status = %x[#{command}]
@@ -99,7 +99,7 @@ class CodemCommand
       puts Kernel.exec("#{command} #{'>/dev/null 2>&1' if silent}")
     end
   end
-  
+
   def url
     "'#{@host}/api/jobs'"
   end

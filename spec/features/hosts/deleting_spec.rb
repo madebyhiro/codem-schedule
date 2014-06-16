@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Deleting a host" do
+feature 'Deleting a host' do
   let!(:host) { FactoryGirl.create(:host, name: 'HostName') }
 
   before do
@@ -13,4 +13,3 @@ feature "Deleting a host" do
     expect(page).to_not have_text('HostName')
   end
 end
-

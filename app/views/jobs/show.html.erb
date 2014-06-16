@@ -25,8 +25,9 @@
 
 			  <%- if state_change.deliveries.any? -%>
   			  <span class="notifications">
-  			   <%= link_to_function pluralize(state_change.deliveries.size, 'notification'),
-  			                        "$('#deliveries_#{state_change.id}').toggle()" %>
+  			   <%= link_to pluralize(state_change.deliveries.size, 'notification'),
+  			               '#',
+  			               onclick: "$('#deliveries_#{state_change.id}').toggle()" %>
   			  </span>
 			  <%- end -%>
 

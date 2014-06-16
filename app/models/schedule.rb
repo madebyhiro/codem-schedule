@@ -1,8 +1,6 @@
 class Schedule
   class << self
     def run!
-      count = 0
-
       jobs = to_be_updated_jobs
 
       jobs.each do |job|
@@ -16,17 +14,17 @@ class Schedule
         end
 
       end
-     
+
       jobs.size
     end
 
     def to_be_updated_jobs
-      Job.where(state: [ Job::Scheduled, Job::Processing, Job::OnHold ]).order('created_at')
+      Job.where(state: [Job::Scheduled, Job::Processing, Job::OnHold]).order('created_at')
     end
-  
-    def get_available_slots
+
+    def available_slots
       sum = 0
-      Host.all.each do |h| 
+      Host.all.each do |h|
         h.update_status
         sum += h.available_slots
       end
@@ -34,36 +32,40 @@ class Schedule
     end
 
     private
-      def update_job(job)
-        if attrs = Transcoder.job_status(job)
-          job.update_attributes :progress => attrs['progress'],
-                                :duration => attrs['duration'],
-                                :filesize => attrs['filesize']
 
-          if job.state != attrs['status']
-            job.enter(attrs['status'], attrs)
-          end
+    def update_job(job)
+      attrs = Transcoder.job_status(job)
+      if attrs
+        job.update_attributes(
+          progress: attrs['progress'],
+          duration: attrs['duration'],
+          filesize: attrs['filesize']
+        )
 
-        else
-          job.enter(Job::OnHold)
-        end
+        job.enter(attrs['status'], attrs) if job.state != attrs['status']
 
-        job
+      else
+        job.enter(Job::OnHold)
       end
 
-      def schedule_job(job)
-        for host in Host.with_available_slots
-          if attrs = Transcoder.schedule(:host => host, :job => job)
+      job
+    end
 
-            job.update_attributes :host_id => attrs['host_id'],
-                                  :remote_job_id => attrs['job_id'],
-                                  :transcoding_started_at => Time.current
+    def schedule_job(job)
+      Host.with_available_slots.each do |host|
+        attrs = Transcoder.schedule(host: host, job: job)
+        next unless attrs
 
-            job.enter(Job::Processing, attrs)
+        job.update_attributes(
+          host_id: attrs['host_id'],
+          remote_job_id: attrs['job_id'],
+          transcoding_started_at: Time.current
+        )
 
-            break
-          end
-        end
+        job.enter(Job::Processing, attrs)
+
+        break
       end
+    end
   end
 end

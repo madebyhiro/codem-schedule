@@ -2,28 +2,28 @@ require 'webmock/rspec'
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  add_group "Controllers" do |src_file| 
-    src_file.filename =~ /app\/controllers/ && not(src_file.filename =~ /app\/controllers\/api/)
+  add_group 'Controllers' do |src_file|
+    src_file.filename =~ %r{/app/controllers/} && !(src_file.filename =~ %r{/app/controllers/api/})
   end
-  add_group "API Controllers" do |src_file|
-    src_file.filename =~ /app\/controllers\/api/
+  add_group 'API Controllers' do |src_file|
+    src_file.filename =~ %r{/app/controllers/api/}
   end
   add_group 'Mailers' do |src_file|
-    src_file.filename =~ /app\/mailers/
+    src_file.filename =~ %r{/app/mailers/}
   end
-  add_filter do |src_file| 
-    src_file.filename =~ /vendor|lib/
+  add_filter do |src_file|
+    src_file.filename =~ %r{/vendor|lib/}
   end
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   # == Mock Framework

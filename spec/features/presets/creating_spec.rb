@@ -28,16 +28,16 @@ feature 'Creating a preset' do
     expect(page).to have_text("Name can't be blank")
   end
 
-  scenario "neither params nor thumbnail options" do
+  scenario 'neither params nor thumbnail options' do
     fill_in 'Parameters', with: ''
     fill_in 'Thumbnail options', with: ''
     click_button 'Create Preset'
-    expect(page).to have_text("Either parameters or thumbnail options should be specified")
+    expect(page).to have_text('Either parameters or thumbnail options should be specified')
   end
 
-  scenario "invalid thumbnail options" do
+  scenario 'invalid thumbnail options' do
     fill_in 'Thumbnail options', with: 'foo:bar'
     click_button 'Create Preset'
-    expect(page).to have_text("Thumbnail options must be valid JSON")
+    expect(page).to have_text('Thumbnail options must be valid JSON')
   end
 end

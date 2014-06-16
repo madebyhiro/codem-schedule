@@ -171,3 +171,9 @@ h1.title {
   width:auto;
 }
 
+.pagination ul {
+  list-style:none;
+  li {
+    display:inline-block;
+  }
+}

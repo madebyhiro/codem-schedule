@@ -10,7 +10,7 @@ Scheduler::Application.routes.draw do
         get :failed
         delete :purge
       end
-      
+
       member do
         post :retry
       end
@@ -23,17 +23,17 @@ Scheduler::Application.routes.draw do
 
     get '/probe'   => 'api#probe'
     get '/schedule' => 'scheduler#schedule'
-    
+
     resources :presets
-    
+
     resources :hosts
-    
+
     get '/statistics' => 'statistics#show'
   end
 
   resources :jobs
-  
+
   resources :presets, :hosts
-  
+
   root :to => 'dashboard#show'
 end

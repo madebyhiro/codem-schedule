@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature "Editing a preset" do
+feature 'Editing a preset' do
   let!(:preset) { FactoryGirl.create(:preset) }
 
-  scenario "editing name" do
+  scenario 'editing name' do
     visit presets_path
     click_link 'Edit'
     fill_in 'Name', with: 'New name'
@@ -11,7 +11,7 @@ feature "Editing a preset" do
     expect(page).to have_text('New name')
   end
 
-  scenario "editing parameters" do
+  scenario 'editing parameters' do
     visit presets_path
     click_link 'Edit'
     fill_in 'Parameters', with: 'new params'
@@ -19,4 +19,3 @@ feature "Editing a preset" do
     expect(page).to have_text('new params')
   end
 end
-

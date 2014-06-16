@@ -3,7 +3,7 @@ FactoryGirl.define do
     j.source_file 'source'
     j.destination_file 'dest'
     j.preset_id 1
-    j.remote_job_id "1"
+    j.remote_job_id '1'
   end
 
   factory :preset do |p|

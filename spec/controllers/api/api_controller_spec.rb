@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::ApiController, :type => :controller do
+describe Api::ApiController, type: :controller do
   describe "GET 'probe'" do
     before(:each) do
       allow(Transcoder).to receive(:probe).and_return 'results'
@@ -16,4 +16,3 @@ describe Api::ApiController, :type => :controller do
     end
   end
 end
-

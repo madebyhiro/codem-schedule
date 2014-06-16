@@ -16,7 +16,7 @@ feature 'Creating a host' do
     fill_in 'Url', with: 'http://locohost:8080'
   end
 
-  scenario "successfully" do
+  scenario 'successfully' do
     click_button 'Create Host'
 
     expect(page).to have_text('locohost')
@@ -37,4 +37,3 @@ feature 'Creating a host' do
     expect(page).to have_text("Url can't be blank")
   end
 end
-

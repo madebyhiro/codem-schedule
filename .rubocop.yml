@@ -1,0 +1,26 @@
+Documentation:
+  Enabled: false
+
+Style/LineLength:
+  Max: 150
+
+Style/MethodLength:
+  Max: 40
+
+Style/CyclomaticComplexity:
+  Max: 14
+
+Style/ConstantName:
+  Enabled: false
+
+AllCops:
+  RunRailsCops: true
+  Exclude: 
+    - db/**/*
+    - script/**/*
+    - spec/factories.rb
+    - config/**/*
+    - vendor/**/*
+    - spec/support/**/*
+    - bin/**/*
+

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Editing a host" do
+feature 'Editing a host' do
   let!(:host) { FactoryGirl.create(:host) }
 
   before do
@@ -9,22 +9,21 @@ feature "Editing a host" do
     click_link 'Edit'
   end
 
-  scenario "name" do
+  scenario 'name' do
     fill_in 'Name', with: 'New name'
     click_button 'Update Host'
     expect(page).to have_text('New name')
   end
 
-  scenario "url" do
+  scenario 'url' do
     fill_in 'Url', with: 'New url'
     click_button 'Update Host'
     expect(page).to have_text('New url')
   end
 
-  scenario "no name" do
+  scenario 'no name' do
     fill_in 'Name', with: ''
     click_button 'Update Host'
     expect(page).to have_text("Name can't be blank")
   end
 end
-

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Creating a job" do
+feature 'Creating a job' do
   let!(:preset) { FactoryGirl.create(:preset, name: 'Preset') }
 
   before do
@@ -15,7 +15,7 @@ feature "Creating a job" do
     select 'Preset', from: 'Preset'
   end
 
-  scenario "successfully" do
+  scenario 'successfully' do
     click_button 'Create Job'
 
     expect(page).to have_text('input')
@@ -26,19 +26,19 @@ feature "Creating a job" do
     expect(j.preset).to eq(preset)
   end
 
-  scenario "without an input file" do
+  scenario 'without an input file' do
     fill_in 'Input', with: ''
     click_button 'Create Job'
     expect(page).to have_text("Source file can't be blank")
   end
 
-  scenario "without an output file" do
+  scenario 'without an output file' do
     fill_in 'Output', with: ''
     click_button 'Create Job'
     expect(page).to have_text("Destination file can't be blank")
   end
 
-  scenario "without a preset" do
+  scenario 'without a preset' do
     preset.destroy
     visit new_job_path
     fill_in 'Input', with: 'input'
@@ -47,4 +47,3 @@ feature "Creating a job" do
     expect(page).to have_text("Preset can't be blank")
   end
 end
-

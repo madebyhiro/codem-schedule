@@ -19,8 +19,10 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'rubocop'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'guard-rubocop'
 end
 
 group :test do

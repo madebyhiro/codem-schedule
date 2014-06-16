@@ -6,7 +6,7 @@
 # === Hosts
 # Creating and viewing of hosts.
 # A host is a representation of a Codem \Transcoder instance.
-# 
+#
 # ==== Endpoints
 # GET  /api/hosts::     See Api::HostsController#index
 # POST /api/hosts::     See Api::HostsController#create
