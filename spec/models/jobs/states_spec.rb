@@ -129,12 +129,19 @@ describe Jobs::States, type: :model do
     end
 
     def do_enter
-      job.enter(Job::Success,  'message' => 'msg')
+      job.enter(Job::Success, 'message'    => 'msg',
+                              'thumbnails' => ['thumb.jpg'],
+                              'playlist'   => 'playlist.m3u8',
+                              'segments'   => ['segment.ts'])
+      job.reload
     end
 
     it 'should set the parameters' do
       do_enter
       expect(job.message).to eq('msg')
+      expect(job.thumbnails).to eq(['thumb.jpg'])
+      expect(job.playlist).to eq('playlist.m3u8')
+      expect(job.segments).to eq(['segment.ts'])
       expect(job.completed_at).to eq(@t)
       expect(job.progress).to eq(1.0)
     end

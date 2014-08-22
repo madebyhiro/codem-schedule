@@ -11,6 +11,7 @@ feature 'Creating a preset' do
     fill_in 'Name', with: 'name'
     fill_in 'Parameters', with: 'foo'
     fill_in 'Thumbnail options', with: '{"foo":"bar"}'
+    fill_in 'Segments options', with: '{"seg":"ment"}'
   end
 
   scenario 'should work' do
@@ -20,6 +21,7 @@ feature 'Creating a preset' do
     expect(p.name).to eq('name')
     expect(p.parameters).to eq('foo')
     expect(p.thumbnail_options).to eq('{"foo":"bar"}')
+    expect(p.segments_options).to eq('{"seg":"ment"}')
   end
 
   scenario 'no name' do
@@ -39,5 +41,18 @@ feature 'Creating a preset' do
     fill_in 'Thumbnail options', with: 'foo:bar'
     click_button 'Create Preset'
     expect(page).to have_text('Thumbnail options must be valid JSON')
+  end
+
+  scenario 'invalid segments options' do
+    fill_in 'Segments options', with: 'foo:bar'
+    click_button 'Create Preset'
+    expect(page).to have_text('Segments options must be valid JSON')
+  end
+
+  scenario 'segments options without encoding parameters' do
+    fill_in 'Parameters', with: ''
+    fill_in 'Segments options', with: '{"seg":"ment"}'
+    click_button 'Create Preset'
+    expect(page).to have_text('Encoding parameters required for segmenting video')
   end
 end

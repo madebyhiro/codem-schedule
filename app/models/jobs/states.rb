@@ -61,8 +61,11 @@ module Jobs
     def enter_success(params)
       update_attributes(
         completed_at: Time.current,
-        message: params['message'],
-        progress: 1.0
+        message:      params['message'],
+        thumbnails:   params['thumbnails'],
+        playlist:     params['playlist'],
+        segments:     params['segments'],
+        progress:     1.0
       )
       notify
     end

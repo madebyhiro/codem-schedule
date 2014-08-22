@@ -16,6 +16,8 @@ class Job < ActiveRecord::Base
   before_destroy :remove_job_from_transcoder
 
   serialize :arguments
+  serialize :thumbnails
+  serialize :segments
 
   scope :scheduled,   -> { where(state: Scheduled) }
   scope :processing,  -> { where(state: Processing) }
