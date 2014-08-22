@@ -15,6 +15,7 @@ module Api
     #       "name":"h264",
     #       "parameters":"-acodec libfaac -ab 96k -ar 44100 -vcodec libx264 -vb 416k -vpre slow -vpre baseline -s 320x180 -y",
     #       "thumbnail_options":null,
+    #       "segments_options":null,
     #       "updated_at":"2011-05-09T11:59:53Z"}
     #     }
     #   ]
@@ -33,6 +34,7 @@ module Api
     # <tt>params</tt>:: Parameters to use
     # Optional:
     # <tt>thumbnail_options</tt>:: Thumbnail options to use
+    # <tt>segments_options</tt>:: Thumbnail options to use
     #
     # === Response codes
     # <tt>success</tt>:: <tt>201 created</tt>
@@ -47,6 +49,7 @@ module Api
     #     "name":"webm",
     #     "parameters":"params",
     #     "thumbnail_options":null,
+    #     "segments_options":null,
     #     "updated_at":"2011-05-10T14:44:07Z"}
     #   }
     def create
@@ -103,11 +106,12 @@ module Api
         params[:name] = params[:preset][:name]
         params[:parameters] = params[:preset][:parameters]
         params[:thumbnail_options] = params[:preset][:thumbnail_options]
+        params[:segments_options] = params[:preset][:segments_options]
       end
 
       preset = Preset.find(params[:id])
 
-      if preset.update_attributes(name: params[:name], parameters: params[:parameters], thumbnail_options: params[:thumbnail_options])
+      if preset.update_attributes(name: params[:name], parameters: params[:parameters], thumbnail_options: params[:thumbnail_options], segments_options: params[:segments_options])
         respond_with preset, location: api_preset_url(preset) do |format|
           format.html { redirect_to presets_path }
         end

@@ -18,4 +18,13 @@ feature 'Editing a preset' do
     click_button 'Update Preset'
     expect(page).to have_text('new params')
   end
+
+  scenario 'editing segments options' do
+    visit presets_path
+    click_link 'Edit'
+    fill_in 'Segments options', with: '{"SEG": "MENT"}'
+    click_button 'Update Preset'
+    click_link 'Edit'
+    expect(page).to have_selector(%q{input[value='{"SEG": "MENT"}']})
+  end
 end

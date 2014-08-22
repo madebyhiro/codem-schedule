@@ -13,17 +13,23 @@ class Transcoder
     end
 
     def job_to_json(job)
+      thumb_opts = nil
+      segments_options = nil
+
       if job.preset.thumbnail_options.present?
         thumb_opts = JSON.parse(job.preset.thumbnail_options)
-      else
-        thumb_opts = nil
+      end
+
+      if job.preset.segments_options.present?
+        segments_options = JSON.parse(job.preset.segments_options)
       end
 
       {
         'source_file' => job.source_file,
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
-        'thumbnail_options' => thumb_opts
+        'thumbnail_options' => thumb_opts,
+        'segments_options' => segments_options
       }.to_json
     end
 

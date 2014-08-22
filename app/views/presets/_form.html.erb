@@ -31,10 +31,18 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :thumbnail_options, class: 'control-label required' %>
+      <%= f.label :thumbnail_options, class: 'control-label' %>
       <div class="controls">
         <%= f.text_field :thumbnail_options, class: 'form-control' %>
       <a href="#thumbnail_help" role="button" class="btn" data-toggle="modal">Help</a>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :segments_options, class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :segments_options, class: 'form-control' %>
+      <a href="#segments_help" role="button" class="btn" data-toggle="modal">Help</a>
       </div>
     </div>
 
@@ -70,6 +78,35 @@
             <li>A size can be specified in pixels (width x height). If omitted it will generate thumbnails the size of the source video. (optional)</li>
             <li>A format for the thumbnails. The format must be supported by your ffmpeg binary. If omitted it will generate thumbnails in the JPEG format. Most people will use either "jpg" or "png". (optional)</li>
           </ul>		
+        </ul>
+      </ul>
+      <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="segments_help">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Segments options</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          It's possible to generate segments while transcoding the input file.
+          These options can be specified for each preset, and use the following syntax:
+        </p>
+        <ul>
+          <li>Valid options are:</li>
+          <ul>
+   	    <li><p>A segment_time: <pre>{ "segment_time": 10 }</pre> will generate segments at every 10 secconds.</p></li>
+          </ul>
         </ul>
       </ul>
       <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>

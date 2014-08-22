@@ -36,12 +36,13 @@ describe Transcoder, type: :model do
     end
 
     it 'should convert a job to transcoder params correctly' do
-      # with thumbnail options presetn
+      # with thumbnail options present
       expect(Transcoder.job_to_json(@job)).to eq({
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'thumbnail_options' => { seconds: 1 }
+        'thumbnail_options' => { seconds: 1 },
+        'segments_options' => nil
       }.to_json)
 
       # without thumbnail options
@@ -50,7 +51,18 @@ describe Transcoder, type: :model do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'thumbnail_options' => nil
+        'thumbnail_options' => nil,
+        'segments_options' => nil
+      }.to_json)
+
+      # with segments options
+      @job.preset.segments_options = '{"segment_time": 10}'
+      expect(Transcoder.job_to_json(@job)).to eq({
+        'source_file' => 'source',
+        'destination_file' => 'dest',
+        'encoder_options' => 'params',
+        'thumbnail_options' => nil,
+        'segments_options' => { segment_time: 10 },
       }.to_json)
     end
   end
