@@ -19,7 +19,8 @@ class Schedule
     end
 
     def to_be_updated_jobs
-      Job.where(state: [Job::Scheduled, Job::Processing, Job::OnHold]).order('created_at')
+        limit = Host.all.length;
+        Job.where(state: [Job::Processing, Job::OnHold, Job::Scheduled]).order('state desc').limit(limit);
     end
 
     def available_slots
