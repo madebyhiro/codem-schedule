@@ -70,6 +70,7 @@ class Transcoder
                  url: url,
                  headers: { content_type: :json, accept: :json },
                  timeout: 2,
+                 open_timeout: 2, # Fallback for RestClient < 1.8.x, requires explicit open_timeout
                  payload: payload }
       response = RestClient::Request.execute(params)
       JSON.parse response
