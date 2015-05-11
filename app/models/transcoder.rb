@@ -24,7 +24,7 @@ class Transcoder
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
         'thumbnail_options' => thumb_opts
-      }.to_json
+      }
     end
 
     def host_status(host)
@@ -45,7 +45,7 @@ class Transcoder
 
     def probe(file)
       host = Host.with_available_slots.first
-      RestClient.send(:post, "#{host.url}/probe", { source_file: file }.to_json)
+      call_transcoder(:post, "#{host.url}/probe", { source_file: file })
     rescue => e
       e
     end
@@ -65,8 +65,13 @@ class Transcoder
     private
 
     def call_transcoder(method, url, *attrs)
-      attrs << { content_type: :json, accept: :json, timeout: 2 }
-      response = RestClient.send(method, url, *attrs)
+      payload = attrs.first.to_json
+      params = { method: method,
+                 url: url,
+                 headers: { content_type: :json, accept: :json },
+                 timeout: 2,
+                 payload: payload }
+      response = RestClient::Request.execute(params)
       JSON.parse response
     rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, RestClient::Exception, JSON::ParserError
       false

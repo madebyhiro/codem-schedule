@@ -41,8 +41,8 @@ describe Transcoder, type: :model do
         'source_file' => 'source',
         'destination_file' => 'dest',
         'encoder_options' => 'params',
-        'thumbnail_options' => { seconds: 1 }
-      }.to_json)
+        'thumbnail_options' => { 'seconds' => 1 }
+      })
 
       # without thumbnail options
       @job.preset.thumbnail_options = nil
@@ -51,7 +51,7 @@ describe Transcoder, type: :model do
         'destination_file' => 'dest',
         'encoder_options' => 'params',
         'thumbnail_options' => nil
-      }.to_json)
+      })
     end
   end
 
@@ -90,7 +90,7 @@ describe Transcoder, type: :model do
 
   describe 'POSTing to the transcoders' do
     before(:each) do
-      allow(RestClient).to receive(:post).and_return '{"foo":"bar"}'
+      allow(RestClient::Request).to receive(:execute).and_return '{"foo":"bar"}'
     end
 
     def do_post
@@ -98,13 +98,14 @@ describe Transcoder, type: :model do
     end
 
     it 'should make the correct call' do
-      expect(RestClient).to receive(:post).with('url', { 'foo' => 'bar' },  content_type: :json, accept: :json, timeout: 2)
+      args = { url: 'url', method: :post, payload: { 'foo' => 'bar' }.to_json }
+      expect(RestClient::Request).to receive(:execute).with(hash_including(args))
       expect(do_post).to eq('foo' => 'bar')
     end
 
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        allow(RestClient).to receive(:post).and_raise ex
+        allow(RestClient::Request).to receive(:execute).and_raise ex
         expect(do_post).to eq(false)
       end
     end
@@ -112,7 +113,7 @@ describe Transcoder, type: :model do
 
   describe 'GETting from the transcoders' do
     before(:each) do
-      allow(RestClient).to receive(:get).and_return '{"foo":"bar"}'
+      allow(RestClient::Request).to receive(:execute).and_return '{"foo":"bar"}'
     end
 
     def do_get
@@ -120,13 +121,14 @@ describe Transcoder, type: :model do
     end
 
     it 'should make the correct call' do
-      expect(RestClient).to receive(:get).with('url', { 'foo' => 'bar' },  content_type: :json, accept: :json, timeout: 2)
+      args = { url: 'url', method: :get, payload: { 'foo' => 'bar' }.to_json }
+      expect(RestClient::Request).to receive(:execute).with(hash_including(args))
       do_get
     end
 
     [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
       it "should recover from #{ex}" do
-        allow(RestClient).to receive(:get).and_raise ex
+        allow(RestClient::Request).to receive(:execute).and_raise ex
         expect(do_get).to eq(false)
       end
     end
@@ -169,7 +171,8 @@ describe Transcoder, type: :model do
       @host = FactoryGirl.create(:host)
       allow(Host).to receive(:with_available_slots).and_return [@host]
 
-      allow(RestClient).to receive(:post).and_return 'probe_results'
+      allow(RestClient::Request).to receive(:execute).and_return 'probe_results'
+      allow(JSON).to receive(:parse).with('probe_results').and_return 'json'
     end
 
     def probe
@@ -182,17 +185,18 @@ describe Transcoder, type: :model do
     end
 
     it 'should delegate the method correctly' do
-      expect(RestClient).to receive(:send).with(:post, 'url/probe', { source_file: 'movie.mp4' }.to_json)
+      args = { method: :post, url: 'url/probe', payload: { source_file: 'movie.mp4' }.to_json }
+      expect(RestClient::Request).to receive(:execute).with(hash_including(args))
       probe
     end
 
     it 'should return the probe results' do
-      expect(probe).to eq('probe_results')
+      expect(probe).to eq('json')
     end
 
     it 'should return the exception if any occurrs' do
       e = StandardError.new('error')
-      allow(RestClient).to receive(:send).and_raise(e)
+      allow(RestClient::Request).to receive(:execute).and_raise(e)
       expect(probe).to eq(e)
     end
   end
