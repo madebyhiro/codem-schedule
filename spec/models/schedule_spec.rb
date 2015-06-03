@@ -45,6 +45,12 @@ describe Schedule, type: :model do
       run
       expect(job.reload.state).to eq(Job::Scheduled)
     end
+
+    it 'limits the scheduled jobs to the maximum amount of slots' do
+      allow(Schedule).to receive(:available_slots).and_return 10
+      11.times { FactoryGirl.create(:job) }
+      expect(Schedule.to_be_scheduled_jobs.size).to eq(10)
+    end
   end
 
   describe 'entering on hold state' do

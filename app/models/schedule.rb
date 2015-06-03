@@ -1,25 +1,28 @@
 class Schedule
   class << self
     def run!
-      jobs = to_be_updated_jobs
+      processed = update_jobs + schedule_jobs
+      processed.size
+    end
 
-      jobs.each do |job|
-
-        job.with_lock(true) do
-          if job.state == Job::Scheduled
-            schedule_job(job)
-          else
-            update_job(job)
-          end
-        end
-
+    def update_jobs
+      to_be_updated_jobs.each do |job|
+        job.with_lock(true) { update_job(job) }
       end
+    end
 
-      jobs.size
+    def schedule_jobs
+      to_be_scheduled_jobs.each do |job|
+        job.with_lock(true) { schedule_job(job) }
+      end
     end
 
     def to_be_updated_jobs
-      Job.where(state: [Job::Scheduled, Job::Processing, Job::OnHold]).order('created_at')
+      Job.where(state: [Job::Processing, Job::OnHold]).order('created_at')
+    end
+
+    def to_be_scheduled_jobs
+      Job.where(state: [Job::Scheduled]).order('created_at').limit(available_slots)
     end
 
     def available_slots
