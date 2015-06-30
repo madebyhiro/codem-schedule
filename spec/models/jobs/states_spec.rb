@@ -59,7 +59,7 @@ describe Jobs::States, type: :model do
       do_enter
       expect(job.progress).to eq(1)
       expect(job.duration).to eq(2)
-      expect(job.filesize).to eq(3)
+      expect(job.filesize).to eq('3')
     end
 
     it 'should generate a state change' do

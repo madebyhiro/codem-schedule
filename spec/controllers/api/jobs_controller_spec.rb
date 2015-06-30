@@ -257,7 +257,7 @@ describe Api::JobsController, type: :controller do
 
     it 'should render nothing' do
       do_delete
-      expect(response.body).to eq(' ')
+      expect(response.body).to eq('')
     end
   end
 

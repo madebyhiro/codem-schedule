@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.3'
 
 gem 'mysql2'
 gem 'jquery-rails'
@@ -13,12 +13,13 @@ gem 'acts_as_list'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 
+gem 'responders', '~> 2.0'
 gem 'sass-rails', '~>4.0.0'
 gem 'coffee-rails', '~>4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.1'
   gem 'rubocop'
   gem 'guard'
   gem 'guard-rspec'

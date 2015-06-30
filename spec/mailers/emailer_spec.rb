@@ -23,12 +23,12 @@ describe Emailer, type: :mailer do
     end
 
     it 'should deliver successfully' do
-      expect { @mailer.deliver }.not_to raise_error
+      expect { @mailer.deliver_now }.not_to raise_error
     end
 
     describe 'and delivered' do
       it 'should be added to the delivery queue' do
-        expect { @mailer.deliver }.to change(ActionMailer::Base.deliveries, :size).by(1)
+        expect { @mailer.deliver_now }.to change(ActionMailer::Base.deliveries, :size).by(1)
       end
     end
 
