@@ -14,7 +14,7 @@ class Transcoder
 
     def job_to_json(job)
       if job.preset.thumbnail_options.present?
-        thumb_opts = JSON.parse(job.preset.thumbnail_options)
+        thumb_opts = MultiJson.load(job.preset.thumbnail_options)
       else
         thumb_opts = nil
       end
@@ -73,8 +73,8 @@ class Transcoder
                  open_timeout: 2, # Fallback for RestClient < 1.8.x, requires explicit open_timeout
                  payload: payload }
       response = RestClient::Request.execute(params)
-      JSON.parse response
-    rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, RestClient::Exception, JSON::ParserError
+      MultiJson.load response
+    rescue Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, RestClient::Exception, MultiJson::ParseError
       false
     end
   end

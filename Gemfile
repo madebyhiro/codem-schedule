@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '4.2.3'
 
+gem 'multi_json'
 gem 'mysql2'
 gem 'jquery-rails'
 gem 'rest-client'

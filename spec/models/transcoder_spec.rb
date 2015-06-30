@@ -103,7 +103,7 @@ describe Transcoder, type: :model do
       expect(do_post).to eq('foo' => 'bar')
     end
 
-    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, JSON::ParserError].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, MultiJson::ParseError].each do |ex|
       it "should recover from #{ex}" do
         allow(RestClient::Request).to receive(:execute).and_raise ex
         expect(do_post).to eq(false)
@@ -126,7 +126,7 @@ describe Transcoder, type: :model do
       do_get
     end
 
-    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, JSON::ParserError].each do |ex|
+    [RestClient::Exception, Errno::ECONNREFUSED, SocketError, Errno::ENETUNREACH, Errno::EHOSTUNREACH, MultiJson::ParseError].each do |ex|
       it "should recover from #{ex}" do
         allow(RestClient::Request).to receive(:execute).and_raise ex
         expect(do_get).to eq(false)
@@ -172,7 +172,7 @@ describe Transcoder, type: :model do
       allow(Host).to receive(:with_available_slots).and_return [@host]
 
       allow(RestClient::Request).to receive(:execute).and_return 'probe_results'
-      allow(JSON).to receive(:parse).with('probe_results').and_return 'json'
+      allow(MultiJson).to receive(:load).with('probe_results').and_return 'json'
     end
 
     def probe

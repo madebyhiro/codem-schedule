@@ -37,8 +37,8 @@ describe Api::PresetsController, type: :controller do
 
     it 'shows a preset as JSON' do
       do_get(:json)
-      expected = JSON.load(subject.to_json)
-      actual   = JSON.load(response.body)
+      expected = MultiJson.load(subject.to_json)
+      actual   = MultiJson.load(response.body)
       expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
 

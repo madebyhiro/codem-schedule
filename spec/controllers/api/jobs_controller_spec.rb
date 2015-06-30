@@ -134,8 +134,8 @@ describe Api::JobsController, type: :controller do
 
     it 'shows scheduled jobs as JSON' do
       do_get(:json)
-      expected = JSON.load(subject.to_json)
-      actual   = JSON.load(response.body).first
+      expected = MultiJson.load(subject.to_json)
+      actual   = MultiJson.load(response.body).first
       expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
 
@@ -204,8 +204,8 @@ describe Api::JobsController, type: :controller do
 
     it 'shows success jobs as JSON' do
       do_get(:json)
-      expected = JSON.load(subject.to_json)
-      actual   = JSON.load(response.body).first
+      expected = MultiJson.load(subject.to_json)
+      actual   = MultiJson.load(response.body).first
       expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
 
@@ -228,8 +228,8 @@ describe Api::JobsController, type: :controller do
 
     it 'shows failed jobs as JSON' do
       do_get(:json)
-      expected = JSON.load(subject.to_json)
-      actual   = JSON.load(response.body).first
+      expected = MultiJson.load(subject.to_json)
+      actual   = MultiJson.load(response.body).first
       expect(expected.slice(:created_at, :updated_at)).to eq(actual.slice(:created_at, :updated_at))
     end
 

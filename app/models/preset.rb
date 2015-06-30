@@ -16,9 +16,9 @@ class Preset < ActiveRecord::Base
   private
 
   def valid_json_options
-    JSON.parse(thumbnail_options)
+    MultiJson.load(thumbnail_options)
     true
-  rescue JSON::ParserError
+  rescue MultiJson::ParseError
     errors.add(:thumbnail_options, 'must be valid JSON')
     false
   end
