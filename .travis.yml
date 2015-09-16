@@ -1,11 +1,12 @@
 sudo: false
 script: "bin/rake --trace"
-bundler_args: "--binstubs --without development"
+bundler_args: "--binstubs"
 language: ruby
 rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.0
   - 2.1.1
+  - 2.1.5
 before_script:
   - "rake db:create:all ; rake db:migrate; rake db:test:prepare"
