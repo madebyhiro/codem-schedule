@@ -18,4 +18,12 @@ feature 'Editing a preset' do
     click_button 'Update Preset'
     expect(page).to have_text('new params')
   end
+
+  scenario 'editing segment time' do
+    visit presets_path
+    click_link 'Edit'
+    fill_in 'HLS Segment time', with: '20'
+    click_button 'Update Preset'
+    expect(page).to have_text('20')
+  end
 end

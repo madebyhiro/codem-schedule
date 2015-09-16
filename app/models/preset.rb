@@ -2,6 +2,7 @@ class Preset < ActiveRecord::Base
   has_many :jobs
 
   validates :name, presence: true, uniqueness: true
+  validates :segment_time_options, numericality: { only_integer: true }, allow_blank: true
 
   validate :should_have_params_or_thumbnail_options
   validate :thumbnail_options, :valid_json_options, if: proc { |p| p.thumbnail_options.present? }
@@ -10,7 +11,8 @@ class Preset < ActiveRecord::Base
     attributes = attributes[:preset] if attributes[:preset]
     create(name: attributes['name'],
            parameters: attributes['parameters'],
-           thumbnail_options: attributes['thumbnail_options'])
+           thumbnail_options: attributes['thumbnail_options'],
+           segment_time_options: attributes['segment_time_options'])
   end
 
   private

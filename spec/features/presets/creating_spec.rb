@@ -11,6 +11,7 @@ feature 'Creating a preset' do
     fill_in 'Name', with: 'name'
     fill_in 'Parameters', with: 'foo'
     fill_in 'Thumbnail options', with: '{"foo":"bar"}'
+    fill_in 'HLS Segment time', with: '10'
   end
 
   scenario 'should work' do
@@ -20,6 +21,7 @@ feature 'Creating a preset' do
     expect(p.name).to eq('name')
     expect(p.parameters).to eq('foo')
     expect(p.thumbnail_options).to eq('{"foo":"bar"}')
+    expect(p.segment_time_options).to eq('10')
   end
 
   scenario 'no name' do

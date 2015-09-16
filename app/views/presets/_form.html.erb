@@ -38,6 +38,13 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <%= f.label :segment_time_options, 'HLS Segment time (as integer)', class: 'control-label required' %>
+      <div class="controls">
+        <%= f.text_field :segment_time_options, class: 'form-control' %>
+      <a href="#segment_time_help" role="button" class="btn" data-toggle="modal">Help</a>
+      </div>
+    </div>
   </fieldset>
 
   <div class="form-actions"> 
@@ -65,18 +72,46 @@
    		      <li><p>An array of explicit percentages, this will trigger thumbnails only at the specified positions.<pre>{ "percentages": [0.25, 0.5, 0.75] }</pre> will generate thumbnails at 25%, 50% and 75%.</p></li>
    		      <li>A single offset in seconds, this will trigger a thumbnail every x seconds.<pre>{ "seconds": 10 }</pre> will generate thumbnails at 0 seconds, 10 seconds, 20 seconds, etc., until the end of the source file.</li>
    		      <li><p>An array of explicit offsets, this will trigger thumbnails only at the specified positions.<pre>{ "seconds": [30, 60, 90] }</pre> will generate thumbnails at 30 seconds, 60 seconds and 90 seconds.</p></li>
+            </ul>
+            <ul>
+              <li>A size can be specified in pixels (width x height). If omitted it will generate thumbnails the size of the source video. (optional)</li>
+              <li>A format for the thumbnails. The format must be supported by your ffmpeg binary. If omitted it will generate thumbnails in the JPEG format. Most people will use either "jpg" or "png". (optional)</li>
+            </ul>		
           </ul>
-          <ul>
-            <li>A size can be specified in pixels (width x height). If omitted it will generate thumbnails the size of the source video. (optional)</li>
-            <li>A format for the thumbnails. The format must be supported by your ffmpeg binary. If omitted it will generate thumbnails in the JPEG format. Most people will use either "jpg" or "png". (optional)</li>
-          </ul>		
         </ul>
-      </ul>
-      <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+        <p>See <a href="https://github.com/madebyhiro/codem-transcode#usage">github.com/madebyhiro/codem-transcode#usage</a> for more info.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="segment_time_help">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Segment time options</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+        By using the segment time options, Codem transcodes a video to the <a href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming" target="_blank">HLS</a> format.<br/>
+        The value entered here will be passed on to the Transcoder, instructing it to create segments with the specified length as seconds.<br/>
+        </p>
+        <p>
+        We recommend to transcode the video to MP4 in order to use segmenting.
+        </p>
+        <p>
+        <b>This requires codem-transcode v0.5.4 or higher.</b>
+        </p>
+        <p>See <a href="https://github.com/madebyhiro/codem-transcode#segmenting--hls">github.com/madebyhiro/codem-transcode#usegmenting--hls</a> for more info.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

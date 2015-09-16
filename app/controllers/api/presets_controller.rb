@@ -14,6 +14,7 @@ module Api
     #       "id":1,
     #       "name":"h264",
     #       "parameters":"-acodec libfaac -ab 96k -ar 44100 -vcodec libx264 -vb 416k -vpre slow -vpre baseline -s 320x180 -y",
+    #       "segment_time_options":null,
     #       "thumbnail_options":null,
     #       "updated_at":"2011-05-09T11:59:53Z"}
     #     }
@@ -33,6 +34,7 @@ module Api
     # <tt>params</tt>:: Parameters to use
     # Optional:
     # <tt>thumbnail_options</tt>:: Thumbnail options to use
+    # <tt>segment_time_options</tt>:: HLS Segment time options to use
     #
     # === Response codes
     # <tt>success</tt>:: <tt>201 created</tt>
@@ -46,6 +48,7 @@ module Api
     #     "id":3,
     #     "name":"webm",
     #     "parameters":"params",
+    #     "segment_time_options":null,
     #     "thumbnail_options":null,
     #     "updated_at":"2011-05-10T14:44:07Z"}
     #   }
@@ -79,6 +82,7 @@ module Api
     #     "id":3,
     #     "name":"webm",
     #     "parameters":"params",
+    #     "segment_time_options":null,
     #     "thumbnail_options":null,
     #     "updated_at":"2011-05-10T14:44:07Z"}
     #   }
@@ -93,6 +97,7 @@ module Api
     # <tt>name</tt>:: Name of the preset
     # <tt>parameters</tt>:: Parameters of the preset
     # <tt>thumbnail_options</tt>:: Thumbnail options
+    # <tt>segment_time_options</tt>:: Segment time options
     #
     # === Example
     #
@@ -103,11 +108,15 @@ module Api
         params[:name] = params[:preset][:name]
         params[:parameters] = params[:preset][:parameters]
         params[:thumbnail_options] = params[:preset][:thumbnail_options]
+        params[:segment_time_options] = params[:preset][:segment_time_options]
       end
 
       preset = Preset.find(params[:id])
 
-      if preset.update_attributes(name: params[:name], parameters: params[:parameters], thumbnail_options: params[:thumbnail_options])
+      if preset.update_attributes(name: params[:name],
+                                  parameters: params[:parameters],
+                                  thumbnail_options: params[:thumbnail_options],
+                                  segment_time_options: params[:segment_time_options])
         respond_with preset, location: api_preset_url(preset) do |format|
           format.html { redirect_to presets_path }
         end

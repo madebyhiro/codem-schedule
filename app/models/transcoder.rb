@@ -13,18 +13,21 @@ class Transcoder
     end
 
     def job_to_json(job)
-      if job.preset.thumbnail_options.present?
-        thumb_opts = MultiJson.load(job.preset.thumbnail_options)
-      else
-        thumb_opts = nil
-      end
-
-      {
+      json = {
         'source_file' => job.source_file,
         'destination_file' => job.destination_file,
         'encoder_options' => job.preset.parameters,
-        'thumbnail_options' => thumb_opts
       }
+
+      if job.preset.thumbnail_options.present?
+        json.merge!('thumbnail_options' => MultiJson.load(job.preset.thumbnail_options))
+      end
+
+      if job.preset.segment_time_options.present?
+        json.merge!('segments_options' => { 'segment_time' => job.preset.segment_time_options.to_i })
+      end
+
+      json
     end
 
     def host_status(host)
