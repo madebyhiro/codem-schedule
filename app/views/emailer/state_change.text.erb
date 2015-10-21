@@ -1,4 +1,4 @@
-Job <%= @job.id %> has entered <%= @job.state %>: <%= @job.message %>
+Job <%= @job.id %> with source file '<%= @job.source_file %>' and destination file '<%= @job.destination_file %>' has entered <%= @job.state %>: <%= @job.message %>
 
 Visit this job in the api: <%= api_job_url @job %>
 

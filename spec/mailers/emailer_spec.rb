@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Emailer, type: :mailer do
   before(:each) do
-    @job = double(Job, id: 1, state: 'state', message: 'message')
+    @job = double(Job, id: 1, state: 'state', message: 'message', source_file: 'input', destination_file: 'output')
   end
 
   def do_send
@@ -19,7 +19,7 @@ describe Emailer, type: :mailer do
     end
 
     it 'should render the state' do
-      expect(@mailer.body).to include("Job #{@job.id} has entered state: message")
+      expect(@mailer.body).to include("Job #{@job.id} with source file 'input' and destination file 'output' has entered state: message")
     end
 
     it 'should deliver successfully' do
