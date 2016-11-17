@@ -32,6 +32,6 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
   gem 'webmock'
-  gem 'capybara'
+  gem 'capybara', '= 2.5.0'
   gem 'launchy'
 end
