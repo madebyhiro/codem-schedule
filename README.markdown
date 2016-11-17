@@ -7,8 +7,6 @@ Codem Scheduler
 
 The Codem Scheduler is part of the Codem open source video transcoder platform. This application manages the scheduling and handling of jobs via a webfrontend and an API.
 
-For documentation and general info, see <http://transcodem.com/>
-
 Install instructions
 --------------------
 You'll need a Ruby on Rails installation, served by the webserver of your choice. Please note: Ruby 1.9.3 or greater is required, Ruby 2.0 is preferred.
