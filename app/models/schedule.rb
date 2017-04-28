@@ -22,7 +22,7 @@ class Schedule
     end
 
     def to_be_scheduled_jobs
-      Job.where(state: [Job::Scheduled]).order('created_at').limit(available_slots)
+      Job.where(state: [Job::Scheduled]).order('priority DESC, created_at').limit(available_slots)
     end
 
     def available_slots
