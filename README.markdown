@@ -1,6 +1,6 @@
-[![Build Status](https://secure.travis-ci.org/madebyhiro/codem-schedule.png)](http://travis-ci.org/madebyhiro/codem-schedule)
-[![Dependency Status](https://gemnasium.com/madebyhiro/codem-schedule.png)](https://gemnasium.com/madebyhiro/codem-schedule)
-[![Code Climate](https://codeclimate.com/github/madebyhiro/codem-schedule.png)](https://codeclimate.com/github/madebyhiro/codem-schedule)
+# IMPORTANT: This project is no longer actively maintained.
+
+---
 
 Codem Scheduler
 ===============
